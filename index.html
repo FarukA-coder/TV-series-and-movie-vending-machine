@@ -1,0 +1,2850 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMatic - Dizi & Film Otomatı</title>
+    <meta name="description" content="Duygu durumunuza göre film ve dizi öneren, saklı cevherleri keşfetmenizi sağlayan retro-modern dijital otomat.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+/* ============================================================
+   CineMatic — Cyberpunk Neon Vending Machine
+   Complete Stylesheet
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   1. CSS VARIABLES
+   ---------------------------------------------------------- */
+:root {
+  /* Backgrounds */
+  --bg-dark: #040d12;
+  --machine-bg: #0a1628;
+  --machine-panel: #0f1f35;
+  --machine-border: #1a3a5c;
+
+  /* Neon Colors */
+  --neon-blue: #3b82f6;
+  --neon-green: #22c55e;
+  --neon-teal: #14b8a6;
+  --neon-lime: #84cc16;
+  --neon-emerald: #10b981;
+  --neon-purple: #a855f7;
+  --neon-magenta: #d946ef;
+
+  /* Text */
+  --text-light: #f0fdf4;
+  --text-muted: #7dd3a0;
+  --text-dark: #022c22;
+
+  /* Glow Shadows */
+  --glow-blue: 0 0 12px rgba(59, 130, 246, 0.5), 0 0 32px rgba(59, 130, 246, 0.2);
+  --glow-green: 0 0 12px rgba(34, 197, 94, 0.5), 0 0 32px rgba(34, 197, 94, 0.2);
+  --glow-teal: 0 0 12px rgba(20, 184, 166, 0.5), 0 0 32px rgba(20, 184, 166, 0.2);
+  --glow-lime: 0 0 12px rgba(132, 204, 22, 0.5), 0 0 32px rgba(132, 204, 22, 0.2);
+  --glow-emerald: 0 0 12px rgba(16, 185, 129, 0.5), 0 0 32px rgba(16, 185, 129, 0.2);
+  --glow-purple: 0 0 12px rgba(168, 85, 247, 0.5), 0 0 32px rgba(168, 85, 247, 0.2);
+  --glow-magenta: 0 0 12px rgba(217, 70, 239, 0.5), 0 0 32px rgba(217, 70, 239, 0.2);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ----------------------------------------------------------
+   2. RESET & BASE
+   ---------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', sans-serif;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ----------------------------------------------------------
+   3. STARS BACKGROUND
+   ---------------------------------------------------------- */
+.stars-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(34, 197, 94, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(20, 184, 166, 0.03) 0%, transparent 50%);
+}
+
+.stars-background::before,
+.stars-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  animation: starsScroll 120s linear infinite;
+}
+
+.stars-background::before {
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 25% 35%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 40% 10%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 55% 45%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 70% 20%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 85% 55%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 15% 60%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 30% 80%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 50% 70%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 65% 85%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 80% 40%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 95% 75%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 5% 90%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 20% 50%, rgba(255, 255, 255, 0.2), transparent),
+    radial-gradient(1px 1px at 45% 30%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 60% 65%, rgba(59, 130, 246, 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 35% 95%, rgba(34, 197, 94, 0.6), transparent),
+    radial-gradient(1.5px 1.5px at 75% 5%, rgba(20, 184, 166, 0.6), transparent);
+}
+
+.stars-background::after {
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 28% 48%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 42% 8%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 58% 38%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 72% 62%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 88% 18%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 8% 78%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 33% 55%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 48% 88%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 62% 28%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 78% 72%, rgba(255, 255, 255, 0.3), transparent),
+    radial-gradient(1px 1px at 92% 42%, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 18% 85%, rgba(132, 204, 22, 0.5), transparent),
+    radial-gradient(1.5px 1.5px at 52% 15%, rgba(59, 130, 246, 0.5), transparent);
+  animation-delay: -40s;
+  animation-duration: 160s;
+}
+
+@keyframes starsScroll {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50%, -25%); }
+}
+
+/* ----------------------------------------------------------
+   4. APP CONTAINER
+   ---------------------------------------------------------- */
+.app-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ----------------------------------------------------------
+   5. HEADER
+   ---------------------------------------------------------- */
+.app-header {
+  text-align: center;
+  padding: 2rem 0 1.5rem;
+}
+
+.logo-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--text-light);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  line-height: 1.2;
+}
+
+.logo-text .highlight {
+  color: var(--neon-purple);
+  text-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.2);
+  animation: neonBlink 4s ease-in-out infinite;
+}
+
+.subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ----------------------------------------------------------
+   6. COUNTER BADGE
+   ---------------------------------------------------------- */
+.counter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 100px;
+  padding: 0.4rem 1.2rem;
+  margin-top: 1rem;
+}
+
+.counter-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  font-family: 'Outfit', sans-serif;
+}
+
+.counter-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--neon-green);
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+}
+
+/* ----------------------------------------------------------
+   7. MACHINE WRAPPER
+   ---------------------------------------------------------- */
+.machine-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  flex: 1;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+@media (max-width: 900px) {
+  .machine-wrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   8. VENDING MACHINE
+   ---------------------------------------------------------- */
+.vending-machine {
+  background: var(--machine-bg);
+  border: 8px solid var(--machine-border);
+  border-bottom-width: 16px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow:
+    0 0 30px rgba(34, 197, 94, 0.1),
+    0 0 60px rgba(34, 197, 94, 0.05),
+    0 20px 60px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+/* ----------------------------------------------------------
+   9. GLASS COMPARTMENT
+   ---------------------------------------------------------- */
+.machine-glass-compartment {
+  height: 180px;
+  background: linear-gradient(180deg, rgba(4, 13, 18, 0.9) 0%, rgba(10, 30, 20, 0.6) 100%);
+  border-bottom: 3px solid var(--machine-border);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glass-reflection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.glass-reflection::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    135deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.03) 42%,
+    rgba(255, 255, 255, 0.06) 44%,
+    rgba(255, 255, 255, 0.03) 46%,
+    transparent 48%
+  );
+  pointer-events: none;
+}
+
+.shelves {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 85%;
+  position: relative;
+  z-index: 1;
+}
+
+.shelf {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid rgba(26, 58, 92, 0.5);
+}
+
+.capsule {
+  width: 28px;
+  height: 28px;
+  border-radius: 50% 50% 45% 45%;
+  position: relative;
+  animation: capsuleFloat 3s ease-in-out infinite alternate;
+}
+
+.capsule::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 10px;
+  border-radius: 0 0 50% 50%;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.capsule.blue {
+  background: var(--neon-blue);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+}
+.capsule.blue::after { background: rgba(59, 130, 246, 0.3); }
+
+.capsule.green {
+  background: var(--neon-green);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+.capsule.green::after { background: rgba(34, 197, 94, 0.3); }
+
+.capsule.teal {
+  background: var(--neon-teal);
+  box-shadow: 0 0 8px rgba(20, 184, 166, 0.6);
+}
+.capsule.teal::after { background: rgba(20, 184, 166, 0.3); }
+
+.capsule.lime {
+  background: var(--neon-lime);
+  box-shadow: 0 0 8px rgba(132, 204, 22, 0.6);
+}
+.capsule.lime::after { background: rgba(132, 204, 22, 0.3); }
+
+.capsule.purple {
+  background: var(--neon-purple);
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+}
+.capsule.purple::after { background: rgba(168, 85, 247, 0.3); }
+
+.capsule:nth-child(2) { animation-delay: 0.5s; }
+.capsule:nth-child(3) { animation-delay: 1s; }
+.capsule:nth-child(4) { animation-delay: 1.5s; }
+.capsule:nth-child(5) { animation-delay: 0.8s; }
+.capsule:nth-child(6) { animation-delay: 1.3s; }
+
+/* ----------------------------------------------------------
+   10. CONTROL PANEL
+   ---------------------------------------------------------- */
+.machine-control-panel {
+  background: var(--machine-panel);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* ----------------------------------------------------------
+   11. LED DISPLAY
+   ---------------------------------------------------------- */
+.led-display {
+  background: #020a08;
+  border: 3px solid var(--neon-purple);
+  box-shadow: 
+    0 0 10px rgba(168, 85, 247, 0.25),
+    inset 0 0 10px rgba(168, 85, 247, 0.15);
+  border-radius: 8px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.display-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.display-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--neon-green);
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.7), 0 0 20px rgba(34, 197, 94, 0.3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+  animation: screenPulse 3s ease-in-out infinite;
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+.display-text.warning {
+  color: #ef4444;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.7), 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.display-text.success {
+  color: var(--neon-emerald);
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.7), 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+/* ----------------------------------------------------------
+   12. CONTROLS GRID
+   ---------------------------------------------------------- */
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.group-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* ----------------------------------------------------------
+   13. TOGGLE BUTTONS
+   ---------------------------------------------------------- */
+.toggle-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.toggle-buttons.three-cols {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.btn-toggle {
+  background: transparent;
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+
+.btn-toggle:hover {
+  background: rgba(34, 197, 94, 0.06);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: var(--text-light);
+}
+
+.btn-toggle.active {
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+#btnTypeFilm.active {
+  background: var(--neon-blue);
+  border-color: var(--neon-blue);
+  box-shadow: var(--glow-blue);
+  color: var(--text-dark);
+}
+
+#btnTypeDizi.active {
+  background: var(--neon-green);
+  border-color: var(--neon-green);
+  box-shadow: var(--glow-green);
+  color: var(--text-dark);
+}
+
+#btnPoolAll.active {
+  background: var(--neon-teal);
+  border-color: var(--neon-teal);
+  box-shadow: var(--glow-teal);
+  color: var(--text-dark);
+}
+
+#btnPoolPopular.active {
+  background: var(--neon-blue);
+  border-color: var(--neon-blue);
+  box-shadow: var(--glow-blue);
+  color: var(--text-dark);
+}
+
+#btnPoolGems.active {
+  background: var(--neon-purple);
+  border-color: var(--neon-purple);
+  box-shadow: var(--glow-purple);
+  color: var(--text-light);
+}
+
+/* ----------------------------------------------------------
+   14. CATEGORY PILLS
+   ---------------------------------------------------------- */
+.category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  max-height: 120px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.category-pills::-webkit-scrollbar {
+  width: 4px;
+}
+
+.category-pills::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+}
+
+.category-pills::-webkit-scrollbar-thumb {
+  background: rgba(34, 197, 94, 0.25);
+  border-radius: 4px;
+}
+
+.category-pills::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 197, 94, 0.4);
+}
+
+.pill-item {
+  background: transparent;
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  border-radius: 100px;
+  padding: 0.3rem 0.75rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+}
+
+.pill-item:hover {
+  background: rgba(34, 197, 94, 0.06);
+  border-color: rgba(34, 197, 94, 0.35);
+  color: var(--text-light);
+}
+
+.pill-item.active {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: var(--neon-blue);
+  color: var(--neon-blue);
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.2);
+}
+
+.type-dizi .pill-item.active {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: var(--neon-green);
+  color: var(--neon-green);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.2);
+}
+
+/* ----------------------------------------------------------
+   15. MOOD SELECTOR
+   ---------------------------------------------------------- */
+.mood-selector-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.mood-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.mood-emoji {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.mood-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.mood-btn:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mood-btn.active {
+  border-color: var(--neon-teal);
+  background: rgba(20, 184, 166, 0.12);
+  box-shadow: var(--glow-teal);
+}
+
+.mood-btn.active .mood-label {
+  color: var(--neon-teal);
+}
+
+@media (max-width: 600px) {
+  .mood-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.35rem;
+  }
+
+  .mood-btn {
+    padding: 0.35rem;
+  }
+
+  .mood-emoji {
+    font-size: 1.2rem;
+  }
+
+  .mood-label {
+    font-size: 0.5rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   16. INTERACTION ZONE
+   ---------------------------------------------------------- */
+/* ----------------------------------------------------------
+   16. INTERACTION ZONE
+   ---------------------------------------------------------- */
+.interaction-zone {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.01);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  margin-top: 0.5rem;
+  position: relative;
+  z-index: 10; /* Ensure this is always clickable above shelves/drawers */
+}
+
+.coin-slot-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  position: relative;
+  z-index: 15;
+  pointer-events: auto;
+}
+
+.coin-slot {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #0c1c2e, #040d12);
+  border: 2px solid var(--neon-blue);
+  box-shadow: 
+    inset 0 3px 10px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(59, 130, 246, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: var(--transition-normal);
+  cursor: pointer;
+  z-index: 16;
+  pointer-events: auto;
+}
+
+.coin-slot.inserted {
+  border-color: var(--neon-green);
+  box-shadow:
+    inset 0 3px 10px rgba(0, 0, 0, 0.8),
+    var(--glow-green);
+}
+
+.slot-opening {
+  width: 6px;
+  height: 24px;
+  background: #010503;
+  border-radius: 3px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.9);
+  margin-bottom: 2px;
+}
+
+.slot-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: var(--neon-blue);
+  text-shadow: 0 0 4px rgba(59, 130, 246, 0.3);
+  text-align: center;
+  pointer-events: none;
+  margin-top: 2px;
+}
+
+.coin-slot.inserted .slot-text {
+  color: var(--neon-green);
+  text-shadow: 0 0 4px rgba(34, 197, 94, 0.3);
+}
+
+.btn-coin {
+  background: linear-gradient(135deg, var(--neon-purple), #7e22ce);
+  color: var(--text-light);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  box-shadow:
+    0 3px 0 #1e3a8a,
+    0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.btn-coin:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 0 #1e3a8a,
+    0 5px 12px rgba(59, 130, 246, 0.3),
+    var(--glow-blue);
+  border-color: var(--neon-blue);
+}
+
+.btn-coin:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 1px 0 #1e3a8a,
+    0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.lever-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 15;
+  cursor: pointer;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.lever-base {
+  width: 24px;
+  height: 64px;
+  background: linear-gradient(to right, #111827, #1f2937, #111827);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.lever-arm {
+  width: 8px;
+  height: 52px;
+  background: linear-gradient(to right, #6b7280, #d1d5db, #6b7280);
+  border-radius: 4px;
+  position: absolute;
+  bottom: 6px;
+  transform-origin: bottom center;
+  transition: transform 0.15s ease-in-out;
+}
+
+.lever-arm.pulling {
+  animation: leverPullEffect 0.6s ease-in-out;
+}
+
+.lever-handle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #4ade80, var(--neon-green), #14532d);
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow:
+    0 0 12px rgba(34, 197, 94, 0.5),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+.lever-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--neon-green);
+  text-shadow: 0 0 4px rgba(34, 197, 94, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+
+/* ----------------------------------------------------------
+   17. SHORTCUTS HINT
+   ---------------------------------------------------------- */
+.shortcuts-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0;
+  font-size: 0.7rem;
+  color: rgba(125, 211, 160, 0.4);
+}
+
+.shortcuts-hint kbd {
+  font-family: 'Courier New', monospace;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 0.15rem 0.4rem;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ----------------------------------------------------------
+   18. MACHINE BOTTOM
+   ---------------------------------------------------------- */
+.machine-bottom {
+  background: #060e18;
+  border-top: 3px solid var(--machine-border);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.dispense-tray {
+  width: 80%;
+  height: 70px;
+  background: #030910;
+  border: 2px solid var(--machine-border);
+  border-radius: 8px 8px 12px 12px;
+  position: relative;
+  overflow: hidden;
+  perspective: 400px;
+}
+
+.tray-door {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, var(--machine-border), #0d1b2a);
+  border-radius: 8px 8px 0 0;
+  transform-origin: top center;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tray-door::after {
+  content: '';
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.tray-door.open {
+  transform: rotateX(-85deg);
+  pointer-events: none;
+}
+
+.dispensed-capsule {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -60px;
+  z-index: 4;
+  opacity: 0;
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.5);
+}
+
+.dispensed-capsule.animate {
+  animation: capsuleFallEffect 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.dispensed-capsule.green {
+  background: radial-gradient(circle at 40% 35%, #4ade80, var(--neon-green), #15803d);
+  box-shadow: 0 0 16px rgba(34, 197, 94, 0.6);
+}
+
+.dispensed-capsule.blue {
+  background: radial-gradient(circle at 40% 35%, #60a5fa, var(--neon-blue), #1d4ed8);
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.6);
+}
+
+.dispensed-capsule.teal {
+  background: radial-gradient(circle at 40% 35%, #2dd4bf, var(--neon-teal), #0d9488);
+  box-shadow: 0 0 16px rgba(20, 184, 166, 0.6);
+}
+
+.dispensed-capsule.lime {
+  background: radial-gradient(circle at 40% 35%, #a3e635, var(--neon-lime), #65a30d);
+  box-shadow: 0 0 16px rgba(132, 204, 22, 0.6);
+}
+
+.dispensed-capsule.purple {
+  background: radial-gradient(circle at 40% 35%, #c084fc, var(--neon-purple), #7e22ce);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.6);
+}
+
+.capsule-light {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  filter: blur(1px);
+}
+
+.dispensed-capsule.glow-pulse {
+  animation: capsuleGlowPulse 1.5s ease-in-out infinite;
+}
+
+.tray-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: rgba(125, 211, 160, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+/* ----------------------------------------------------------
+   19. CONFETTI CANVAS
+   ---------------------------------------------------------- */
+#confettiCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ----------------------------------------------------------
+   20. RESULT PANEL
+   ---------------------------------------------------------- */
+.result-panel {
+  background: rgba(10, 22, 40, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  border-radius: 24px;
+  padding: 2.5rem;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-normal);
+}
+
+.card-glass-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(59, 130, 246, 0.03) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.result-panel.gem-result {
+  border-color: rgba(34, 197, 94, 0.25);
+  box-shadow: 0 0 40px rgba(34, 197, 94, 0.08);
+}
+
+.result-panel.gem-result .card-glass-glow {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(34, 197, 94, 0.04) 0%,
+    transparent 70%
+  );
+}
+
+.result-panel.popular-result {
+  border-color: rgba(59, 130, 246, 0.25);
+  box-shadow: 0 0 40px rgba(59, 130, 246, 0.08);
+}
+
+.result-panel.popular-result .card-glass-glow {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(59, 130, 246, 0.04) 0%,
+    transparent 70%
+  );
+}
+
+.result-panel.dizi-result {
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
+/* ----------------------------------------------------------
+   21. RESULT PLACEHOLDER
+   ---------------------------------------------------------- */
+.result-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.pulse-icon {
+  font-size: 4rem;
+  animation: placeholderPulse 2.5s ease-in-out infinite;
+}
+
+.result-placeholder h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+.result-placeholder p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+/* ----------------------------------------------------------
+   22. RESULT CONTENT
+   ---------------------------------------------------------- */
+.result-content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.result-content.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ----------------------------------------------------------
+   23. BADGE TAG
+   ---------------------------------------------------------- */
+.badge-tag {
+  display: inline-block;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.8rem;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.8rem;
+}
+
+.badge-tag.gem {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: var(--neon-green);
+}
+
+.badge-tag.popular {
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: var(--neon-blue);
+}
+
+/* ----------------------------------------------------------
+   24. RESULT TITLE
+   ---------------------------------------------------------- */
+.result-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--text-light), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ----------------------------------------------------------
+   25. META ROW
+   ---------------------------------------------------------- */
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.imdb-slash {
+  font-size: 0.75rem;
+  color: rgba(125, 211, 160, 0.4);
+}
+
+/* ----------------------------------------------------------
+   26. IMDb BAR
+   ---------------------------------------------------------- */
+.imdb-bar-wrapper {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  margin: 0.8rem 0;
+  overflow: hidden;
+}
+
+.imdb-bar {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 0 8px rgba(59, 130, 246, 0.4),
+    0 0 16px rgba(34, 197, 94, 0.2);
+}
+
+/* ----------------------------------------------------------
+   27. GENRE TAGS
+   ---------------------------------------------------------- */
+.genre-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.genre-tag {
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  border-radius: 100px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  transition: var(--transition-fast);
+}
+
+.genre-tag:hover {
+  border-color: rgba(34, 197, 94, 0.3);
+  color: var(--text-light);
+}
+
+/* ----------------------------------------------------------
+   28. DETAIL GRID
+   ---------------------------------------------------------- */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.8rem;
+  background: rgba(34, 197, 94, 0.04);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.detail-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: 'Outfit', sans-serif;
+}
+
+.detail-value {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------
+   29. SIMILAR TITLES
+   ---------------------------------------------------------- */
+.similar-box {
+  margin-bottom: 1.5rem;
+}
+
+.similar-box h4 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.6rem;
+}
+
+.similar-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.similar-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(59, 130, 246, 0.06);
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  border-radius: 100px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #93c5fd;
+  transition: var(--transition-fast);
+}
+
+.similar-tag::before {
+  content: '▸';
+  font-style: normal;
+  font-size: 0.65rem;
+  opacity: 0.6;
+}
+
+.similar-tag:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--text-light);
+}
+
+/* ----------------------------------------------------------
+   30. PLATFORMS
+   ---------------------------------------------------------- */
+.platform-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.platform-badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  border-radius: 100px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.7rem;
+  color: var(--text-light);
+  font-family: 'Outfit', sans-serif;
+  transition: var(--transition-fast);
+}
+
+.platform-badge:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* ----------------------------------------------------------
+   31. AGE RATING
+   ---------------------------------------------------------- */
+.age-badge {
+  display: inline-block;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  border-width: 2px;
+  border-style: solid;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.age-badge.age-18 {
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.4);
+  background: rgba(248, 113, 113, 0.1);
+}
+
+.age-badge.age-16 {
+  color: #fb923c;
+  border-color: rgba(251, 146, 60, 0.4);
+  background: rgba(251, 146, 60, 0.1);
+}
+
+.age-badge.age-13 {
+  color: var(--neon-teal);
+  border-color: rgba(20, 184, 166, 0.4);
+  background: rgba(20, 184, 166, 0.1);
+}
+
+.age-badge.age-7 {
+  color: var(--neon-green);
+  border-color: rgba(34, 197, 94, 0.4);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.age-badge.age-all {
+  color: var(--neon-green);
+  border-color: rgba(34, 197, 94, 0.4);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+/* ----------------------------------------------------------
+   32. TRIVIA BOX
+   ---------------------------------------------------------- */
+.trivia-box {
+  background: rgba(20, 184, 166, 0.04);
+  border-left: 3px solid var(--neon-teal);
+  border-radius: 0 10px 10px 0;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.trivia-box h4 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--neon-teal);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.trivia-box h4::before {
+  content: '💡 ';
+}
+
+.trivia-box p {
+  font-size: 0.85rem;
+  color: #99f6e4;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* ----------------------------------------------------------
+   33. FAVORITES HEART
+   ---------------------------------------------------------- */
+.fav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0.25rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+.fav-btn:hover {
+  transform: scale(1.2);
+}
+
+.fav-btn.active {
+  color: var(--neon-green);
+  text-shadow: 0 0 12px rgba(34, 197, 94, 0.6);
+  animation: heartBeat 1s ease-in-out;
+}
+
+/* ----------------------------------------------------------
+   34. DESCRIPTION & WHY-WATCH BOXES
+   ---------------------------------------------------------- */
+.description-box {
+  margin-bottom: 1rem;
+}
+
+.description-box p {
+  font-size: 0.9rem;
+  color: #a7f3d0;
+  line-height: 1.7;
+}
+
+.why-watch-box {
+  background: rgba(59, 130, 246, 0.04);
+  border-left: 3px solid var(--neon-blue);
+  border-radius: 0 10px 10px 0;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.why-watch-box h4 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--neon-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.why-watch-box p {
+  font-size: 0.85rem;
+  color: #93c5fd;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.dizi-result .why-watch-box {
+  border-left-color: var(--neon-green);
+}
+
+.dizi-result .why-watch-box h4 {
+  color: var(--neon-green);
+}
+
+.dizi-result .why-watch-box p {
+  color: #86efac;
+}
+
+/* ----------------------------------------------------------
+   35. ACTION BUTTONS
+   ---------------------------------------------------------- */
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.btn-action {
+  background: transparent;
+  border: 2px solid var(--neon-blue);
+  border-radius: 12px;
+  padding: 0.7rem 1rem;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--neon-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-align: center;
+}
+
+.btn-action:hover {
+  background: var(--neon-blue);
+  color: var(--text-dark);
+  box-shadow: var(--glow-blue);
+}
+
+.btn-action.secondary {
+  border-color: var(--neon-green);
+  color: var(--neon-green);
+}
+
+.btn-action.secondary:hover {
+  background: var(--neon-green);
+  color: var(--text-dark);
+  box-shadow: var(--glow-green);
+}
+
+.dizi-result .btn-action {
+  border-color: var(--neon-green);
+  color: var(--neon-green);
+}
+
+.dizi-result .btn-action:hover {
+  background: var(--neon-green);
+  color: var(--text-dark);
+  box-shadow: var(--glow-green);
+}
+
+.dizi-result .btn-action.secondary {
+  border-color: var(--neon-blue);
+  color: var(--neon-blue);
+}
+
+.dizi-result .btn-action.secondary:hover {
+  background: var(--neon-blue);
+  color: var(--text-dark);
+  box-shadow: var(--glow-blue);
+}
+
+/* ----------------------------------------------------------
+   36. FAVORITES PANEL
+   ---------------------------------------------------------- */
+.favorites-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  max-width: 90vw;
+  height: 100vh;
+  max-height: 100vh;
+  background: var(--machine-bg);
+  border-left: 2px solid var(--machine-border);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.favorites-panel.open {
+  transform: translateX(0);
+}
+
+.favorites-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1rem;
+  border-bottom: 1px solid var(--machine-border);
+}
+
+.favorites-panel-header h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--neon-green);
+}
+
+.favorites-panel-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: var(--transition-fast);
+}
+
+.favorites-panel-close:hover {
+  color: var(--text-light);
+}
+
+.fav-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.fav-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.fav-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.fav-list::-webkit-scrollbar-thumb {
+  background: rgba(34, 197, 94, 0.2);
+  border-radius: 4px;
+}
+
+.fav-list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: var(--transition-fast);
+}
+
+.fav-list-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.fav-title {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.fav-title:hover {
+  color: var(--neon-green);
+}
+
+.fav-remove-btn {
+  background: none;
+  border: none;
+  color: rgba(248, 113, 113, 0.5);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  transition: var(--transition-fast);
+}
+
+.fav-remove-btn:hover {
+  background: rgba(248, 113, 113, 0.1);
+  color: #f87171;
+}
+
+.fav-toggle-btn {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 999;
+  background: var(--machine-bg);
+  border: 2px solid var(--machine-border);
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+  padding: 0.6rem 0.5rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  color: var(--neon-green);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.fav-toggle-btn:hover {
+  background: rgba(34, 197, 94, 0.08);
+  box-shadow: -4px 0 12px rgba(34, 197, 94, 0.1);
+}
+
+.fav-empty-msg {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ----------------------------------------------------------
+   37. FOOTER
+   ---------------------------------------------------------- */
+.app-footer {
+  text-align: center;
+  padding: 2rem 0 1rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.app-footer strong {
+  color: var(--neon-teal);
+  font-weight: 700;
+}
+
+.app-footer a {
+  color: var(--neon-teal);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+.app-footer a:hover {
+  color: var(--text-light);
+  text-shadow: 0 0 8px rgba(20, 184, 166, 0.4);
+}
+
+/* ----------------------------------------------------------
+   38. UTILITY CLASSES
+   ---------------------------------------------------------- */
+.hidden {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ----------------------------------------------------------
+   39. ANIMATIONS / KEYFRAMES
+   ---------------------------------------------------------- */
+
+/* Neon Blink — subtle pulsing for .highlight */
+@keyframes neonBlink {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.2);
+  }
+  50% {
+    opacity: 0.85;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.3), 0 0 20px rgba(168, 85, 247, 0.1);
+  }
+}
+
+/* Capsule Float — gentle bobbing */
+@keyframes capsuleFloat {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Capsule Fall — bouncy dispense */
+@keyframes capsuleFallEffect {
+  0% {
+    bottom: -60px;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.5);
+  }
+  30% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.1);
+  }
+  50% {
+    bottom: 20px;
+    transform: translateX(-50%) scale(0.95);
+  }
+  70% {
+    bottom: 10px;
+    transform: translateX(-50%) scale(1.05);
+  }
+  85% {
+    bottom: 14px;
+    transform: translateX(-50%) scale(0.98);
+  }
+  100% {
+    bottom: 12px;
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* Capsule Glow Pulse — breathing glow after dispensed */
+@keyframes capsuleGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(34, 197, 94, 0.7), 0 0 40px rgba(34, 197, 94, 0.3);
+    filter: brightness(1.15);
+  }
+}
+
+/* Lever Pull — quick pull & return */
+@keyframes leverPullEffect {
+  0% {
+    transform: rotate(0deg);
+  }
+  40% {
+    transform: rotate(25deg);
+  }
+  60% {
+    transform: rotate(25deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Screen Pulse — CRT-like breathing */
+@keyframes screenPulse {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(34, 197, 94, 0.7), 0 0 20px rgba(34, 197, 94, 0.3);
+  }
+  50% {
+    opacity: 0.9;
+    text-shadow: 0 0 6px rgba(34, 197, 94, 0.5), 0 0 14px rgba(34, 197, 94, 0.2);
+  }
+}
+
+/* Placeholder Pulse — icon pulsing */
+@keyframes placeholderPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* Heart Beat — for active favorites */
+@keyframes heartBeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.2);
+  }
+}
+
+/* ----------------------------------------------------------
+   40. RESPONSIVE — max-width 600px
+   ---------------------------------------------------------- */
+@media (max-width: 600px) {
+  .app-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .logo-text {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  .header-controls {
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .counter-badge, .level-badge {
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .btn-header {
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .machine-wrapper {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+
+  .result-panel {
+    padding: 1.2rem;
+    min-height: auto;
+    border-radius: 18px;
+  }
+
+  .result-title {
+    font-size: 1.4rem;
+  }
+
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .interaction-zone {
+    padding: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .coin-slot {
+    width: 56px;
+    height: 56px;
+  }
+
+  .btn-coin {
+    font-size: 0.65rem;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .lever-base {
+    height: 50px;
+  }
+
+  .lever-handle {
+    width: 24px;
+    height: 24px;
+  }
+
+  .machine-control-panel {
+    padding: 1rem;
+  }
+
+  .toggle-buttons.three-cols {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.35rem;
+  }
+
+  .btn-toggle {
+    padding: 0.45rem 0.3rem;
+    font-size: 0.6rem;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .meta-row {
+    gap: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .favorites-panel {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .shortcuts-hint {
+    display: none !important;
+  }
+
+  .counter-badge {
+    padding: 0.3rem 0.9rem;
+  }
+
+  .machine-glass-compartment {
+    height: 140px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 380px) {
+  .logo-text {
+    font-size: 1.4rem;
+  }
+
+  .result-title {
+    font-size: 1.2rem;
+  }
+
+  .toggle-buttons.three-cols {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mood-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===== HEADER CONTROLS & NEW BUTTONS ===== */
+.header-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-header {
+  font-family: 'Orbitron', sans-serif;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-header:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--neon-blue);
+  color: var(--neon-blue);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+}
+
+.btn-header.accent {
+  border-color: rgba(168, 85, 247, 0.3);
+  color: var(--neon-purple);
+}
+
+.btn-header.accent:hover {
+  border-color: var(--neon-purple);
+  background: rgba(168, 85, 247, 0.06);
+  box-shadow: var(--glow-purple);
+  color: var(--text-light);
+}
+
+.btn-header.muted {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.btn-header.muted:hover {
+  color: var(--text-light);
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+}
+
+/* ===== LEVEL BADGE ===== */
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(168, 85, 247, 0.05);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.05);
+  transition: var(--transition-fast);
+}
+
+.level-badge:hover {
+  border-color: var(--neon-purple);
+  box-shadow: var(--glow-purple);
+  background: rgba(168, 85, 247, 0.1);
+}
+
+.level-label {
+  font-size: 0.65rem;
+  font-family: 'Orbitron', sans-serif;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.level-value {
+  font-size: 0.8rem;
+  font-family: 'Orbitron', sans-serif;
+  color: var(--neon-purple);
+  font-weight: 900;
+  text-shadow: 0 0 4px rgba(168, 85, 247, 0.4);
+}
+
+/* ===== HISTORY BOX ===== */
+.history-box {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.history-box h4 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.history-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.history-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-light);
+  background: rgba(168, 85, 247, 0.06);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  transition: var(--transition-fast);
+}
+
+.history-tag:hover {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.3);
+  color: var(--text-light);
+  transform: translateY(-1px);
+}
+
+.history-empty {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+
+</style>
+</head>
+<body>
+    <canvas id="confettiCanvas"></canvas>
+    <div class="stars-background"></div>
+    <div class="app-container">
+
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="logo-text">CINE<span class="highlight">MATIC</span></h1>
+            <p class="subtitle">Duygu Durumunuza Göre Film & Dizi Otomatı</p>
+            <div class="header-controls">
+                <div class="counter-badge">
+                    <span class="counter-label">Toplam Öneri</span>
+                    <span class="counter-value" id="dispensedCounter">0</span>
+                </div>
+                <div class="level-badge" id="levelBadge">
+                    <span class="level-label">RÜTBE</span>
+                    <span class="level-value" id="levelValue">SİNEMA ÇAYLAĞI 🔰</span>
+                </div>
+                <button class="btn-header" id="btnMute" title="Sesi Aç/Kapat">🔊 Sesi Kapat</button>
+                <button class="btn-header accent" id="btnDailyPick" title="Rastgele Yüksek Puanlı Film/Dizi Önerisi">🌟 Günün Önerisi</button>
+            </div>
+        </header>
+
+        <main class="machine-wrapper">
+
+            <!-- ===== VENDING MACHINE ===== -->
+            <section class="vending-machine" id="vendingMachine">
+                <div class="machine-glass-compartment">
+                    <div class="glass-reflection"></div>
+                    <div class="shelves">
+                        <div class="shelf">
+                            <div class="capsule blue"></div>
+                            <div class="capsule green"></div>
+                            <div class="capsule purple"></div>
+                            <div class="capsule lime"></div>
+                        </div>
+                        <div class="shelf">
+                            <div class="capsule purple"></div>
+                            <div class="capsule blue"></div>
+                            <div class="capsule lime"></div>
+                            <div class="capsule green"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="machine-control-panel">
+                    <div class="led-display" id="mainDisplay">
+                        <div class="display-grid"></div>
+                        <div class="display-text" id="displayText">LÜTFEN JETON ATIN</div>
+                    </div>
+
+                    <div class="controls-grid">
+                        <!-- Step 1: Type -->
+                        <div class="control-group">
+                            <span class="group-label">1. TÜR SEÇİMİ</span>
+                            <div class="toggle-buttons">
+                                <button type="button" class="btn-toggle active" id="btnTypeFilm">🎬 FİLM</button>
+                                <button type="button" class="btn-toggle" id="btnTypeDizi">📺 DİZİ</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Pool -->
+                        <div class="control-group">
+                            <span class="group-label">2. HAVUZ SEÇİMİ</span>
+                            <div class="toggle-buttons three-cols">
+                                <button type="button" class="btn-toggle active" id="btnPoolAll">TÜMÜ</button>
+                                <button type="button" class="btn-toggle" id="btnPoolPopular">🔥 POPÜLER</button>
+                                <button type="button" class="btn-toggle" id="btnPoolGems">💎 CEVHER</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Origin (NEW!) -->
+                        <div class="control-group">
+                            <span class="group-label">3. YAPIM KÖKENİ <small>(opsiyonel)</small></span>
+                            <div class="toggle-buttons three-cols">
+                                <button type="button" class="btn-toggle active" id="btnOriginAll">TÜMÜ</button>
+                                <button type="button" class="btn-toggle" id="btnOriginYerli">YERLİ 🇹🇷</button>
+                                <button type="button" class="btn-toggle" id="btnOriginYabanci">YABANCI 🌍</button>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Category -->
+                        <div class="control-group full-width">
+                            <span class="group-label">4. KATEGORİ</span>
+                            <div class="category-pills" id="categoryContainer"></div>
+                        </div>
+
+                        <!-- Step 5: MOOD SELECTOR (NEW!) -->
+                        <div class="control-group full-width mood-selector-group">
+                            <span class="group-label">5. DUYGU DURUMUNUZ <small>(opsiyonel)</small></span>
+                            <div class="mood-grid" id="moodGrid">
+                                <button type="button" class="mood-btn" data-mood="Neşeli"><span class="mood-emoji">😄</span><span class="mood-label">Neşeli</span></button>
+                                <button type="button" class="mood-btn" data-mood="Hüzünlü"><span class="mood-emoji">😢</span><span class="mood-label">Hüzünlü</span></button>
+                                <button type="button" class="mood-btn" data-mood="Adrenalin"><span class="mood-emoji">🔥</span><span class="mood-label">Adrenalin</span></button>
+                                <button type="button" class="mood-btn" data-mood="Düşünceli"><span class="mood-emoji">🤔</span><span class="mood-label">Düşünceli</span></button>
+                                <button type="button" class="mood-btn" data-mood="Romantik"><span class="mood-emoji">💕</span><span class="mood-label">Romantik</span></button>
+                                <button type="button" class="mood-btn" data-mood="Gerilimli"><span class="mood-emoji">😱</span><span class="mood-label">Gerilimli</span></button>
+                                <button type="button" class="mood-btn" data-mood="Nostaljik"><span class="mood-emoji">🌙</span><span class="mood-label">Nostaljik</span></button>
+                                <button type="button" class="mood-btn" data-mood="Rahat"><span class="mood-emoji">😌</span><span class="mood-label">Rahat</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coin & Lever -->
+                    <div class="interaction-zone">
+                        <div class="coin-slot-wrapper">
+                            <div class="coin-slot" id="coinSlot">
+                                <div class="slot-opening"></div>
+                                <span class="slot-text">JETON (1₺)</span>
+                            </div>
+                            <button class="btn-coin" id="btnInsertCoin">JETON AT</button>
+                        </div>
+                        <div class="lever-wrapper">
+                            <div class="lever-base">
+                                <div class="lever-arm" id="leverArm">
+                                    <div class="lever-handle"></div>
+                                </div>
+                            </div>
+                            <span class="lever-label">KOLU ÇEK</span>
+                        </div>
+                    </div>
+                    <div class="shortcuts-hint">
+                        <span><kbd>Space</kbd> Jeton At</span>
+                        <span><kbd>Enter</kbd> Kolu Çek</span>
+                    </div>
+                </div>
+
+                <!-- Dispense Tray -->
+                <div class="machine-bottom">
+                    <div class="dispense-tray" id="dispenseTray">
+                        <div class="tray-door" id="trayDoor"></div>
+                        <div class="dispensed-capsule" id="dispensedCapsule"><div class="capsule-light"></div></div>
+                    </div>
+                    <div class="tray-label">ÜRÜN ALMA BÖLMESİ</div>
+                </div>
+            </section>
+
+            <!-- ===== RESULT DETAIL PANEL ===== -->
+            <section class="result-panel" id="resultPanel">
+                <div class="card-glass-glow"></div>
+
+                <div class="result-placeholder" id="resultPlaceholder">
+                    <div class="pulse-icon">🎬</div>
+                    <h3>Otomatı Çalıştırın</h3>
+                    <p>Türünü ve duygu durumunuzu seçin, jeton atın ve kolu çekerek sürprizinizi keşfedin!</p>
+                </div>
+
+                <div class="result-content hidden" id="resultContent">
+                    <!-- Top Row: Badge + Fav + Age -->
+                    <div class="result-top-row">
+                        <span class="badge-tag" id="resultBadge">SAKLI CEVHER</span>
+                        <span class="age-badge" id="resultAge">13+</span>
+                        <button class="fav-btn" id="btnFavorite" title="Favorilere ekle">🤍</button>
+                    </div>
+
+                    <h2 class="result-title" id="resultTitle">Film Adı</h2>
+
+                    <div class="meta-row">
+                        <div class="meta-item"><span class="meta-icon">⭐</span> <strong>IMDb:</strong> <strong id="resultImdb">8.5</strong><span class="imdb-slash">/10</span></div>
+                        <div class="meta-item"><span class="meta-icon">📅</span> <span id="resultYear">2023</span></div>
+                        <div class="meta-item"><span class="meta-icon">⏱️</span> <span id="resultDuration">120 dk</span></div>
+                        <div class="meta-item"><span class="meta-icon">🌍</span> <span id="resultCountry">ABD</span></div>
+                    </div>
+
+                    <div class="imdb-bar-wrapper"><div class="imdb-bar" id="imdbBar" style="width:0%"></div></div>
+
+                    <div class="genre-tags" id="resultGenres"></div>
+
+                    <!-- Director & Cast -->
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span class="detail-label">🎬 Yönetmen / Yaratıcı</span>
+                            <span class="detail-value" id="resultDirector">—</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">🎭 Başrol Oyuncuları</span>
+                            <span class="detail-value" id="resultCast">—</span>
+                        </div>
+                    </div>
+
+                    <!-- Platforms -->
+                    <div class="platform-row" id="resultPlatforms"></div>
+
+                    <!-- Synopsis -->
+                    <div class="description-box">
+                        <h4>📖 Özet</h4>
+                        <p id="resultDescription"></p>
+                    </div>
+
+                    <!-- Why Watch -->
+                    <div class="why-watch-box">
+                        <h4>🎯 Neden İzlemelisiniz?</h4>
+                        <p id="resultWhyWatch"></p>
+                    </div>
+
+                    <!-- Trivia -->
+                    <div class="trivia-box">
+                        <h4>💡 İlginç Bilgi</h4>
+                        <p id="resultTrivia"></p>
+                    </div>
+
+                    <!-- Similar Titles -->
+                    <div class="similar-box">
+                        <h4>🔗 Buna Benzeyenler</h4>
+                        <div class="similar-tags" id="resultSimilar"></div>
+                    </div>
+
+                    <!-- History Box (NEW!) -->
+                    <div class="history-box" id="historyBox">
+                        <h4>🕒 Son Çevrilenler</h4>
+                        <div class="history-tags" id="historyTags">
+                            <span class="history-empty">Geçmiş henüz boş.</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="btn-action primary" id="btnWatchTrailer"><span class="btn-icon">▶</span> Fragmanı Ara</button>
+                        <button class="btn-action secondary" id="btnSpinAgain"><span class="btn-icon">🔄</span> Tekrar Çevir</button>
+                    </div>
+                    <button class="btn-action" id="btnShare" style="margin-top: 0.8rem; border-color: var(--neon-teal); color: var(--neon-teal); width: 100%;"><span class="btn-icon">🔗</span> Öneriyi Arkadaşlarınla Paylaş</button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Favorites Panel (Slide-in) -->
+        <aside class="favorites-panel" id="favoritesPanel">
+            <div class="fav-panel-header">
+                <h3>❤️ Favorilerim</h3>
+                <button class="fav-close-btn" id="btnCloseFav">✕</button>
+            </div>
+            <div class="fav-list" id="favList">
+                <p class="fav-empty">Henüz favori eklemediniz.</p>
+            </div>
+        </aside>
+        <button class="fav-toggle-btn" id="btnToggleFav">❤️ <span id="favCountBadge">0</span></button>
+
+        <footer class="app-footer">
+            <p>&copy; 2026 CineMatic • Yapay zeka ile sevgiyle tasarlanmıştır • <strong id="dbCountDisplay"></strong></p>
+        </footer>
+    </div>
+
+    <script>
+// =====================================
+const filmDatabase = [
+    // ===== AKSİYON & MACERA =====
+    {id:"f1",title:"Mad Max: Fury Road",imdb:8.1,year:2015,duration:"120 dk",pool:"popular",genres:["Aksiyon & Macera"],moods:["Adrenalin"],director:"George Miller",cast:"Tom Hardy, Charlize Theron",country:"Avustralya",description:"Çöl haline gelmiş dünyada tiran Immortan Joe'dan kaçan savaşçı Furiosa ve tutsak Max'in sonsuz çöl kovalamacası.",whyWatch:"Neredeyse hiç CGI kullanmadan gerçek araçlarla çekilmiş, 21. yüzyılın en iyi aksiyon filmi.",similar:["John Wick","Edge of Tomorrow"],ageRating:"16+",platforms:["Netflix","Amazon Prime"],trivia:"Filmin %80'i pratik efektlerle çekildi; 150'den fazla gerçek araç kullanıldı."},
+    {id:"f2",title:"The Raid: Redemption",imdb:7.6,year:2011,duration:"101 dk",pool:"gem",genres:["Aksiyon & Macera"],moods:["Adrenalin"],director:"Gareth Evans",cast:"Iko Uwais, Joe Taslim",country:"Endonezya",description:"Uyuşturucu baronunun 30 katlı binasına baskın yapan polis timi tuzağa düşer ve her katı dövüşerek çıkmak zorunda kalır.",whyWatch:"Endonezya dövüş sanatı Pencak Silat'ı dünyaya tanıtan, koreografi harikası bir aksiyon filmi.",similar:["John Wick","Ong-Bak"],ageRating:"18+",platforms:["Amazon Prime"],trivia:"Filmin bütçesi sadece 1.1 milyon dolardı ama 9.1 milyon dolar hasılat yaptı."},
+    {id:"f3",title:"Baby Driver",imdb:7.6,year:2017,duration:"113 dk",pool:"gem",genres:["Aksiyon & Macera","Komedi"],moods:["Adrenalin","Neşeli"],director:"Edgar Wright",cast:"Ansel Elgort, Lily James",country:"ABD",description:"Kulağındaki çınlamayı müzikle bastıran genç kaçış şoförü Baby, son soygundan sonra suç dünyasından kurtulmaya çalışır.",whyWatch:"Her araba kovalamacası müzikle senkronize edilmiş, görsel bir müzik videosu gibi akan eşsiz bir deneyim.",similar:["Drive","The Nice Guys"],ageRating:"16+",platforms:["Netflix"],trivia:"Edgar Wright senaryoyu 1995'te yazdı ama filmi çekmek için 20 yıl bekledi."},
+    {id:"f4",title:"Edge of Tomorrow",imdb:7.9,year:2014,duration:"113 dk",pool:"gem",genres:["Aksiyon & Macera","Bilim Kurgu & Fantastik"],moods:["Adrenalin","Neşeli"],director:"Doug Liman",cast:"Tom Cruise, Emily Blunt",country:"ABD",description:"Uzaylılarla savaşta her öldüğünde aynı günü yaşayan asker, efsanevi bir savaşçıyla döngüyü kırmaya çalışır.",whyWatch:"Zaman döngüsü konseptini aksiyon ile mükemmel harmanlayan, hafife alınmış bir bilim kurgu klasiği.",similar:["Groundhog Day","Inception"],ageRating:"13+",platforms:["Netflix","HBO Max"],trivia:"Tom Cruise zırhıyla 60 pound (27 kg) ekstra ağırlık taşıdı ve bu yüzden sette defalarca düştü."},
+    {id:"f5",title:"Kill Bill: Vol. 1",imdb:8.2,year:2003,duration:"111 dk",pool:"popular",genres:["Aksiyon & Macera"],moods:["Adrenalin"],director:"Quentin Tarantino",cast:"Uma Thurman, Lucy Liu",country:"ABD",description:"Düğünde öldürülmeye çalışılan eski suikastçı Gelin, komadan uyandıktan sonra intikam listesini avlamaya başlar.",whyWatch:"Tarantino'nun Uzak Doğu sineması, samuray filmleri ve spaghetti western aşkını birleştirdiği kült intikam destanı.",similar:["Oldboy","The Raid"],ageRating:"18+",platforms:["Amazon Prime"],trivia:"Crazy 88 dövüş sahnesinin çekimi 8 hafta sürdü."},
+    {id:"f6",title:"John Wick",imdb:7.4,year:2014,duration:"101 dk",pool:"popular",genres:["Aksiyon & Macera"],moods:["Adrenalin"],director:"Chad Stahelski",cast:"Keanu Reeves, Michael Nyqvist",country:"ABD",description:"Emekli efsanevi tetikçi, ölen eşinin hatırası olan köpeğini öldüren mafya oğlunun peşine düşerek yeraltını ateşe verir.",whyWatch:"Modern aksiyon sinemasının kurallarını yeniden yazan, silah dövüşü koreografisinde çığır açan franchise başlangıcı.",similar:["The Raid","Nobody"],ageRating:"18+",platforms:["Netflix","Amazon Prime"],trivia:"Keanu Reeves film için 3 ay boyunca günde 8 saat silah ve dövüş eğitimi aldı."},
+    {id:"f7",title:"The Dark Knight",imdb:9.0,year:2008,duration:"152 dk",pool:"popular",genres:["Aksiyon & Macera","Gerilim & Gizem","Polisiye & Suç"],moods:["Adrenalin","Düşünceli"],director:"Christopher Nolan",cast:"Christian Bale, Heath Ledger",country:"ABD / İngiltere",description:"Gotham'ın yeni umut ışığı Batman, kaosun somutlaşmış hali Joker ile düzenin ve anarşinin büyük savaşında yüzleşir.",whyWatch:"Heath Ledger'ın ölümünden sonra Oscar kazanan efsanevi Joker performansıyla süper kahraman türünü aşan bir suç destanı.",similar:["Se7en","Inception"],ageRating:"13+",platforms:["Netflix","HBO Max"],trivia:"Heath Ledger Joker rolüne hazırlanmak için bir otelde 6 hafta boyunca kendini izole etti ve bir günlük tuttu."},
+    {id:"f8",title:"Gladiator",imdb:8.5,year:2000,duration:"155 dk",pool:"popular",genres:["Aksiyon & Macera","Dram"],moods:["Adrenalin","Hüzünlü"],director:"Ridley Scott",cast:"Russell Crowe, Joaquin Phoenix",country:"ABD / İngiltere",description:"İmparator tarafından ailesini kaybeden ve köle olarak satılan Roma generali Maximus, gladyatör olarak Colosseum'da intikamını arar.",whyWatch:"Russell Crowe'un Oscar ödüllü performansı ve Hans Zimmer'ın müthiş müzikleriyle modern epik türün taçsız kralı.",similar:["Braveheart","Troy"],ageRating:"16+",platforms:["Amazon Prime"],trivia:"Colosseum sahnelerinin büyük kısmı Malta'daki Fort Ricasoli'de inşa edilen 16 metrelik bir sette çekildi."},
+ 
+    // ===== BİLİM KURGU =====
+    {id:"f9",title:"Interstellar",imdb:8.7,year:2014,duration:"169 dk",pool:"popular",genres:["Bilim Kurgu & Fantastik","Dram"],moods:["Düşünceli","Hüzünlü"],director:"Christopher Nolan",cast:"Matthew McConaughey, Anne Hathaway",country:"ABD / İngiltere",description:"Yaşanılamaz hale gelen Dünya'dan insanlığın yeni yurdunu bulmak için uzayın derinliklerine yolculuk eden bir baba pilotun hikayesi.",whyWatch:"Fizikçi Kip Thorne danışmanlığında bilimsel doğruluğa sadık, Hans Zimmer müzikleri ve yıkıcı baba-kız dramasıyla modern uzay destanı.",similar:["Arrival","The Martian"],ageRating:"13+",platforms:["Amazon Prime"],trivia:"Filmde gösterilen kara delik görselleştirmesi o kadar doğruydu ki bilim insanları bunu akademik makalede yayınladı."},
+    {id:"f10",title:"Inception",imdb:8.8,year:2010,duration:"148 dk",pool:"popular",genres:["Bilim Kurgu & Fantastik","Aksiyon & Macera"],moods:["Adrenalin","Düşünceli"],director:"Christopher Nolan",cast:"Leonardo DiCaprio, Tom Hardy",country:"ABD / İngiltere",description:"Rüya içinde rüya tekniğiyle bilinçaltından bilgi çalan Cobb'a, bu kez bir fikir yerleştirme görevi verilir.",whyWatch:"Katmanlı rüya mimarisi, yer çekimsiz dövüş sahneleri ve efsanevi topaç finaliyle sinema tarihinin en popüler bilim kurgusu.",similar:["The Matrix","Tenet"],ageRating:"13+",platforms:["Netflix","HBO Max"],trivia:"Dönen otel koridoru sahnesi için 30 metrelik dönen bir set inşa edildi."},
+    {id:"f11",title:"Arrival (Geliş)",imdb:7.9,year:2016,duration:"116 dk",pool:"gem",genres:["Bilim Kurgu & Fantastik","Dram"],moods:["Düşünceli","Hüzünlü"],director:"Denis Villeneuve",cast:"Amy Adams, Jeremy Renner",country:"ABD",description:"Dünya'ya inen gizemli uzay gemileriyle iletişim kurmak için görevlendirilen dilbilimci, uzaylıların dilini çözdükçe zaman algısı değişir.",whyWatch:"Uzaylı istilasını silah yerine dil ve iletişim üzerinden işleyen, tekrar izlemek isteyeceğiniz derin bir bilim kurgu.",similar:["Interstellar","Ex Machina"],ageRating:"13+",platforms:["Amazon Prime","MUBI"],trivia:"Amy Adams, dilbilimci rolüne hazırlanmak için gerçek dilbilim profesörleriyle çalıştı."},
+    {id:"f12",title:"Ex Machina",imdb:7.7,year:2014,duration:"108 dk",pool:"gem",genres:["Bilim Kurgu & Fantastik","Gerilim & Gizem"],moods:["Düşünceli","Gerilimli"],director:"Alex Garland",cast:"Domhnall Gleeson, Alicia Vikander, Oscar Isaac",country:"İngiltere",description:"Bir teknoloji CEO'sunun dağ evine davet edilen genç programcı, dünyanın ilk gerçek yapay zekası üzerinde Turing testi yapar.",whyWatch:"Yapay bilinç, manipülasyon ve insanlığın geleceğini üç oyuncunun performansıyla klostrofobik gerilimde sorgulayan minimalist şaheser.",similar:["Her","Blade Runner 2049"],ageRating:"16+",platforms:["Netflix"],trivia:"Alicia Vikander'ın Ava olarak yüz ifadeleri tamamen doğaldı; VFX ekibi sadece vücudunu robot olarak işledi."},
+    {id:"f13",title:"Blade Runner 2049",imdb:8.0,year:2017,duration:"164 dk",pool:"popular",genres:["Bilim Kurgu & Fantastik","Dram"],moods:["Düşünceli","Nostaljik"],director:"Denis Villeneuve",cast:"Ryan Gosling, Harrison Ford",country:"ABD / İngiltere",description:"LAPD replikant avcısı K, rutin görevde insanlık ile replikant barışını sarsacak bir sır keşfeder.",whyWatch:"Roger Deakins'in Oscar ödüllü sinematografisi ve orijinal filmin DNA'sına sadık kalarak onu aşan nadir devam filmlerinden biri.",similar:["Ex Machina","Ghost in the Shell"],ageRating:"16+",platforms:["Amazon Prime","HBO Max"],trivia:"Roger Deakins bu film için 14. Oscar adaylığını aldı ve ilk Oscar'ını kazandı."},
+    {id:"f14",title:"Coherence",imdb:7.2,year:2013,duration:"89 dk",pool:"gem",genres:["Bilim Kurgu & Fantastik","Gerilim & Gizem"],moods:["Düşünceli","Gerilimli"],director:"James Ward Byrkit",cast:"Emily Foxler, Maury Sterling",country:"ABD",description:"Kuyruklu yıldızın geçtiği gece toplanan 8 arkadaş, kendilerini paralel gerçeklikler sarmalında bulur.",whyWatch:"Doğaçlama diyaloglarla ve çok düşük bütçeyle çekilmiş, en zihin açıcı paralel evren filmlerinden biri.",similar:["Primer","Predestination"],ageRating:"13+",platforms:["Amazon Prime"],trivia:"Oyunculara senaryo verilmedi; yönetmen her gece kartlara yazarak sahneleri yönlendirdi."},
+    {id:"f15",title:"The Man from Earth",imdb:7.9,year:2007,duration:"87 dk",pool:"gem",genres:["Bilim Kurgu & Fantastik","Dram"],moods:["Düşünceli","Rahat"],director:"Richard Schenkman",cast:"David Lee Smith, Tony Todd",country:"ABD",description:"Üniversiteden ayrılan tarih profesörü, arkadaşlarına 14.000 yıldır yaşayan bir Cro-Magnon insanı olduğunu açıklar.",whyWatch:"Tek bir odada geçen diyaloglarla felsefi soruları sorgulatıp ekrana kilitleyen eşsiz bir minimalist bilim kurgu.",similar:["12 Angry Men","Coherence"],ageRating:"7+",platforms:["Amazon Prime","MUBI"],trivia:"Film tamamen bir evde 5 günde çekildi ve yapım maliyeti 200.000 dolardı."},
+    {id:"f16",title:"Moon (Ay)",imdb:7.8,year:2009,duration:"97 dk",pool:"gem",genres:["Bilim Kurgu & Fantastik","Dram"],moods:["Düşünceli","Hüzünlü"],director:"Duncan Jones",cast:"Sam Rockwell, Kevin Spacey (ses)",country:"İngiltere",description:"Ay'daki madencilik üssünde 3 yıllık sözleşmesinin sonunu bekleyen Sam Bell, bir kazadan sonra kimliğini sorgulamaya başlar.",whyWatch:"Sam Rockwell'ın tek başına taşıdığı, 70'lerin yavaş tempolu bilim kurgu klasikleri tarzında mükemmel bir film.",similar:["Ex Machina","Arrival"],ageRating:"13+",platforms:["MUBI"],trivia:"Film David Bowie'nin oğlu Duncan Jones'un yönetmenlik debüsüdür."},
+    {id:"f17",title:"Her (Aşk)",imdb:8.0,year:2013,duration:"126 dk",pool:"gem",genres:["Bilim Kurgu & Fantastik","Dram","Romantik"],moods:["Romantik","Düşünceli","Hüzünlü"],director:"Spike Jonze",cast:"Joaquin Phoenix, Scarlett Johansson (ses)",country:"ABD",description:"Yalnız bir yazar, yapay zeka işletim sistemi Samantha'ya aşık olur ve dijital bir aşkın sınırlarıyla yüzleşir.",whyWatch:"Yapay zekayla aşk kavramını en insancıl ve en güzel şekilde sorgulayan, görsel paleti ve müzikleriyle büyüleyen bir başyapıt.",similar:["Eternal Sunshine","Ex Machina"],ageRating:"13+",platforms:["Netflix"],trivia:"Samantha'nın sesini ilk Samantha Morton seslendirdi; post-prodüksiyonda Scarlett Johansson ile değiştirildi."},
+    {id:"f18",title:"The Martian (Marslı)",imdb:8.0,year:2015,duration:"144 dk",pool:"popular",genres:["Bilim Kurgu & Fantastik","Aksiyon & Macera"],moods:["Neşeli","Adrenalin"],director:"Ridley Scott",cast:"Matt Damon, Jessica Chastain",country:"ABD",description:"Mars'ta fırtınada ekibinden kopan astronot Mark Watney, sınırlı kaynaklarla kızıl gezegende hayatta kalmaya çalışır.",whyWatch:"Bilimi eğlenceli ve anlaşılır kılarak hayatta kalma hikayesini neşeli bir maceraya çeviren, insanın zekasını kutlayan pozitif bir film.",similar:["Interstellar","Gravity"],ageRating:"13+",platforms:["Disney+","Amazon Prime"],trivia:"NASA, filmin bilimsel doğruluğunu onayladı ve Mars toprak mekaniği konusunda danışmanlık verdi."},
+    {id:"f19",title:"Predestination",imdb:7.4,year:2014,duration:"97 dk",pool:"gem",genres:["Bilim Kurgu & Fantastik","Gerilim & Gizem"],moods:["Düşünceli","Gerilimli"],director:"Spierig Brothers",cast:"Ethan Hawke, Sarah Snook",country:"Avustralya",description:"Zamansal ajanın son görevinde döngüsel bir paradoksun içine düşmesini anlatır.",whyWatch:"Zaman yolculuğu paradokslarını mantıksal sınırlarına kadar zorlayan, bittiğinde uzun süre düşündüren yapım.",similar:["Primer","Coherence"],ageRating:"16+",platforms:["Amazon Prime"],trivia:"Sarah Snook rolü için hem erkek hem kadın fiziğine bürünmek adına 6 ay boyunca özel hazırlandı."},
+    {id:"f20",title:"Annihilation",imdb:6.8,year:2018,duration:"115 dk",pool:"gem",genres:["Bilim Kurgu & Fantastik","Korku"],moods:["Gerilimli","Düşünceli"],director:"Alex Garland",cast:"Natalie Portman, Jennifer Jason Leigh",country:"ABD",description:"Dünya'ya düşen meteorun etrafında genişleyen gizemli 'Parıltı' bölgesine kadın bilim insanları keşif düzenler.",whyWatch:"Kozmik korkuyu bilimsel çerçeveye oturtan, hipnotize edici ve son sahnesiyle beyni eriten cesur bir bilim kurgu.",similar:["Stalker","Ex Machina"],ageRating:"16+",platforms:["Netflix","Amazon Prime"],trivia:"Yönetmen Alex Garland kaynak romanı bir kez okudu ve bilerek tekrar okumadan senaryoyu yazdı."},
+    {id:"f21",title:"District 9",imdb:7.9,year:2009,duration:"112 dk",pool:"gem",genres:["Bilim Kurgu & Fantastik","Aksiyon & Macera"],moods:["Düşünceli","Adrenalin"],director:"Neill Blomkamp",cast:"Sharlto Copley",country:"Güney Afrika",description:"Johannesburg'a inen uzaylılar 20 yıl boyunca gettolaştırılır; tahliye operasyonuyla görevlendirilen bürokrat Wikus DNA'sı değişmeye başlayınca her şey altüst olur.",whyWatch:"Apartheid'ı bilim kurgu metaforuyla eleştiren, sahte belgesel tarzıyla çekilmiş son derece özgün ve sarsıcı bir film.",similar:["Arrival","Elysium"],ageRating:"16+",platforms:["Amazon Prime"],trivia:"Filmin bütçesi 30 milyon dolardı ama 210 milyon dolar hasılat yaptı ve 4 Oscar'a aday gösterildi."},
+ 
+    // ===== DRAM =====
+    {id:"f22",title:"Whiplash",imdb:8.5,year:2014,duration:"107 dk",pool:"popular",genres:["Dram"],moods:["Adrenalin","Düşünceli"],director:"Damien Chazelle",cast:"Miles Teller, J.K. Simmons",country:"ABD",description:"Konservatuara giren genç davulcu, acımasız caz hocası Fletcher'ın orkestrasında sınırlarını aşmaya zorlanır.",whyWatch:"J.K. Simmons'ın Oscar ödüllü nefes kesici performansıyla müziği gladyatör savaşına çeviren bir başyapıt.",similar:["Black Swan","The Pianist"],ageRating:"13+",platforms:["Netflix","Amazon Prime"],trivia:"Miles Teller sahneler için o kadar çok davul çaldı ki elleri kanla kaplandı; bazı sahnelerde kan gerçek."},
+    {id:"f23",title:"Parasite (Parazit)",imdb:8.5,year:2019,duration:"132 dk",pool:"popular",genres:["Dram","Gerilim & Gizem","Komedi"],moods:["Düşünceli","Gerilimli"],director:"Bong Joon-ho",cast:"Song Kang-ho, Choi Woo-shik",country:"Güney Kore",description:"Yoksul Kim ailesi, zengin Park ailesine sızarak hizmetine girer; ama düzen beklenmedik şekilde çözülür.",whyWatch:"Sınıf eşitsizliğini kara mizah ve gerilimle harmanlayan, Oscar'da En İyi Film kazanan ilk yabancı dil filmi.",similar:["Snowpiercer","Oldboy"],ageRating:"16+",platforms:["Amazon Prime"],trivia:"Yönetmen Bong Joon-ho, Kim ailesinin bodrum katı evini tamamen sıfırdan bir sette inşa ettirdi."},
+    {id:"f24",title:"The Shawshank Redemption",imdb:9.3,year:1994,duration:"142 dk",pool:"popular",genres:["Dram"],moods:["Düşünceli","Nostaljik"],director:"Frank Darabont",cast:"Tim Robbins, Morgan Freeman",country:"ABD",description:"Haksız yere müebbet hapse mahkum edilen bankacı Andy Dufresne, Shawshank'ta umudunu kaybetmeden özgürlüğe giden yolunu inşa eder.",whyWatch:"IMDb'nin tüm zamanlar 1 numarası; umut ve dostluk temasını sinema tarihinin en etkileyici finaliyle taçlandıran ölümsüz bir klasik.",similar:["The Green Mile","12 Angry Men"],ageRating:"16+",platforms:["Netflix","Amazon Prime"],trivia:"Film gişede başarısız oldu ama VHS ve DVD satışlarıyla kült statüsüne ulaştı."},
+    {id:"f25",title:"Eternal Sunshine of the Spotless Mind",imdb:8.3,year:2004,duration:"108 dk",pool:"gem",genres:["Dram","Bilim Kurgu & Fantastik","Romantik"],moods:["Romantik","Hüzünlü","Düşünceli"],director:"Michel Gondry",cast:"Jim Carrey, Kate Winslet",country:"ABD",description:"Ayrılıklarının ardından birbirlerinin anılarını sildiren Joel ve Clementine, silme işlemi sırasında aşklarını yeniden keşfeder.",whyWatch:"Jim Carrey'nin en derin dramatik performansı ve aşkın doğasını sorgulayan en güzel filmlerden biri.",similar:["Her","Before Sunrise"],ageRating:"13+",platforms:["Netflix","MUBI"],trivia:"Charlie Kaufman senaryoyu rüyasında gördüğü bir fikirden yola çıkarak yazdı."},
+    {id:"f26",title:"Incendies",imdb:8.3,year:2010,duration:"131 dk",pool:"gem",genres:["Dram","Gerilim & Gizem"],moods:["Hüzünlü","Düşünceli"],director:"Denis Villeneuve",cast:"Lubna Azabal, Mélissa Désormeaux-Poulin",country:"Kanada",description:"Annelerinin vasiyeti üzerine Orta Doğu'ya yolculuk eden ikiz kardeşler, annelerinin karanlık geçmişiyle yüzleşir.",whyWatch:"Sinema tarihinin en sarsıcı ters köşelerinden birine sahip finaliyle Denis Villeneuve'ün erken dönem dehasının kanıtı.",similar:["Prisoners","A Separation"],ageRating:"18+",platforms:["MUBI"],trivia:"Film Wajdi Mouawad'ın aynı adlı tiyatro oyunundan uyarlandı."},
+    {id:"f27",title:"Nightcrawler",imdb:7.8,year:2014,duration:"117 dk",pool:"gem",genres:["Dram","Gerilim & Gizem"],moods:["Gerilimli","Düşünceli"],director:"Dan Gilroy",cast:"Jake Gyllenhaal, Rene Russo",country:"ABD",description:"L.A.'da suç görüntülerini TV'ye satan Lou Bloom, reyting uğruna haberlerini yaratacak kadar ileri gider.",whyWatch:"Jake Gyllenhaal'ın tüyler ürperten performansıyla medya etiğini ve sosyopat karakterleri eleştiren harika bir film.",similar:["Drive","Gone Girl"],ageRating:"16+",platforms:["Netflix"],trivia:"Jake Gyllenhaal, karakterin rahatsız edici görünümü için 13 kilo verdi ve neredeyse hiç göz kırpmamayı denedi."},
+    {id:"f28",title:"Schindler's List",imdb:9.0,year:1993,duration:"195 dk",pool:"popular",genres:["Dram"],moods:["Hüzünlü","Düşünceli"],director:"Steven Spielberg",cast:"Liam Neeson, Ralph Fiennes",country:"ABD",description:"II. Dünya Savaşı'nda Alman sanayici Oskar Schindler, 1.100'den fazla Yahudi'yi fabrikasında istihdam ederek Holokost'tan kurtarır.",whyWatch:"Spielberg'in en kişisel filmi; insanlık tarihinin en karanlık sayfalarını siyah-beyaz görüntülerle unutulmaz kılan sinema başyapıtı.",similar:["The Pianist","Life is Beautiful"],ageRating:"16+",platforms:["Netflix"],trivia:"Spielberg film için maaş almadı; 'kan parası olur' dedi ve tüm gelirini Shoah Foundation'a bağış laboral."},
+    {id:"f29",title:"12 Angry Men",imdb:9.0,year:1957,duration:"96 dk",pool:"gem",genres:["Dram"],moods:["Düşünceli","Nostaljik"],director:"Sidney Lumet",cast:"Henry Fonda, Lee J. Cobb",country:"ABD",description:"Cinayet davası jürisindeki 12 erkek, başlangıçta suçlu olduğundan emin oldukları sanığın kaderini tartışır.",whyWatch:"Tek bir odada 12 erkek ve diyaloglardan ibaret olmasına rağmen sinema tarihinin en gerilimli, en düşündürücü filmlerinden biri.",similar:["The Man from Earth","A Few Good Men"],ageRating:"7+",platforms:["MUBI","Amazon Prime"],trivia:"Film tamamen 1 odada çekildi ve çekimler sadece 20 gün sürdü."},
+    {id:"f30",title:"The Green Mile",imdb:8.6,year:1999,duration:"189 dk",pool:"popular",genres:["Dram"],moods:["Hüzünlü","Nostaljik"],director:"Frank Darabont",cast:"Tom Hanks, Michael Clarke Duncan",country:"ABD",description:"1935 Louisiana'da ölüm koridoru gardiyanı Paul Edgecomb, doğaüstü güçlere sahip ama ölüme mahkum edilen dev cüsseli John Coffey ile tanışır.",whyWatch:"Michael Clarke Duncan'ın yürek parçalayıcı performansıyla insanlık, adalet ve merhametin en güçlü şekilde işlendiği bir Stephen King uyarlaması.",similar:["Shawshank Redemption","Forrest Gump"],ageRating:"16+",platforms:["Netflix","Amazon Prime"],trivia:"Michael Clarke Duncan filmi izlediğinde kendi sahnelerinde ağladı."},
+    {id:"f31",title:"A Separation",imdb:8.3,year:2011,duration:"123 dk",pool:"gem",genres:["Dram"],moods:["Düşünceli","Hüzünlü"],director:"Asghar Farhadi",cast:"Leila Hatami, Peyman Moaadi",country:"İran",description:"Boşanmak isteyen çiftin hikayesi, bakıcının işten çıkarılmasıyla hukuki ve ahlaki bulmacaya dönüşür.",whyWatch:"Hiçbir tarafın haklı olmadığı, izleyiciyi yargıç koltuğuna oturtan İran sinemasının dünyaya armağanı.",similar:["Incendies","The Hunt"],ageRating:"13+",platforms:["MUBI"],trivia:"Film hem Oscar hem de Altın Ayı kazanan ilk İran filmi oldu."},
+    {id:"f32",title:"The Fall (Düşüş)",imdb:7.8,year:2006,duration:"117 dk",pool:"gem",genres:["Dram","Aksiyon & Macera"],moods:["Nostaljik","Düşünceli"],director:"Tarsem Singh",cast:"Lee Pace, Catinca Untaru",country:"ABD / Hindistan",description:"Hastanedeki felçli dublör, küçük bir kıza beş masalsı kahramanın intikam hikayesini anlatır.",whyWatch:"20'den fazla ülkede hiç CGI kullanılmadan çekilmiş, sinematografisiyle göz banyosu yaptıran görsel şaheser.",similar:["Pan's Labyrinth","Life of Pi"],ageRating:"13+",platforms:["MUBI"],trivia:"Yönetmen filmi finanse etmek için 18 yıl boyunca reklam filmi çekti."},
+    {id:"f33",title:"City of God",imdb:8.6,year:2002,duration:"130 dk",pool:"gem",genres:["Dram","Polisiye & Suç"],moods:["Adrenalin","Düşünceli"],director:"Fernando Meirelles",cast:"Alexandre Rodrigues",country:"Brezilya",description:"Rio de Janeiro'nun en tehlikeli favelasında büyüyen iki gencin farklı yolları: biri fotoğrafçı, diğeri uyuşturucu baronu olmayı seçer.",whyWatch:"Gerçek favela sakinlerinin oynadığı, Brezilya sinemasının dünyaya açılan en güçlü kapısı ve şiddetin gündelik hayata nasıl sızdığının acı portresi.",similar:["Slumdog Millionaire","Goodfellas"],ageRating:"18+",platforms:["MUBI","Amazon Prime"],trivia:"Filmdeki 200 oyuncunun büyük çoğunluğu profesyonel değildi; gerçek favela sakinleriydi."},
+    {id:"f34",title:"Manchester by the Sea",imdb:7.8,year:2016,duration:"137 dk",pool:"gem",genres:["Dram"],moods:["Hüzünlü"],director:"Kenneth Lonergan",cast:"Casey Affleck, Michelle Williams, Lucas Hedges",country:"ABD",description:"Ağabeyinin ölümünün ardından yeğenine vasilik yapmak zorunda kalan Lee Chandler, geçmişindeki yıkıcı bir trajedinin gölgesinde kendini toplamaya çalışır.",whyWatch:"Bazı yaraların iyileşmeyeceğini kabul eden, grief (yas) temasını Hollywood'un klişelerinden uzak en dürüst şekilde işleyen cesur bir film.",similar:["Ordinary People","Three Billboards"],ageRating:"16+",platforms:["Amazon Prime"],trivia:"Casey Affleck, Lee Chandler'ın duygusal kopukluğunu yansıtmak için sette diğer oyuncularla minimum düzeyde sosyalleşti."},
+ 
+    // ===== GERİLİM & GİZEM =====
+    {id:"f35",title:"Se7en",imdb:8.6,year:1995,duration:"127 dk",pool:"popular",genres:["Gerilim & Gizem","Polisiye & Suç"],moods:["Gerilimli"],director:"David Fincher",cast:"Brad Pitt, Morgan Freeman",country:"ABD",description:"Yedi ölümcül günahı temsil eden seri cinayetlerin peşindeki iki dedektifin karanlık yolculuğu.",whyWatch:"Sinema tarihinin en şok edici finallerinden biri ve 'kutudaki' sahneyle popüler kültüre kazınan ölümsüz gerilim.",similar:["Zodiac","Gone Girl"],ageRating:"18+",platforms:["Netflix"],trivia:"Senaryodaki 'kutuda ne var' finali stüdyo tarafından değiştirilmek istendi ama Fincher ve Brad Pitt karşı çıktı."},
+    {id:"f36",title:"Gone Girl",imdb:8.1,year:2014,duration:"149 dk",pool:"popular",genres:["Gerilim & Gizem","Dram"],moods:["Gerilimli","Düşünceli"],director:"David Fincher",cast:"Ben Affleck, Rosamund Pike",country:"ABD",description:"Evlilik yıldönümünde karısı kaybolan Nick, hem araştırma yapar hem de medyanın bir numaralı şüphelisi olur.",whyWatch:"Rosamund Pike'ın unutulmaz performansıyla medya manipülasyonunu ve evliliğin karanlık yüzünü işleyen gerilim.",similar:["Se7en","The Girl on the Train"],ageRating:"18+",platforms:["Disney+"],trivia:"Rosamund Pike Oscar adaylığı için 27 kez okuma yaptı ve rolü son anda kaptı."},
+    {id:"f37",title:"Prisoners",imdb:8.1,year:2013,duration:"153 dk",pool:"gem",genres:["Gerilim & Gizem","Dram"],moods:["Gerilimli","Hüzünlü"],director:"Denis Villeneuve",cast:"Hugh Jackman, Jake Gyllenhaal",country:"ABD",description:"Kızları kaçırılan bir baba adaleti kendi eline alırken dedektif Loki karanlık sırlar ağını çözmeye çalışır.",whyWatch:"Ahlaki ikilem, Roger Deakins'in kasvetli görüntüleri ve nefes kesici atmosferle bir Denis Villeneuve şaheseri.",similar:["Zodiac","Mystic River"],ageRating:"16+",platforms:["Amazon Prime","HBO Max"],trivia:"Jake Gyllenhaal, Loki karakterinin göz kırpma tikini kendisi ekledi."},
+    {id:"f38",title:"Oldboy",imdb:8.4,year:2003,duration:"120 dk",pool:"gem",genres:["Gerilim & Gizem","Aksiyon & Macera"],moods:["Gerilimli","Adrenalin"],director:"Park Chan-wook",cast:"Choi Min-sik, Yoo Ji-tae",country:"Güney Kore",description:"15 yıl boyunca sebebsiz bir odaya hapsedilen Oh Dae-su, serbest bırakıldıktan sonra nedenini bulmaya çalışır.",whyWatch:"Tek planlı koridorda dövüş sahnesi, yıkıcı finali ve intikamın bedelini en acımasız biçimde gösteren kült bir film.",similar:["I Saw the Devil","Parasite"],ageRating:"18+",platforms:["MUBI"],trivia:"Koridor dövüş sahnesi 3 gün boyunca 17 kez çekildi; son halinde kesme yok."},
+    {id:"f39",title:"Memento",imdb:8.4,year:2000,duration:"113 dk",pool:"popular",genres:["Gerilim & Gizem"],moods:["Düşünceli","Gerilimli"],director:"Christopher Nolan",cast:"Guy Pearce, Carrie-Anne Moss",country:"ABD",description:"Kısa süreli hafıza kaybı yaşayan Leonard, karısının katilini dövmeler ve Polaroid fotoğraflarla takip eder.",whyWatch:"Hikayeyi tersinden anlatan devrimci yapısıyla izleyiciyi kahramanla aynı karmaşaya sokan başyapıt.",similar:["Inception","The Prestige"],ageRating:"16+",platforms:["Amazon Prime"],trivia:"Film iki zaman çizgisinde ilerler: biri ileri (siyah-beyaz), diğeri geri (renkli)."},
+    {id:"f40",title:"The Prestige",imdb:8.5,year:2006,duration:"130 dk",pool:"popular",genres:["Gerilim & Gizem","Dram"],moods:["Düşünceli","Gerilimli"],director:"Christopher Nolan",cast:"Christian Bale, Hugh Jackman",country:"ABD / İngiltere",description:"19. yüzyıl Londra'sında birbirinin düşmanı iki sihirbaz, mükemmel illüzyonu yaratmak için sınırları aşan bir rekabete girer.",whyWatch:"Sihirbazlık, bilim ve saplantıyı birleştiren, her izleyişte yeni detaylar keşfettiğiniz çok katmanlı bir Nolan bulmacası.",similar:["Memento","The Illusionist"],ageRating:"13+",platforms:["Netflix","Amazon Prime"],trivia:"Nikola Tesla'yı canlandıran David Bowie, Nolan'ın ilk ve tek tercihi olduğu için 5 dakikada rolü kabul etti."},
+    {id:"f41",title:"Shutter Island",imdb:8.2,year:2010,duration:"138 dk",pool:"popular",genres:["Gerilim & Gizem","Korku"],moods:["Gerilimli"],director:"Martin Scorsese",cast:"Leonardo DiCaprio, Mark Ruffalo",country:"ABD",description:"Federal ajan Teddy Daniels, akıl hastanesi adasında kaybolan bir mahkumu ararken kendi gerçekliğini sorgulamaya başlar.",whyWatch:"Scorsese'nin gotik atmosferi ve DiCaprio'nun yoğun performansıyla finale kadar sizi yanıltan psikolojik bir gerilim.",similar:["Inception","Black Swan"],ageRating:"16+",platforms:["Netflix","Amazon Prime"],trivia:"Film kasıtlı olarak 1950'lerin B-tipi korku filmlerine görsel saygı duruşu yapacak şekilde çekildi."},
+    {id:"f42",title:"Zodiac",imdb:7.7,year:2007,duration:"157 dk",pool:"gem",genres:["Gerilim & Gizem","Polisiye & Suç"],moods:["Gerilimli","Düşünceli"],director:"David Fincher",cast:"Jake Gyllenhaal, Robert Downey Jr.",country:"ABD",description:"San Francisco'yu terörize eden seri katil Zodiac'ı yakalamak için yıllarını harcayan karikatüristin gerçek hikayesi.",whyWatch:"Çözülemeyen gerçek bir suç hikayesini, saplantının insanı nasıl yuttuğunu gösteren hipnotize edici bir yolculuk.",similar:["Se7en","Mindhunter"],ageRating:"16+",platforms:["Amazon Prime"],trivia:"Fincher bazı sahneleri 70'den fazla kez çektirdi; Robert Downey Jr. buna protesto olarak sete kavanoz bıraktı."},
+    {id:"f43",title:"The Handmaiden",imdb:8.1,year:2016,duration:"145 dk",pool:"gem",genres:["Gerilim & Gizem","Dram"],moods:["Gerilimli","Romantik"],director:"Park Chan-wook",cast:"Kim Min-hee, Ha Jung-woo",country:"Güney Kore",description:"1930'lar Kore'sinde zengin kadının servetini dolandırmak için hizmetçi olarak sızan kız, planın değişmesiyle yüzleşir.",whyWatch:"Üç perdeli anlatımda her seferinde kuralları yeniden yazan, estetik ve kurgusuyla nefes kesici bir sinematik bulmaca.",similar:["Oldboy","Parasite"],ageRating:"18+",platforms:["MUBI","Amazon Prime"],trivia:"Park Chan-wook, Sarah Waters'ın romanını Viktorya dönemi İngiltere'sinden sömürge Kore'sine taşıdı."},
+    {id:"f44",title:"Searching",imdb:7.6,year:2018,duration:"102 dk",pool:"gem",genres:["Gerilim & Gizem"],moods:["Gerilimli"],director:"Aneesh Chaganty",cast:"John Cho, Debra Messing",country:"ABD",description:"Kızı kaybolan baba, kızının bilgisayarına girerek dijital ayak izlerini takip eder.",whyWatch:"Tamamı ekranlardan anlatılan yenilikçi tekniğiyle temposu hiç düşmeyen sürükleyici bir modern gerilim.",similar:["Gone Girl","Unfriended"],ageRating:"13+",platforms:["Netflix"],trivia:"Filmdeki tüm ekranlar gerçek işletim sistemleri ve uygulamalarla çalışıyordu."},
+    {id:"f45",title:"The Silence of the Lambs",imdb:8.6,year:1991,duration:"118 dk",pool:"popular",genres:["Gerilim & Gizem","Korku","Polisiye & Suç"],moods:["Gerilimli"],director:"Jonathan Demme",cast:"Jodie Foster, Anthony Hopkins",country:"ABD",description:"Genç FBI stajyeri Clarice Starling, seri katil Buffalo Bill'i yakalamak için hapis yatan dahi yamyam Hannibal Lecter'dan yardım ister.",whyWatch:"Anthony Hopkins'in 16 dakikalık ekran süresiyle Oscar kazandığı efsanevi performansıyla 5 ana dalda Oscar alan nadir filmlerden biri.",similar:["Se7en","Zodiac"],ageRating:"18+",platforms:["Netflix","Amazon Prime"],trivia:"Hopkins sadece 16 dakika ekranda görünmesine rağmen En İyi Erkek Oyuncu Oscar'ı kazandı."},
+    {id:"f46",title:"No Country for Old Men",imdb:8.2,year:2007,duration:"122 dk",pool:"gem",genres:["Gerilim & Gizem","Polisiye & Suç"],moods:["Gerilimli","Düşünceli"],director:"Joel & Ethan Coen",cast:"Javier Bardem, Josh Brolin, Tommy Lee Jones",country:"ABD",description:"Teksas sınırında 2 milyon dolarlık uyuşturucu parasını bilan avcı Llewelyn, acımasız katil Anton Chigurh tarafından takip edilir.",whyWatch:"Javier Bardem'in sinema tarihinin en korkutucu kötü adamlarından birini yarattığı, müziksiz gerilim atmosferiyle 4 Oscar kazanan bir Coen Kardeşler şaheseri.",similar:["Fargo (film)","Blood Simple"],ageRating:"18+",platforms:["Amazon Prime"],trivia:"Filmde neredeyse hiç müzik kullanılmadı; Coen Kardeşler gerilimi sadece ses tasarımıyla yarattı."},
+ 
+    // ===== KOMEDİ =====
+    {id:"f47",title:"The Grand Budapest Hotel",imdb:8.1,year:2014,duration:"99 dk",pool:"gem",genres:["Komedi","Dram"],moods:["Neşeli","Nostaljik"],director:"Wes Anderson",cast:"Ralph Fiennes, Tony Revolori",country:"ABD / Almanya",description:"1930'larda lüks bir otelin efsanevi konsiyerji ve sadık çırağının çalıntı tablo yüzünden başına gelen çılgın maceralar.",whyWatch:"Simetrik kompozisyonları, pastel paleti ve absürt mizahıyla sinema tarihinin en özgün ve keyifli filmlerinden biri.",similar:["Moonrise Kingdom","The Royal Tenenbaums"],ageRating:"13+",platforms:["Disney+"],trivia:"Filmdeki 3 farklı zaman dilimi 3 farklı ekran oranında (aspect ratio) çekildi."},
+    {id:"f48",title:"In Bruges",imdb:7.9,year:2008,duration:"107 dk",pool:"gem",genres:["Komedi","Dram","Gerilim & Gizem","Polisiye & Suç"],moods:["Neşeli","Düşünceli"],director:"Martin McDonagh",cast:"Colin Farrell, Brendan Gleeson",country:"İngiltere / Belçika",description:"Bir işi batıran iki İrlandalı tetikçi Bruges'e sürgün edilir; biri şehre hayran, diğeri can sıkıntısından patlıyor.",whyWatch:"Kara mizah, felsefi diyaloglar ve beklenmedik duygusal derinlikle hem güldüren hem düşündüren bir şaheser.",similar:["Three Billboards","The Nice Guys"],ageRating:"18+",platforms:["Amazon Prime"],trivia:"Colin Farrell Golden Globe kazandı ama gişede film sadece 33 milyon dolar hasılat yapabildi."},
+    {id:"f49",title:"Hunt for the Wilderpeople",imdb:7.9,year:2016,duration:"101 dk",pool:"gem",genres:["Komedi","Aksiyon & Macera"],moods:["Neşeli","Rahat"],director:"Taika Waititi",cast:"Sam Neill, Julian Dennison",country:"Yeni Zelanda",description:"Sorunlu şehir çocuğu Ricky ile aksi üvey amcası Hec, Yeni Zelanda ormanlarında kaybolunca ülke çapında insan avı başlar.",whyWatch:"Taika Waititi'nin absürt mizahını sıcak bir büyüme hikayesiyle harmanlayan, yüzünüzde gülümseme bırakan film.",similar:["Jojo Rabbit","Moonrise Kingdom"],ageRating:"7+",platforms:["Amazon Prime"],trivia:"Film Yeni Zelanda gişe tarihinin en çok izlenen yerli yapımı oldu."},
+    {id:"f50",title:"Jojo Rabbit",imdb:7.9,year:2019,duration:"108 dk",pool:"gem",genres:["Komedi","Dram"],moods:["Neşeli","Hüzünlü"],director:"Taika Waititi",cast:"Roman Griffin Davis, Thomasin McKenzie, Taika Waititi",country:"ABD / Yeni Zelanda",description:"II. Dünya Savaşı'nda hayali arkadaşı Adolf Hitler olan fanatik Nazi çocuğu Jojo, annesinin bir Yahudi kızı sakladığını keşfeder.",whyWatch:"Faşizmi absürt mizahla eleştirirken insanlığı ve sevgiyi kutlayan, son 20 dakikası gözyaşlarınızı tutamayacağınız cesur bir trajikomedi.",similar:["Life is Beautiful","The Grand Budapest Hotel"],ageRating:"13+",platforms:["Disney+"],trivia:"Taika Waititi, Hitler rolünü 'Nazileri utandırmak için bir Polinezyalı Yahudi'nin oynaması lazım' diyerek kabul etti."},
+    {id:"f51",title:"The Truman Show",imdb:8.2,year:1998,duration:"103 dk",pool:"popular",genres:["Komedi","Dram"],moods:["Düşünceli","Nostaljik"],director:"Peter Weir",cast:"Jim Carrey, Ed Harris",country:"ABD",description:"Truman Burbank, hayatının doğumundan beri 24 saat canlı yayınlanan devasa bir reality show olduğunu fark etmeye başlar.",whyWatch:"Jim Carrey'nin komedi maskesini çıkardığı, gerçeklik algısını ve özgürlüğü en güzel sorgulayan, zamanının ötesinde bir film.",similar:["Eternal Sunshine","The Matrix"],ageRating:"7+",platforms:["Amazon Prime"],trivia:"'Truman Show Delusion' gerçek bir psikolojik durum olarak tıp literatürüne girdi."},
+    {id:"f52",title:"Knives Out",imdb:7.9,year:2019,duration:"130 dk",pool:"popular",genres:["Komedi","Gerilim & Gizem"],moods:["Neşeli","Gerilimli"],director:"Rian Johnson",cast:"Daniel Craig, Ana de Armas, Chris Evans",country:"ABD",description:"Zengin yazar Harlan Thrombey'nin gizemli ölümü, ailedeki herkesin şüpheli olduğu bir dedektif soruşturmasına dönüşür.",whyWatch:"Agatha Christie geleneğini modern ve eğlenceli şekilde yeniden yorumlayan, her izleyişte yeni detaylar keşfettiğiniz bir whodunit.",similar:["Clue","The Nice Guys"],ageRating:"13+",platforms:["Amazon Prime"],trivia:"Daniel Craig'in Benoit Blanc aksanı, güneyli tarihçi Shelby Foote'tan esinlendi."},
+    {id:"f53",title:"Amélie",imdb:8.3,year:2001,duration:"122 dk",pool:"gem",genres:["Komedi","Romantik"],moods:["Neşeli","Romantik","Rahat"],director:"Jean-Pierre Jeunet",cast:"Audrey Tautou, Mathieu Kassovitz",country:"Fransa",description:"Montmartre'daki kafede çalışan hayalperest Amélie, etrafındaki insanların hayatını gizlice iyileştirmeye karar verir.",whyWatch:"Paris'in masalsı atmosferi, Yann Tiersen'in ikonik müzikleri ve saf iyimserliğiyle izlerken mutlu olmamak imkansız.",similar:["The Grand Budapest Hotel","Moonrise Kingdom"],ageRating:"7+",platforms:["MUBI"],trivia:"Film Fransa'da 8.8 myelin bilet sattı ve dünya genelinde 174 milyon dolar hasılat yaptı."},
+    {id:"f54",title:"The Nice Guys",imdb:7.3,year:2016,duration:"116 dk",pool:"gem",genres:["Komedi","Aksiyon & Macera"],moods:["Neşeli","Rahat"],director:"Shane Black",cast:"Ryan Gosling, Russell Crowe",country:"ABD",description:"1977 L.A.'da beceriksiz bir dedektif ve kaba kuvvet kullanan tetikçi, kayıp kız davası için çalışmak zorunda kalır.",whyWatch:"Ryan Gosling'in komedi yeteneğinin zirvesi, 70'lerin retro atmosferi ve mükemmel buddy-cop kimyasıyla gizli hazine.",similar:["Kiss Kiss Bang Bang","In Bruges"],ageRating:"16+",platforms:["Amazon Prime","HBO Max"],trivia:"Ryan Gosling'in tuvaletteki fiziksel komedi sahnelerinin çoğu doğaçlamaydı."},
+ 
+    // ===== ANİMASYON =====
+    {id:"f55",title:"Spirited Away",imdb:8.6,year:2001,duration:"125 dk",pool:"popular",genres:["Animasyon"],moods:["Nostaljik","Düşünceli"],director:"Hayao Miyazaki",cast:"Rumi Hiiragi, Miyu Irino",country:"Japonya",description:"Ruhlar alemine giren Chihiro, domuzlara dönüştürülen ailesi için büyülü bir hamamda çalışmaya başlar.",whyWatch:"Animasyon tarihinin en büyük başyapıtı; Oscar kazanan ve hayal gücünün sınırlarını zorlayan eşsiz bir yolculuk.",similar:["Howl's Moving Castle","Princess Mononoke"],ageRating:"7+",platforms:["Netflix"],trivia:"Film Japonya'da Titanic'in gişe rekorunu kırdı ve 18 yıl boyunca tahtını korudu."},
+    {id:"f56",title:"Your Name (Kimi no Na wa)",imdb:8.4,year:2016,duration:"106 dk",pool:"gem",genres:["Animasyon"],moods:["Romantik","Hüzünlü"],director:"Makoto Shinkai",cast:"Ryunosuke Kamiki, Mone Kamishiraishi",country:"Japonya",description:"Birbirini tanımayan taşralı bir kız ile Tokyo'lu bir erkek, her uyandıklarında birbirlerinin bedenlerinde uyanır.",whyWatch:"Nefes kesici görsel güzelliği, Radwimps'in müzikleri ve son yarım saatindeki duygusal yoğunlukla Japon animasyonunun modern zirve noktası.",similar:["Weathering with You","A Silent Voice"],ageRating:"7+",platforms:["Netflix"],trivia:"Film 358 milyon dolar hasılat yaparak Spirited Away'den sonra en çok kazanan anime oldu."},
+    {id:"f57",title:"Spider-Man: Into the Spider-Verse",imdb:8.4,year:2018,duration:"117 dk",pool:"popular",genres:["Animasyon"],moods:["Adrenalin","Neşeli"],director:"Bob Persichetti, Peter Ramsey",cast:"Shameik Moore, Jake Johnson",country:"ABD",description:"Brooklyn'li Miles Morales, farklı boyutlardan gelen Spider-Man'lerle çoklu evreni kurtarır.",whyWatch:"Animasyon sinemasının kurallarını yeniden yazan, her karesi sanat eseri olan devrimci süper kahraman filmi.",similar:["The Incredibles","Big Hero 6"],ageRating:"7+",platforms:["Netflix","Disney+"],trivia:"Her animasyon karesi ayrı ayrı çizildi; standart 24fps yerine 12fps kullanılarak çizgi roman hissi yaratıldı."},
+    {id:"f58",title:"Klaus",imdb:8.2,year:2019,duration:"96 dk",pool:"popular",genres:["Animasyon"],moods:["Neşeli","Nostaljik","Rahat"],director:"Sergio Pablos",cast:"Jason Schwartzman, J.K. Simmons",country:"İspanya",description:"Kutup kasabasına sürülen bencil postacı, münzevi oyuncak üreticisi Klaus ile Noel efsanesini başlatır.",whyWatch:"2D el çizimi tarzını modern teknolojiyle buluşturan büyüleyici çizimleri ve içinizi ısıtacak hikayesiyle bir kış klasiği.",similar:["Ratatouille","Coco"],ageRating:"7+",platforms:["Netflix"],trivia:"Netflix'in ilk orijinal animasyon filmi ve Annie Ödülleri'nde En İyi Animasyon seçildi."},
+    {id:"f59",title:"Perfect Blue",imdb:8.0,year:1997,duration:"81 dk",pool:"gem",genres:["Animasyon"],moods:["Gerilimli","Düşünceli"],director:"Satoshi Kon",cast:"Junko Iwao, Rica Matsumoto",country:"Japonya",description:"Pop idol Mima oyunculuğa geçtiğinde saplantılı hayran takibi yüzünden gerçeklik algısını yitirmeye başlar.",whyWatch:"Nolan ve Aronofsky'ye ilham vermiş, psikolojik gerilimi animasyonla mükemmel birleştiren Japon başyapıtı.",similar:["Black Swan","Paprika"],ageRating:"18+",platforms:["MUBI"],trivia:"Darren Aronofsky, Requiem for a Dream'deki küvet sahnesini bu filmden kopyaladığını itiraf etti."},
+    {id:"f60",title:"Akira",imdb:8.0,year:1988,duration:"124 dk",pool:"gem",genres:["Animasyon"],moods:["Adrenalin","Nostaljik"],director:"Katsuhiro Otomo",cast:"Mitsuo Iwata, Nozomu Sasaki",country:"Japonya",description:"2019 Neo-Tokyo'da gizli askeri deney sonrası psişik güçler kazanan Tetsuo, şehri yıkımın eşiğine getirir.",whyWatch:"Batı'da anime'yi meşrulaştıran, cyberpunk estetiğini tanımlayan, 35 yıl sonra bile görsel olarak çağdaş animasyonları utandıran devrimci başyapıt.",similar:["Ghost in the Shell","Blade Runner"],ageRating:"16+",platforms:["Crunchyroll","MUBI"],trivia:"Filmin 160.000 animasyon karesi el ile çizildi; bu 1988 için rekor bir rakamdı."},
+    {id:"f61",title:"Coco",imdb:8.4,year:2017,duration:"105 dk",pool:"popular",genres:["Animasyon"],moods:["Neşeli","Hüzünlü","Nostaljik"],director:"Lee Unkrich",cast:"Anthony Gonzalez, Gael García Bernal",country:"ABD",description:"Müzisyen olmayı hayal eden Miguel, Ölüler Günü'nde ölüler diyarına geçerek ailesinin müzik yasağının sırrını çözer.",whyWatch:"Meksika kültürünü muhteşem renklerle kutlayan, 'Remember Me' şarkısıyla ağlamayan izleyicinin olmadığı duygusal Pixar başyapıtı.",similar:["Spirited Away","Ratatouille"],ageRating:"7+",platforms:["Disney+"],trivia:"Pixar ekibi filmden önce 6 yıl boyunca Meksika kültürünü ve Día de los Muertos geleneğini araştırdı."},
+    {id:"f62",title:"Howl's Moving Castle",imdb:8.2,year:2004,duration:"119 dk",pool:"popular",genres:["Animasyon"],moods:["Romantik","Nostaljik","Rahat"],director:"Hayao Miyazaki",cast:"Chieko Baisho, Takuya Kimura",country:"Japonya",description:"Bir cadının lanetleyerek yaşlı kadına dönüştürdüğü genç şapkacı Sophie, gezgin büyücü Howl'un hareketli kalesine sığınır.",whyWatch:"Miyazaki'nin en romantik filmi; savaş karşıtı mesajı, büyüleyici görsel dünyası ve Joe Hisaishi'nin müzikleriyle muhteşem bir masal.",similar:["Spirited Away","Kiki's Delivery Service"],ageRating:"7+",platforms:["Netflix"],trivia:"Miyazaki bu filmi Irak Savaşı'na tepki olarak çekti; anti-militarist mesajı bilinçli."},
+    {id:"f63",title:"Grave of the Fireflies",imdb:8.5,year:1988,duration:"89 dk",pool:"gem",genres:["Animasyon"],moods:["Hüzünlü"],director:"Isao Takahata",cast:"Tsutomu Tatsumi, Ayano Shiraishi",country:"Japonya",description:"II. Dünya Savaşı'nda Japon bombardımanı sırasında yetim kalan iki kardeşin hayatta kalma mücadelesi.",whyWatch:"Roger Ebert'in 'gelmiş geçmiş en iyi savaş filmlerinden biri' dediği, izlerken ağlamamanın fiziksel olarak imkansız olduğu yıkıcı bir başyapıt.",similar:["Schindler's List","Barefoot Gen"],ageRating:"13+",platforms:["MUBI"],trivia:"Studio Ghibli, bu filmi My Neighbor Totoro ile aynı gün çift program olarak gösterime soktu."},
+    {id:"f64",title:"Ratatouille",imdb:8.1,year:2007,duration:"111 dk",pool:"popular",genres:["Animasyon"],moods:["Neşeli","Rahat"],director:"Brad Bird",cast:"Patton Oswalt, Ian Holm",country:"ABD",description:"Şef olmayı hayal eden fare Remy, Paris'in ünlü restoranında beceriksiz Linguini ile gizlice ortaklık kurar.",whyWatch:"Anton Ego'nun final eleştirisiyle sinema tarihinin en güzel monologlarından birine sahip, sanat ve tutku üzerine bir Pixar klasiği.",similar:["Klaus","Coco"],ageRating:"7+",platforms:["Disney+"],trivia:"Pixar animatörlerini Fransız mutfağı konusunda eğitmek için profesyonel şefler tutuldu."},
+ 
+    // ===== KORKU (YENİ KATEGORİ!) =====
+    {id:"f65",title:"Hereditary",imdb:7.3,year:2018,duration:"127 dk",pool:"gem",genres:["Korku","Dram"],moods:["Gerilimli"],director:"Ari Aster",cast:"Toni Collette, Alex Wolff",country:"ABD",description:"Büyükannenin ölümüyle Graham ailesinin üzerine çöken karanlık miras, giderek daha ürkütücü doğaüstü olaylara yol açar.",whyWatch:"Toni Collette'in Oscar hak eden ama alamadığı performansıyla geleneksel aile dramını saf dehşetle birleştiren 2010'ların en iyi korku filmi.",similar:["Midsommar","The Witch"],ageRating:"18+",platforms:["Amazon Prime"],trivia:"Yönetmen Ari Aster ilk kesmede filmi 3 saat uzunluğunda teslim etti ve stüdyonun kısaltma baskısına direndi."},
+    {id:"f66",title:"The Shining",imdb:8.4,year:1980,duration:"146 dk",pool:"popular",genres:["Korku","Gerilim & Gizem"],moods:["Gerilimli","Nostaljik"],director:"Stanley Kubrick",cast:"Jack Nicholson, Shelley Duvall",country:"ABD / İngiltere",description:"Kış boyunca ıssız Overlook Oteli'ne bekçi olarak taşınan yazar Jack Torrance, otelin doğaüstü güçleri altında delirmeye başlar.",whyWatch:"Kubrick'in kusursuz sinematografisi, Nicholson'ın ikonik 'Here's Johnny!' sahnesi ve 40 yıl sonra bile tüyler ürperten atmosferiyle korku türünün taçsız kralı.",similar:["Hereditary","The Exorcist"],ageRating:"18+",platforms:["Netflix","HBO Max"],trivia:"Kubrick, ikizler sahnesini 70'den fazla kez çektirdi; Shelley Duvall sette o kadar stres yaşadı ki saçları dökülmeye başladı."},
+    {id:"f67",title:"Get Out",imdb:7.7,year:2017,duration:"104 dk",pool:"popular",genres:["Korku","Gerilim & Gizem"],moods:["Gerilimli","Düşünceli"],director:"Jordan Peele",cast:"Daniel Kaluuya, Allison Williams",country:"ABD",description:"Siyahi genç Chris, beyaz kız arkadaşının ailesiyle tanışmak için gittikleri taşra evinde tuhaf davranışlarla karşılaşır.",whyWatch:"Irkçılığı korku türüyle dahiyane şekilde birleştiren, Jordan Peele'in Oscar ödüllü senaryosuyla sosyal eleştiri yapan yenilikçi bir film.",similar:["Us","Parasite"],ageRating:"16+",platforms:["Netflix"],trivia:"Jordan Peele senaryoyu Obama döneminde yazdı; 'post-racial Amerika' mitini eleştirmek istedi."},
+    {id:"f68",title:"Midsommar",imdb:7.1,year:2019,duration:"148 dk",pool:"gem",genres:["Korku","Dram"],moods:["Gerilimli","Düşünceli"],director:"Ari Aster",cast:"Florence Pugh, Jack Reynor",country:"ABD / İsveç",description:"Trajik bir kayıp yaşayan genç kadın Dani, erkek arkadaşıyla İsveç'teki bir yaz bayramı festivaline gider; festival giderek kabus gibi bir ritüele dönüşür.",whyWatch:"Korku filmini karanlık yerine güpegündüz parlak güneş altında çeken, ayrılık travmasını folk horror'la birleştiren benzersiz bir deneyim.",similar:["Hereditary","The Wicker Man"],ageRating:"18+",platforms:["Amazon Prime"],trivia:"Florence Pugh'un ağlama sahneleri o kadar gerçekçiydi ki set ekibi birkaç kez çekimi durdurup kontrol etti."},
+ 
+    // ===== ROMANTİK (YENİ KATEGORİ!) =====
+    {id:"f69",title:"Before Sunrise",imdb:8.1,year:1995,duration:"101 dk",pool:"gem",genres:["Romantik","Dram"],moods:["Romantik","Nostaljik","Rahat"],director:"Richard Linklater",cast:"Ethan Hawke, Julie Delpy",country:"ABD / Avusturya",description:"Trende tanışan Amerikalı Jesse ile Fransız Céline, Viyana'da birlikte geçirecekleri tek bir gecede hayatlarını paylaşır.",whyWatch:"Sinema tarihinin en gerçekçi ve en güzel aşk filmlerinden biri; iki insanın sadece yürüyerek ve konuşarak birbirine aşık olduğu saf romantizm.",similar:["Eternal Sunshine","Lost in Translation"],ageRating:"13+",platforms:["MUBI"],trivia:"Filmdeki diyalogların büyük kısmı Ethan Hawke ve Julie Delpy tarafından doğaçlama yapıldı."},
+    {id:"f70",title:"La La Land",imdb:8.0,year:2016,duration:"128 dk",pool:"popular",genres:["Romantik","Komedi","Dram"],moods:["Romantik","Nostaljik","Hüzünlü"],director:"Damien Chazelle",cast:"Ryan Gosling, Emma Stone",country:"ABD",description:"Los Angeles'ta hayallerinin peşinden koşan bir caz piyanisti ile bir aktris adayının aşk hikayesi.",whyWatch:"Hollywood'un altın çağına göndermelerle dolu, renkleriyle, müzikleriyle ve bittersüveet finaliyle kalbinizi hem ısıtan hem kıran modern bir müzikal.",similar:["Whiplash","Singin' in the Rain"],ageRating:"7+",platforms:["Netflix"],trivia:"'City of Stars' şarkısı Gosling tarafından canlı olarak piyanoda çalındı; playback kullanılmadı."},
+    {id:"f71",title:"The Matrix",imdb:8.7,year:1999,duration:"136 dk",pool:"popular",genres:["Bilim Kurgu & Fantastik","Aksiyon & Macera"],moods:["Adrenalin","Düşünceli"],director:"Lana & Lilly Wachowski",cast:"Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss",country:"ABD",description:"Saygın yazılım firmasında çalışan Thomas Anderson, geceleri 'Neo' takma adıyla hackerlık yapmaktadır. Bir gün Morpheus ile karşılaşınca yaşadığı dünyanın yapay bir simülasyon olduğunu öğrenir.",whyWatch:"Görsel efektleri, felsefi derinliği ve 'bullet time' teknolojisiyle bilim kurgu ve aksiyon sinemasını sonsuza dek değiştiren devrimci bir film.",similar:["Inception","The Dark Knight"],ageRating:"16+",platforms:["Netflix","Amazon Prime"],trivia:"Neo rolü başlangıçta Will Smith'e teklif edildi ancak Smith o dönemde 'Wild Wild West' filmini tercih etti."},
+    {id:"f72",title:"Fight Club (Dövüş Kulübü)",imdb:8.8,year:1999,duration:"139 dk",pool:"popular",genres:["Dram","Gerilim & Gizem","Polisiye & Suç"],moods:["Gerilimli","Düşünceli"],director:"David Fincher",cast:"Brad Pitt, Edward Norton, Helena Bonham Carter",country:"ABD",description:"Uykusuzluk çeken sıradan bir büro çalışanı, gizemli sabun satıcısı Tyler Durden ile tanışır. İkili, erkeklerin dövüşerek deşarj olduğu gizli bir yeraltı kulübü kurar.",whyWatch:"Tüketim toplumunu sert bir şekilde eleştiren, sinema tarihinin en ünlü çift kimlik ters köşelerinden birine sahip kült başyapıt.",similar:["Memento","Zodiac"],ageRating:"18+",platforms:["Netflix","Amazon Prime"],trivia:"Brad Pitt ve Edward Norton, rollerine hazırlanmak için gerçek boks ve karma dövüş sanatları dersleri aldılar."},
+    {id:"f73",title:"Pulp Fiction (Ucuz Roman)",imdb:8.9,year:1994,duration:"154 dk",pool:"popular",genres:["Dram","Polisiye & Suç"],moods:["Adrenalin","Neşeli"],director:"Quentin Tarantino",cast:"John Travolta, Samuel L. Jackson, Uma Thurman",country:"ABD",description:"Birkaç suç öyküsünün yollarının kesiştiği, iki kiralık katil, bir boksör, bir gangster ve karısının yaşadığı absürt olaylar silsilesi.",whyWatch:"Kronolojik olmayan anlatımı, kült haline gelmiş diyalogları ve dans sahnesiyle 90'lar bağımsız sinemasının en büyük simgesi.",similar:["Snatch","Reservoir Dogs"],ageRating:"18+",platforms:["Netflix"],trivia:"Efsanevi dans sahnesi, Fellini'nin '8½' filmindeki dans sahnesine bir göndermedir."},
+    {id:"f74",title:"The Godfather (Baba)",imdb:9.2,year:1972,duration:"175 dk",pool:"popular",genres:["Dram","Polisiye & Suç"],moods:["Düşünceli","Nostaljik"],director:"Francis Ford Coppola",cast:"Marlon Brando, Al Pacino, James Caan",country:"ABD",description:"II. Dünya Savaşı sonrasında, New York'taki güçlü İtalyan mafya ailesi Corleone'nin lideri Don Vito Corleone oglo Michael'ın hikayesi.",whyWatch:"Sinema tarihinin en kusursuz filmi olarak kabul edilen, Marlon Brando'nun oyunculuk dersi verdiği, aile, sadakat ve ihanet üzerine ölümsüz bir suç destanı.",similar:["Goodfellas","Scarface"],ageRating:"18+",platforms:["Netflix","Amazon Prime"],trivia:"Marlon Brando, Don Corleone'nin çene yapısını daha hantal göstermek için çekimler boyunca ağzında özel bir protez taşıdı."},
+    {id:"f75",title:"Forrest Gump",imdb:8.8,year:1994,duration:"142 dk",pool:"popular",genres:["Dram","Romantik","Komedi"],moods:["Neşeli","Hüzünlü","Nostaljik"],director:"Robert Zemeckis",cast:"Tom Hanks, Robin Wright",country:"ABD",description:"Düşük IQ'lu ama saf yürekli Forrest Gump'ın, çocukluk aşkı Jenny'yi beklerken farkında olmadan Amerikan tarihinin en önemli olaylarına yön vermesi.",whyWatch:"Tom Hanks'in üst üste ikinci kez Oscar kazandığı, hayata dair sıcacık mesajlar veren, güldürürken ağlatan zamansız bir başyapıt.",similar:["The Green Mile","Truman Show"],ageRating:"13+",platforms:["Netflix","Amazon Prime"],trivia:"Forrest'ın koşu sahnelerindeki dublörü aslında Tom Hanks'in öz kardeşi Jim Hanks'ti."},
+    {id:"f76",title:"G.O.R.A.",imdb:8.0,year:2004,duration:"127 dk",pool:"popular",origin:"yerli",genres:["Komedi","Bilim Kurgu & Fantastik"],moods:["Neşeli","Rahat"],director:"Ömer Faruk Sorak",cast:"Cem Yılmaz, Rasim Öztekin, Özge Özberk",country:"Türkiye",description:"Halı tüccarı Arif'in uzaylılar tarafından kaçırılarak G.O.R.A. gezegenine götürülmesi ve oradan kaçma mücadelesi.",whyWatch:"Türk sinema tarihinin en çok repliği ezberlenen, Cem Yılmaz imzalı efsanevi bilim kurgu komedisi.",similar:["A.R.O.G","Yahşi Batı"],ageRating:"7+",platforms:["Netflix"],trivia:"Filmin çekimleri bittikten sonra yapımcı şirket battığı için vizyona girmesi 1.5 yıl gecikti."},
+    {id:"f77",title:"Babam ve Oğlum",imdb:8.2,year:2005,duration:"112 dk",pool:"popular",origin:"yerli",genres:["Dram"],moods:["Hüzünlü","Nostaljik"],director:"Çağan Irmak",cast:"Fikret Kuşkan, Çetin Tekindor, Ege Tanman",country:"Türkiye",description:"12 Eylül darbesinde annesini kaybeden küçük Deniz'in, yıllardır küs olan babası Sadık ve dedesi Hüseyin Efendi'nin Ege'deki çiftliğine gitmesiyle başlayan hüzünlü öykü.",whyWatch:"Türk sinemasında izleyip de ağlamayan tek bir kişinin bile olmadığı, kuşak çatışmasını ve aile bağlarını en sıcak anlatan şaheser.",similar:["Ayla","Kelebeğin Rüyası"],ageRating:"13+",platforms:["Netflix"],trivia:"Film vizyondaki ilk haftasında çok az izlense de kulaktan kulağa yayılarak toplamda 3.8 milyon seyirciye ulaştı."},
+    {id:"f78",title:"Nefes: Vatan Sağolsun",imdb:8.0,year:2009,duration:"128 dk",pool:"popular",origin:"yerli",genres:["Aksiyon & Macera","Dram"],moods:["Adrenalin","Hüzünlü"],director:"Levent Semerci",cast:"Mete Horozoğlu, İlker Kızmaz",country:"Türkiye",description:"Irak sınırına yakın bir sınır karakolunu korumakla görevlendirilen 40 askerin ve yüzbaşının destansı mücadelesi.",whyWatch:"Savaşın ve askerliğin psikolojik boyutunu en çıplak, en sarsıcı ve en gerçekçi şekilde perdeye aktaran kült askeri film.",similar:["Dağ II","Nefes: Yer Eksi İki"],ageRating:"16+",platforms:["Netflix"],trivia:"Filmdeki telsiz konuşmaları ve oyuncuların doğaçlama diyalogları gerçek sınır karakolu günlüklerinden esinlenilmiştir."},
+    {id:"f79",title:"Kış Uykusu",imdb:8.1,year:2014,duration:"196 dk",pool:"gem",origin:"yerli",genres:["Dram"],moods:["Düşünceli"],director:"Nuri Bilge Ceylan",cast:"Haluk Bilginer, Melisa Sözen, Demet Akbağ",country:"Türkiye",description:"Kapadokya'da eski bir tiyatrocu olan Aydın'ın, eşi ve kız kardeşiyle yaşadığı içsel hesaplaşmalar ve entelektüel yalnızlık öyküsü.",whyWatch:"Cannes Film Festivali'nde en büyük ödül olan Altın Palmiye'yi kazanan, oyunculukları ve diyaloglarıyla büyüleyen edebi sinema doruğu.",similar:["Bir Zamanlar Anadolu'da","Ahlat Ağacı"],ageRating:"13+",platforms:["Netflix"],trivia:"Haluk Bilginer'in Aydın karakteri için yaptığı monolog sahneleri tek planda ve hiç kesilmeden 15 dakika boyunca kaydedildi."},
+    {id:"f80",title:"Eşkıya",imdb:8.2,year:1996,duration:"128 dk",pool:"popular",origin:"yerli",genres:["Dram","Polisiye & Suç","Gerilim & Gizem"],moods:["Hüzünlü","Nostaljik"],director:"Yavuz Turgul",cast:"Şener Şen, Uğur Yücel, Kamran Usluer",country:"Türkiye",description:"35 yıl sonra hapisten çıkan efsanevi eşkıya Baran'ın, kendisini ihbar eden eski arkadaşının peşinden İstanbul'a gelmesi ve genç Cumali ile yollarının kesişmesi.",whyWatch:"Türk sinemasının 90'lardaki çöküş dönemini tek başına bitiren, müzikleri ve Şener Şen - Uğur Yücel ortaklığıyla bir dönüm noktası.",similar:["Kabadayı","Gönül Yarası"],ageRating:"16+",platforms:["Netflix"],trivia:"Film, Türkiye'de 2.5 milyon seyirci barajını aşarak o döneme kadar ki tüm zamanların izlenme rekorunu kırdı."},
+    {id:"f81",title:"Vizontele",imdb:8.0,year:2001,duration:"110 dk",pool:"popular",origin:"yerli",genres:["Komedi","Dram"],moods:["Neşeli","Nostaljik"],director:"Yılmaz Erdoğan, Ömer Faruk Sorak",cast:"Yılmaz Erdoğan, Demet Akbağ, Altan Erkekli, Cem Yılmaz",country:"Türkiye",description:"1974 yılında Van'ın Gevaş ilçesine ilk kez televizyon alıcısının getirilmesiyle mahalle halkının yaşadığı komik ve trajik olaylar.",whyWatch:"Doğu Anadolu samimiyetini, Cem Yılmaz'ın ikonik 'Zeki Müren de bizi görecek mi?' repliğini ve sıcacık bir mahalle komedisini sunan kült yapım.",similar:["G.O.R.A.","Organize İşler"],ageRating:"7+",platforms:["Netflix"],trivia:"Film, çekildiği dönemde 3.3 milyon seyirciye ulaşarak Türk sinema tarihinin en büyük gişe rekorlarından birini kırdı."},
+    {id:"f82",title:"Hababam Sınıfı",imdb:9.3,year:1975,duration:"87 dk",pool:"popular",origin:"yerli",genres:["Komedi","Dram"],moods:["Neşeli","Nostaljik","Rahat"],director:"Ertem Eğilmez",cast:"Kemal Sunal, Tarık Akan, Halit Akçatepe, Münir Özkul, Adile Naşit",country:"Türkiye",description:"Özel Çamlıca Lisesi'nin haylaz, dersleri asan ama birbirine sıkı sıkıya bağlı Hababam Sınıfı öğrencilerinin Kel Mahmut ve öğretmenleriyle yaşadığı unutulmaz maceralar.",whyWatch:"Rıfat Ilgaz'ın ölümsüz eserinden uyarlanan, her saniyesi neşe ve nostalji kokan, Türk sinemasının gelmiş geçmiş en yüksek puanlı kült komedi şaheseri.",similar:["Tosun Paşa","Süt Kardeşler"],ageRating:"Tümü",platforms:["Netflix"],trivia:"Hababam Sınıfı'ndaki İnek Şaban karakteri aslında romanda çok daha ikincil bir karakterdi ancak Kemal Sunal'ın performansı onu başrole taşıdı."},
+    {id:"f83",title:"Yahşi Batı",imdb:7.4,year:2010,duration:"112 dk",pool:"popular",origin:"yerli",genres:["Komedi"],moods:["Neşeli","Rahat"],director:"Ömer Faruk Sorak",cast:"Cem Yılmaz, Ozan Güven, Demet Evgar",country:"Türkiye",description:"1881 yılında padişah tarafından ABD başkanına hediye götürmekle görevlendirilen iki Osmanlı ajanının vahşi batıda soyulması ve parayı bulma maceraları.",whyWatch:"Cem Yılmaz ve Ozan Güven'in muhteşem kimyası, kovboy estetiğini Türk esprileriyle harmanlayan en iyi yerli western parodisi.",similar:["G.O.R.A.","A.R.O.G"],ageRating:"13+",platforms:["Netflix"],trivia:"Filmin çekimleri için Kemerburgaz'da sıfırdan devasa bir vahşi batı kasabası inşa edildi ve çekimlerden sonra set ziyarete açıldı."},
+    {id:"f84",title:"A.R.O.G",imdb:7.3,year:2008,duration:"127 dk",pool:"popular",origin:"yerli",genres:["Komedi","Bilim Kurgu & Fantastik"],moods:["Neşeli","Rahat"],director:"Cem Yılmaz, Ali Taner Baltacı",cast:"Cem Yılmaz, Özge Özberk, Ozan Güven",country:"Türkiye",description:"G.O.R.A. gezegeninden Dünya'ya dönen Arif'in, düşmanı Logar tarafından zaman makinesiyle yontma taş devrine gönderilmesi ve oradaki insanlara medeniyeti öğretmesi.",whyWatch:"G.O.R.A.'nın devam filmi olarak, tarih öncesi çağda geçen futbol sahneleri ve Cem Yılmaz'ın üstün prodüksiyon kalitesiyle kahkahalar vadeden komedi.",similar:["G.O.R.A.","Yahşi Batı"],ageRating:"7+",platforms:["Netflix"],trivia:"Film, o dönem Türk sinema tarihinin en yüksek bütçeli yapımı unvanını elde etti (yaklaşık 9 milyon dolar)."},
+    {id:"f85",title:"Organize İşler",imdb:7.4,year:2005,duration:"114 dk",pool:"popular",origin:"yerli",genres:["Komedi","Polisiye & Suç"],moods:["Neşeli","Rahat"],director:"Yılmaz Erdoğan",cast:"Yılmaz Erdoğan, Tolga Çevik, Demet Akbağ, Cem Yılmaz",country:"Türkiye",description:"İstanbul'da araba hırsızlığı yapan çetenin lideri Asım Noyan'ın, intihar etmek üzere olan saf Süpermen (Süleyman) ile tanışması ve onu çeteye dahil etmesi.",whyWatch:"Cem Yılmaz'ın canlandırdığı mafya lideri Müslüm Duralmaz sahneleri, efsanevi replikleri ve İstanbul'un yeraltı suç dünyasını komediyle ele alan harika kadrosu.",similar:["Vizontele","G.O.R.A."],ageRating:"13+",platforms:["Netflix"],trivia:"Tolga Çevik, bu filmdeki performansıyla Yılmaz Erdoğan tarafından çok beğenilmiş ve daha sonra 'Komedi Dükkanı' projesine ilham kaynağı olmuştur."},
+    {id:"f86",title:"Bir Zamanlar Anadolu'da",imdb:7.9,year:2011,duration:"157 dk",pool:"gem",origin:"yerli",genres:["Dram","Polisiye & Suç","Gerilim & Gizem"],moods:["Düşünceli"],director:"Nuri Bilge Ceylan",cast:"Muhammet Uzuner, Yılmaz Erdoğan, Taner Birsel",country:"Türkiye",description:"Bir doktor ve savcının, bir cinayet şüphelisi eşliğinde Anadolu bozkırlarında ceset ararken geçirdikleri gerilimli ve derin felsefi diyaloglarla dolu 12 saatlik gece yolculuğu.",whyWatch:"Nuri Bilge Ceylan'ın Cannes'da Jüri Büyük Ödülü kazanan, sinematografisiyle resim tablosu çizen, bürokrasi ve insan doğasını muazzam sorgulayan dünya çapındaki filmi.",similar:["Kış Uykusu","Ahlat Ağacı"],ageRating:"13+",platforms:["Netflix"],trivia:"Yılmaz Erdoğan'ın canlandırdığı komiser karakteri, Nuri Bilge Ceylan ile çalışan ilk büyük ana akım aktör denemesiydi ve büyük övgü aldı."},
+    {id:"f87",title:"Kelebeğin Rüyası",imdb:7.7,year:2013,duration:"138 dk",pool:"popular",origin:"yerli",genres:["Dram","Romantik"],moods:["Hüzünlü","Romantik","Nostaljik"],director:"Yılmaz Erdoğan",cast:"Kıvanç Tatlıtuğ, Mert Fırat, Farah Zeynep Abdullah",country:"Türkiye",description:"1940'ların Türkiye'sinde verem hastası olan iki genç şair Rüştü Onur ve Muzaffer Tayyip Uslu'nun şiir, aşk ve hayatta kalma mücadeleleri.",whyWatch:"Kıvanç Tatlıtuğ'un fiziksel dönüşümüyle büyülediği, görkemli dönem atmosferi, müzikleri ve edebiyat aşkıyla dolu yürek burkan tarihi dram.",similar:["Ayla","Babam ve Oğlum"],ageRating:"13+",platforms:["Netflix"],trivia:"Kıvanç Tatlıtuğ ve Mert Fırat, verem hastası şairleri canlandırmak için çekimler öncesinde 15'er kilo verdiler."},
+    {id:"f88",title:"Cep Herkülü: Naim Süleymanoğlu",imdb:8.3,year:2019,duration:"141 dk",pool:"popular",origin:"yerli",genres:["Dram"],moods:["Adrenalin","Hüzünlü","Nostaljik"],director:"Özer Feyzioğlu",cast:"Hayat Van Eck, Yetkin Dikinciler",country:"Türkiye",description:"Dünya halter tarihine adını altın harflerle yazdıran, 3 olimpiyat şampiyonluğu ve 46 dünya rekoru sahibi Naim Süleymanoğlu'nun Bulgaristan'dan Türkiye'ye kaçış hikayesi.",whyWatch:"Bulgaristan'daki Türk zulmünü tüm dünyaya duyuran milli kahramanımızın ilham verici, aksiyon dolu ve son derece duygusal biyografisi.",similar:["Ayla","Nefes"],ageRating:"13+",platforms:["Netflix"],trivia:"Naim Süleymanoğlu'nu canlandıran Hayat Van Eck, role hazırlanmak için Naim'in kardeşi Muharrem Süleymanoğlu ile 1 yıl boyunca ağır antrenmanlar yaptı."},
+    {id:"f89",title:"Devrim Arabaları",imdb:8.0,year:2008,duration:"120 dk",pool:"gem",origin:"yerli",genres:["Dram"],moods:["Düşünceli","Nostaljik"],director:"Tolga Örnek",cast:"Taner Birsel, Selçuk Yöntem, Halit Ergenç, Ali Düşenkalkar",country:"Türkiye",description:"1961 yılında Cumhurbaşkanı Cemal Gürsel'in talimatıyla, sadece 129 günde sıfırdan ilk yerli otomobil 'Devrim'i üretmek için gecesini gündüzüne katan 23 mühendisin inanç dolu hikayesi.",whyWatch:"İnanç, azim ve 'Türkler araba yapamaz' ön yargısına karşı verilen müthiş mücadelenin gözyaşlarıyla izlenecek en iyi tarihi endüstriyel dramı.",similar:["Naim","Kelebeğin Rüyası"],ageRating:"Tümü",platforms:["Netflix"],trivia:"Dizayn edilen araçlar birebir tarihi prototip ölçülerine uygun olarak film için sıfırdan tekrar üretildi."},
+    {id:"f90",title:"7. Koğuştaki Mucize",imdb:8.2,year:2019,duration:"132 dk",pool:"popular",origin:"yerli",genres:["Dram"],moods:["Hüzünlü"],director:"Mehmet Ada Öztekin",cast:"Aras Bulut İynemli, Nisa Sofiya Aksongur",country:"Türkiye",description:"Zihinsel engelli bir baba olan Memo'nun, haksız yere cinayetten idam cezasına çarptırılması ve hapishanedeki 7. koğuş mahkumlarıyla kızı Ova'yı kavuşturma mücadelesi.",whyWatch:"Aras Bulut İynemli'nin devleştiği oyunculuğu ve hapishanedeki taş kalpli mahkumların bile vicdana gelişini anlatan, gözyaşlarınızı tutamayacağınız sarsıcı bir film.",similar:["Babam ve Oğlum","Ayla"],ageRating:"13+",platforms:["Netflix"],trivia:"Film, Neymar ve Cristiano Ronaldo gibi dünyaca ünlü yıldızların sosyal medyada paylaşmasıyla dünya çapında bir Netflix fenomenine dönüştü."},
+];
+
+const diziDatabase = [
+    // ===== AKSİYON & MACERA =====
+    {id:"d1",title:"Arcane",imdb:9.0,year:2021,duration:"2 Sezon (18 Bölüm)",pool:"gem",genres:["Animasyon"],moods:["Adrenalin","Hüzünlü"],director:"Pascal Charrue, Arnaud Delord",cast:"Hailee Steinfeld, Ella Purnell",country:"Fransa / ABD",description:"League of Legends evreninde Zaun ve Piltover arasındaki çatışmada iki kız kardeşin kopuşu.",whyWatch:"Oyun uyarlamasının bu kadar derin ve güzel olabileceğini kanıtlayan, animasyon tarihinin zirvesindeki başyapıt.",similar:["Invincible","Castlevania"],ageRating:"16+",platforms:["Netflix"],trivia:"Her bölümün animasyonu Fortiche stüdyosunda 3 aydan fazla sürdü."},
+    {id:"d2",title:"The Last of Us",imdb:8.8,year:2023,duration:"2 Sezon (17 Bölüm)",pool:"popular",genres:["Aksiyon & Macera","Dram"],moods:["Hüzünlü","Adrenalin"],director:"Craig Mazin, Neil Druckmann",cast:"Pedro Pascal, Bella Ramsey",country:"ABD",description:"Mantar enfeksiyonunun yıkıma sürüklediği dünyada kaçakçı Joel, bağışıklığa sahip Ellie'yi ülkenin ucuna götürür.",whyWatch:"Oyun uyarlama lanetini kıran, 3. bölümdeki Nick Offerman performansıyla yıkıcı bir dram.",similar:["Station Eleven","Children of Men"],ageRating:"18+",platforms:["HBO Max"],trivia:"3. bölüm (Bill & Frank) Emmy'de En İyi Drama Bölümü adaylığı aldı."},
+    {id:"d3",title:"Invincible",imdb:8.7,year:2021,duration:"3 Sezon (24 Bölüm)",pool:"gem",genres:["Animasyon"],moods:["Adrenalin"],director:"Robert Kirkman",cast:"Steven Yeun, J.K. Simmons",country:"ABD",description:"Dünyanın en güçlü süper kahramanının oğlu Mark, babasının karanlık gerçek yüzüyle yüzleşir.",whyWatch:"'Ya gerçekten en güçlü kişi kötüyse?' sorusuyla süper kahraman türünü yıkan yetişkin animasyon.",similar:["The Boys","Arcane"],ageRating:"18+",platforms:["Amazon Prime"],trivia:"İlk sezon finalindeki dövüş sahnesinin animasyonu 4 ay sürdü."},
+    {id:"d4",title:"Firefly",imdb:9.0,year:2002,duration:"1 Sezon (14 Bölüm)",pool:"gem",genres:["Aksiyon & Macera","Bilim Kurgu & Fantastik"],moods:["Neşeli","Nostaljik"],director:"Joss Whedon",cast:"Nathan Fillion, Gina Torres",country:"ABD",description:"İç savaştan sonra Serenity gemisinde yasa dışı kargolar taşıyarak geçinen mürettebatın uzay maceraları.",whyWatch:"Uzay operası ile kovboy temalarını eşsiz karakter ilişkileriyle harmanlayan, erken iptaliyle efsaneleşen kült dizi.",similar:["The Expanse","Cowboy Bebop"],ageRating:"13+",platforms:["Disney+"],trivia:"Hayranları dizinin devamı için Billboard reklamları ve uçak afişleri bile satın aldı."},
+
+    // ===== BİLİM KURGU & FANTASTİK =====
+    {id:"d5",title:"Dark",imdb:8.7,year:2017,duration:"3 Sezon (26 Bölüm)",pool:"popular",genres:["Bilim Kurgu & Fantastik","Gerilim & Gizem"],moods:["Düşünceli","Gerilimli"],director:"Baran bo Odar",cast:"Louis Hofmann, Lisa Vicari",country:"Almanya",description:"Küçük kasabada çocuk kaybolması, dört aile ve 33 yıllık zaman döngüsünü açığa çıkarır.",whyWatch:"TV tarihinin en tutarlı zaman yolculuğu senaryosu; karakter eşleşmeleri ve atmosferiyle kusursuz bulmaca.",similar:["Stranger Things","The OA"],ageRating:"16+",platforms:["Netflix"],trivia:"Dizi 4 farklı zaman diliminde 30'dan fazla karakteri birbirine bağlar."},
+    {id:"d6",title:"Severance",imdb:8.7,year:2022,duration:"2 Sezon (19 Bölüm)",pool:"gem",genres:["Bilim Kurgu & Fantastik","Gerilim & Gizem","Dram"],moods:["Düşünceli","Gerilimli"],director:"Dan Erickson",cast:"Adam Scott, Britt Lower",country:"ABD",description:"Lumon çalışanlarının iş-kişisel anıları cerrahi olarak ayrılmıştır; bir çalışan bu düzeni sorgulamaya başlar.",whyWatch:"Kurumsal iş hayatını sarsıcı kapitalizm eleştirisiyle işleyen, son yılların en özgün dizisi.",similar:["Black Mirror","Westworld"],ageRating:"16+",platforms:["Apple TV+"],trivia:"Lumon ofisinin boş, steril tasarımı AT&T'nin 1960'lardaki ofis estetiğinden esinlendi."},
+    {id:"d7",title:"Black Mirror",imdb:8.7,year:2011,duration:"7 Sezon (28+ Bölüm)",pool:"popular",genres:["Bilim Kurgu & Fantastik","Gerilim & Gizem","Dram"],moods:["Düşünceli","Gerilimli"],director:"Charlie Brooker",cast:"Antoloji",country:"İngiltere",description:"Teknolojinin karanlık yüzünü kısa öykülerle anlatan antoloji; her bölüm bağımsız bir dünya.",whyWatch:"'San Junipero' ve 'White Christmas' gibi bölümleriyle telefonunuza farklı bakmanızı garantileyen modern Alacakaranlık Kuşağı.",similar:["Severance","Westworld"],ageRating:"16+",platforms:["Netflix"],trivia:"İlk bölüm ('The National Anthem') yayınlandıktan yıllar sonra benzeri gerçek bir olay yaşandı."},
+    {id:"d8",title:"The Expanse",imdb:8.5,year:2015,duration:"6 Sezon (62 Bölüm)",pool:"gem",genres:["Bilim Kurgu & Fantastik","Aksiyon & Macera"],moods:["Adrenalin","Düşünceli"],director:"Mark Fergus",cast:"Steven Strait, Dominique Tipper",country:"ABD",description:"Güneş Sistemi'ne yayılmış insanlığın politik entrikalarını ve galaksiyi tehdit eden komploya karşı savaşını anlatır.",whyWatch:"Hard sci-fi'ın TV'deki en iyi temsilcisi; fizik kurallarına sadık uzay savaşları ve 'Game of Thrones uzayda' kapsamı.",similar:["Battlestar Galactica","Foundation"],ageRating:"16+",platforms:["Amazon Prime"],trivia:"Dizi iptal edildikten sonra hayran kampanyası sayesinde Amazon tarafından kurtarıldı."},
+    {id:"d9",title:"Stranger Things",imdb:8.7,year:2016,duration:"4 Sezon (34 Bölüm)",pool:"popular",genres:["Bilim Kurgu & Fantastik","Gerilim & Gizem","Dram"],moods:["Nostaljik","Adrenalin"],director:"Duffer Brothers",cast:"Millie Bobby Brown, Finn Wolfhard",country:"ABD",description:"1983 Indiana'da çocuğun kayboluşu, gizli deneyler, Eleven ve 'Ters Dünya' boyutunu açığa çıkarır.",whyWatch:"80'lerin nostaljisini modern anlatımla buluşturan, Eleven karakteriyle popüler kültüre damga vuran fenomen.",similar:["Dark","Super 8"],ageRating:"16+",platforms:["Netflix"],trivia:"Kate Bush'un 'Running Up That Hill' şarkısı 4. sezon sayesinde 37 yıl sonra tekrar 1 numaraya çıktı."},
+    {id:"d10",title:"Westworld",imdb:8.5,year:2016,duration:"4 Sezon (36 Bölüm)",pool:"popular",genres:["Bilim Kurgu & Fantastik","Dram","Gerilim & Gizem"],moods:["Düşünceli"],director:"Jonathan Nolan, Lisa Joy",cast:"Evan Rachel Wood, Anthony Hopkins",country:"ABD",description:"Robot dolu Vahşi Batı tema parkında, robotlar bilinç kazanmaya başlar.",whyWatch:"İlk iki sezonu yapay bilinç..." ,similar:["Ex Machina","Black Mirror"],ageRating:"18+",platforms:["HBO Max"],trivia:"Anthony Hopkins bir sahnesini tek seferde, senaryo olmadan çekti."},
+    {id:"d11",title:"Devs",imdb:7.7,year:2020,duration:"Minidizi (8 Bölüm)",pool:"gem",genres:["Bilim Kurgu & Fantastik","Gerilim & Gizem","Dram"],moods:["Düşünceli"],director:"Alex Garland",cast:"Sonoya Mizuno, Nick Offerman",country:"ABD",description:"Teknoloji şirketinin gizemli 'Devs' bölümünde çalışan mühendis, sevgilisinin ölümünü araştırırken determinizm ve özgür irade arasında kalır.",whyWatch:"Ex Machina yönetmeni Alex Garland'ın kuantum fiziği ve kaderi sorgulayan, hipnotize edici atmosfere sahip mini dizisi.",similar:["Severance","Westworld"],ageRating:"16+",platforms:["Disney+"],trivia:"Devs bölümünün altın kaplamalı kuantum bilgisayar seti gerçek bir fizik laboratuvarından esinlendi."},
+
+    // ===== DRAM =====
+    {id:"d12",title:"Breaking Bad",imdb:9.5,year:2008,duration:"5 Sezon (62 Bölüm)",pool:"popular",genres:["Dram","Polisiye & Suç","Gerilim & Gizem"],moods:["Adrenalin","Düşünceli"],director:"Vince Gilligan",cast:"Bryan Cranston, Aaron Paul",country:"ABD",description:"Kanserli lise kimya öğretmeni Walter White, ailesine para bırakmak için eski öğrencisiyle uyuşturucu üretmeye başlar.",whyWatch:"İnsanın adım adım suç imparatoruna dönüşümünü gösteren, TV tarihinin zirvesi kabul edilen başyapıt.",similar:["Better Call Saul","Ozark"],ageRating:"18+",platforms:["Netflix"],trivia:"Bryan Cranston gerçekten metamfetamin pişirme kimyasını öğrendi; DEA'dan danışmanlık aldı."},
+    {id:"d13",title:"Better Call Saul",imdb:9.0,year:2015,duration:"6 Sezon (63 Bölüm)",pool:"popular",genres:["Dram","Polisiye & Suç"],moods:["Düşünceli","Nostaljik"],director:"Vince Gilligan, Peter Gould",cast:"Bob Odenkirk, Rhea Seehorn",country:"ABD",description:"Breaking Bad'den 6 yıl önce, dolandırıcı Jimmy McGill'in Saul Goodman'a dönüşüm hikayesi.",whyWatch:"Rhea Seehorn'un Kim Wexler'ı ile TV tarihinin en iyi yazılmış kadın karakterlerinden birini sunan olgun dram.",similar:["Breaking Bad","Fargo"],ageRating:"16+",platforms:["Netflix"],trivia:"Bob Odenkirk, sette kalp krizi geçirdi ve hayata döndürüldükten sonra çekimlere devam etti."},
+    {id:"d14",title:"Chernobyl",imdb:9.4,year:2019,duration:"Minidizi (5 Bölüm)",pool:"popular",genres:["Dram"],moods:["Hüzünlü","Düşünceli"],director:"Craig Mazin",cast:"Jared Harris, Stellan Skarsgård",country:"ABD / İngiltere",description:"1986 Çernobil felaketini, örtbas girişimlerini ve gerçeği ortaya çıkaran bilim insanlarını anlatır.",whyWatch:"Yalanların bedelini ve radyasyonun dehşetini iliklerinize kadar hissettiren, tarihin en yüksek puanlı mini dizisi.",similar:["Band of Brothers","The Terror"],ageRating:"16+",platforms:["HBO Max"],trivia:"Dizideki radyasyon kurbanı sahneleri o kadar gerçekçiydi ki bazı izleyiciler bayıldı."},
+    {id:"d15",title:"Succession",imdb:8.9,year:2018,duration:"4 Sezon (39 Bölüm)",pool:"popular",genres:["Dram","Komedi"],moods:["Düşünceli"],director:"Jesse Armstrong",cast:"Jeremy Strong, Sarah Snook, Brian Cox",country:"ABD",description:"Medya imparatorluğu patronu Logan Roy'un çocukları, taht kavgasında acımasızca savaşır.",whyWatch:"Zenginliğin ve gücün çocukları nasıl bozduğunu Shakespeare trajedisi formatında, efsanevi diyaloglarla anlatan dram.",similar:["The Sopranos","Billions"],ageRating:"18+",platforms:["HBO Max"],trivia:"Jeremy Strong, Kendall Roy rolüne hazırlanırken gerçek milyarderlerin çocuklarını gözlemledi."},
+    {id:"d16",title:"The Wire",imdb:9.3,year:2002,duration:"5 Sezon (60 Bölüm)",pool:"gem",genres:["Dram","Polisiye & Suç","Gerilim & Gizem"],moods:["Düşünceli"],director:"David Simon",cast:"Dominic West, Idris Elba",country:"ABD",description:"Baltimore'un uyuşturucu dünyası, polisi, limanı ve okul sistemini farklı açılardan inceleyen sosyolojik roman.",whyWatch:"Birçok eleştirmen tarafından gelmiş geçmiş en iyi TV dizisi seçilen, sabırla ödüllendiren eşsiz başyapıt.",similar:["The Sopranos","Breaking Bad"],ageRating:"18+",platforms:["HBO Max"],trivia:"David Simon eski bir Baltimore Sun muhabiriydi; dizideki olayların çoğu gerçek."},
+    {id:"d17",title:"Band of Brothers",imdb:9.4,year:2001,duration:"Minidizi (10 Bölüm)",pool:"gem",genres:["Dram","Aksiyon & Macera"],moods:["Hüzünlü","Adrenalin","Nostaljik"],director:"Tom Hanks, Steven Spielberg",cast:"Damian Lewis, Ron Livingston",country:"ABD",description:"II. Dünya Savaşı'nda ABD 101. Hava İndirme Tümeni Easy Bölüğü'nün Normandiya'dan savaş sonuna kadar gerçek hikayesi.",whyWatch:"Gerçek gazilerin röportajlarıyla başlayan her bölüm, kardeşlik bağını sinema kalitesinde sunan TV tarihinin en epik mini dizisi.",similar:["Chernobyl","Saving Private Ryan"],ageRating:"16+",platforms:["HBO Max"],trivia:"Gerçek Easy Bölüğü gazileri dizinin galasında ağlayarak birbirlerine sarıldı."},
+    {id:"d18",title:"The Sopranos",imdb:9.2,year:1999,duration:"6 Sezon (86 Bölüm)",pool:"popular",genres:["Dram","Polisiye & Suç"],moods:["Düşünceli"],director:"David Chase",cast:"James Gandolfini, Edie Falco",country:"ABD",description:"New Jersey mafya patronu Tony Soprano, suç imparatorluğunu yönetirken panik atakları yüzünden psikiyatriste gider.",whyWatch:"Modern TV'nin altın çağını başlatan, James Gandolfini'nin ölümsüz performansıyla TV dizisi kavramını sonsuza dek değiştiren başyapıt.",similar:["Breaking Bad","The Wire"],ageRating:"18+",platforms:["HBO Max"],trivia:"Son bölümün tartışmalı 'karaya kesme' finali 15+ yıldır tartışılmaya devam ediyor."},
+    {id:"d19",title:"Normal People",imdb:8.3,year:2020,duration:"Minidizi (12 Bölüm)",pool:"gem",genres:["Dram","Romantik"],moods:["Romantik","Hüzünlü"],director:"Lenny Abrahamson",cast:"Daisy Edgar-Jones, Paul Mescal",country:"İrlanda",description:"İrlanda'da lise yıllarından üniversiteye kadar birbirine çekilip uzaklaşan Connell ve Marianne'ın karmaşık aşk hikayesi.",whyWatch:"Sally Rooney'nin romanından uyarlanan, iletişimsizliğin yarattığı acıyı ve gençlik aşkını en samimi haliyle anlatan yıkıcı bir dram.",similar:["Fleabag","Before Sunrise"],ageRating:"18+",platforms:["BBC iPlayer","Hulu"],trivia:"Paul Mescal bu rolle tanındı ve Gladiator II'nin başrolünü kaptı."},
+
+    // ===== GERİLİM & GİZEM =====
+    {id:"d20",title:"True Detective (S1)",imdb:8.9,year:2014,duration:"1 Sezon (8 Bölüm)",pool:"popular",genres:["Gerilim & Gizem","Polisiye & Suç","Dram"],moods:["Gerilimli","Düşünceli"],director:"Cary Joji Fukunaga",cast:"Matthew McConaughey, Woody Harrelson",country:"ABD",description:"Louisiana'da ritüel cinayetleri soruşturan iki dedektifin 17 yıla yayılan hikayesi.",whyWatch:"McConaughey'nin Rust Cohle felsefe monologları, 6 dakikalık tek plan sahnesi ve Southern Gothic atmosferiyle zirvede.",similar:["Mindhunter","Fargo"],ageRating:"18+",platforms:["HBO Max"],trivia:"6 dakikalık kesintisiz tek plan sahnesi 1 gün boyunca 7 kez çekildi."},
+    {id:"d21",title:"Mr. Robot",imdb:8.5,year:2015,duration:"4 Sezon (45 Bölüm)",pool:"gem",genres:["Gerilim & Gizem","Dram","Bilim Kurgu & Fantastik"],moods:["Gerilimli","Düşünceli"],director:"Sam Esmail",cast:"Rami Malek, Christian Slater",country:"ABD",description:"Sosyal fobi hastası hacker Elliot Alderson, dünya ekonomisini çökertme planına dahil olur.",whyWatch:"Hacking sahnelerinin teknik doğruluğu, Rami Malek'in performansı ve 4. sezon twist'iyle dijital çağın Fight Club'ı.",similar:["Black Mirror","Breaking Bad"],ageRating:"16+",platforms:["Amazon Prime"],trivia:"Dizideki hacking sahneleri gerçek siber güvenlik uzmanları tarafından denetlendi ve teknik olarak doğru."},
+    {id:"d22",title:"Mindhunter",imdb:8.6,year:2017,duration:"2 Sezon (19 Bölüm)",pool:"gem",genres:["Gerilim & Gizem","Polisiye & Suç","Dram"],moods:["Gerilimli","Düşünceli"],director:"David Fincher",cast:"Jonathan Groff, Holt McCallany",country:"ABD",description:"1970'lerde FBI ajanları suçlu psikolojisini anlamak için seri katillerle yüz yüze röportaj yapar.",whyWatch:"David Fincher imzalı, suçlunun zihnini diyalogların gerilimi ve atmosferle hissettiren elit bir dizi.",similar:["True Detective","Zodiac"],ageRating:"18+",platforms:["Netflix"],trivia:"Ed Kemper'ı canlandıran Cameron Britton, gerçek Kemper'ın ses kayıtlarını haftalarca dinleyerek hazırlandı."},
+    {id:"d23",title:"Ozark",imdb:8.5,year:2017,duration:"4 Sezon (44 Bölüm)",pool:"popular",genres:["Gerilim & Gizem","Polisiye & Suç","Dram"],moods:["Gerilimli","Adrenalin"],director:"Bill Dubuque",cast:"Jason Bateman, Laura Linney",country:"ABD",description:"Kartel için kara para aklayan finansçı Marty Byrde, ailesiyle Missouri'ye kaçar ve yeni operasyonlar kurar.",whyWatch:"Jason Bateman'ın komedi imajını tamamen yıkan performansıyla 'sıradan insanın suça girişi' temasının en iyi temsilcisi.",similar:["Breaking Bad","Fargo"],ageRating:"18+",platforms:["Netflix"],trivia:"Dizinin mavimsi renk paleti kasıtlıdır; soğukluk ve yabancılaşma hissini güçlendirmek için kullanıldı."},
+    {id:"d24",title:"Utopia (UK)",imdb:8.4,year:2013,duration:"2 Sezon (12 Bölüm)",pool:"gem",genres:["Gerilim & Gizem","Dram","Bilim Kurgu & Fantastik"],moods:["Gerilimli","Düşünceli"],director:"Dennis Kelly",cast:"Fiona O'Shaughnessy, Adeel Akhtar",country:"İngiltere",description:"Efsanevi çizgi romanın el yazmasını bulan forum üyeleri, küresel komployu engellemeye çalışır.",whyWatch:"Sarı renk paleti, hipnotik müzikleri ve kehanet niteliğindeki senaryosuyla kült bir İngiliz yapımı.",similar:["Mr. Robot","Severance"],ageRating:"18+",platforms:["Amazon Prime"],trivia:"Dizinin parlak sarı renk paleti sinematografik bir imza olarak sinemaseverlerce efsaneleşti."},
+    {id:"d25",title:"Mare of Easttown",imdb:8.4,year:2021,duration:"Minidizi (7 Bölüm)",pool:"gem",genres:["Gerilim & Gizem","Dram","Polisiye & Suç"],moods:["Gerilimli","Hüzünlü"],director:"Craig Zobel",cast:"Kate Winslet, Evan Peters",country:"ABD",description:"Pennsylvania kasabasında cinayet soruşturması yürüten dedektif Mare, kişisel yıkımla da baş eder.",whyWatch:"Kate Winslet'ın süssüz, glamour'dan uzak performansıyla kasaba dedektifi rolüne yeni boyut kazandıran mükemmel mini dizi.",similar:["True Detective","Sharp Objects"],ageRating:"18+",platforms:["HBO Max"],trivia:"Kate Winslet, karakterin gerçekçi görünmesi için afişlerdeki rötuşları kaldırttı."},
+    {id:"d26",title:"Hannibal",imdb:8.5,year:2013,duration:"3 Sezon (39 Bölüm)",pool:"gem",genres:["Gerilim & Gizem","Korku","Dram"],moods:["Gerilimli"],director:"Bryan Fuller",cast:"Mads Mikkelsen, Hugh Dancy",country:"ABD",description:"FBI profili Will Graham, seri katilleri yakalamak için Dr. Hannibal Lecter'dan danışmanlık alır; ama Lecter'ın kendisi bir katildir.",whyWatch:"Mads Mikkelsen'in Hopkins'e alternatif yarattığı sofistike Lecter'ı, cinayet sahnelerini sanata dönüştüren estetik ve şiirsel bir korku şaheseri.",similar:["Mindhunter","The Silence of the Lambs"],ageRating:"18+",platforms:["Amazon Prime"],trivia:"Dizideki yemek sahneleri gerçek bir şef tarafından hazırlandı; tabaklar sanata dönüştürüldü."},
+
+    // ===== KOMEDİ =====
+    {id:"d27",title:"Fleabag",imdb:8.7,year:2016,duration:"2 Sezon (12 Bölüm)",pool:"gem",genres:["Komedi","Dram"],moods:["Neşeli","Hüzünlü"],director:"Phoebe Waller-Bridge",cast:"Phoebe Waller-Bridge, Andrew Scott",country:"İngiltere",description:"Londra'da yaşayan öfkeli genç kadın, dördüncü duvarı yıkarak bize dert yanıyor.",whyWatch:"Komedi ile dramı inanılmaz dengede tutan, dördüncü duvarı en zekice kullanan TV tarihinin en iyi işlerinden biri.",similar:["Atlanta","Ted Lasso"],ageRating:"18+",platforms:["Amazon Prime"],trivia:"2. sezondaki 'Hot Priest' Andrew Scott, internet fenomeni oldu."},
+    {id:"d28",title:"Ted Lasso",imdb:8.8,year:2020,duration:"3 Sezon (34 Bölüm)",pool:"gem",genres:["Komedi","Dram"],moods:["Neşeli","Rahat"],director:"Jason Sudeikis, Bill Lawrence",cast:"Jason Sudeikis, Hannah Waddingham",country:"ABD / İngiltere",description:"Amerikan futbolu koçu, futboldan anlamadan İngiltere Premier Lig takımının başına getirilir.",whyWatch:"Nezaketin ve iyimserliğin gücünü gösteren, izlerken kendinizi iyi hissedeceğiniz nadir dizilerden biri.",similar:["Schitt's Creek","Parks and Recreation"],ageRating:"7+",platforms:["Apple TV+"],trivia:"Dizi aslında 2013'te NBC Sports için çekilen bir reklam filminden doğdu."},
+    {id:"d29",title:"What We Do in the Shadows",imdb:8.6,year:2019,duration:"6 Sezon (50+ Bölüm)",pool:"gem",genres:["Komedi","Bilim Kurgu & Fantastik"],moods:["Neşeli","Rahat"],director:"Jemaine Clement, Taika Waititi",cast:"Kayvan Novak, Matt Berry",country:"ABD",description:"Staten Island'da birlikte yaşayan 4 vampirin modern dünyaya uyum sağlamaya çalışmasını anlatan sahte belgesel.",whyWatch:"Matt Berry'nin müthiş zamanlaması ve vampir mitolojisini gündelik hayatla harmanlayan efsanevi komedi.",similar:["Brooklyn Nine-Nine","Community"],ageRating:"16+",platforms:["Disney+"],trivia:"Orijinal 2014 Yeni Zelanda filmi de Taika Waititi yönetimindeydi."},
+    {id:"d30",title:"Atlanta",imdb:8.6,year:2016,duration:"4 Sezon (41 Bölüm)",pool:"gem",genres:["Komedi","Dram"],moods:["Düşünceli","Neşeli"],director:"Donald Glover",cast:"Donald Glover, Brian Tyree Henry",country:"ABD",description:"Üniversiteyi bırakan Earn, rap müzisyeni kuzeni Paper Boi'nin menajeri olarak hip-hop sahnesinde yol arar.",whyWatch:"Her bölümde tür değiştiren, sürrealist ve popüler kültürü en zekice eleştiren Donald Glover yaratımı.",similar:["Fleabag","Barry"],ageRating:"16+",platforms:["Disney+"],trivia:"'Teddy Perkins' bölümünde Donald Glover 5 saat boyunca makyaj masasında beyaz yüzlü karaktere dönüştürüldü."},
+    {id:"d31",title:"Dirk Gently",imdb:8.2,year:2016,duration:"2 Sezon (18 Bölüm)",pool:"gem",genres:["Komedi","Bilim Kurgu & Fantastik","Gerilim & Gizem"],moods:["Neşeli","Rahat"],director:"Max Landis",cast:"Samuel Barnett, Elijah Wood",country:"ABD / İngiltere",description:"Her şeyin bağlantılı olduğuna inanan 'bütünsel' dedektif Dirk ve isteksiz asistanı Todd'un absürt maceraları.",whyWatch:"Hiçbir şey anlamadığınız ama sezon sonunda yapbozun mükemmel birleştiği Douglas Adams uyarlaması.",similar:["Community","The Good Place"],ageRating:"13+",platforms:["Netflix"],trivia:"Douglas Adams romanından uyarlanmasına rağmen tamamen orijinal karakterler ve hikayeler kullanıldı."},
+    {id:"d32",title:"Schitt's Creek",imdb:8.5,year:2015,duration:"6 Sezon (80 Bölüm)",pool:"popular",genres:["Komedi"],moods:["Neşeli","Rahat"],director:"Dan Levy, Eugene Levy",cast:"Eugene Levy, Catherine O'Hara, Dan Levy",country:"Kanada",description:"İflas eden zengin Rose ailesi, yıllar önce şaka olsun diye satın aldıkları küçük kasaba Schitt's Creek'e taşınmak zorunda kalır.",whyWatch:"İlk sezondan sonra büyüyen kalitesiyle sıcacık karakter gelişimi, LGBTQ+ temsili ve finaliyle ağlamadan izleyemeyeceğiniz bir komedi.",similar:["Ted Lasso","Brooklyn Nine-Nine"],ageRating:"13+",platforms:["Netflix"],trivia:"Son sezonda Emmy'de komedi dalında tüm ana ödülleri kazanan ilk dizi oldu."},
+    {id:"d33",title:"Community",imdb:8.5,year:2009,duration:"6 Sezon (110 Bölüm)",pool:"gem",genres:["Komedi"],moods:["Neşeli"],director:"Dan Harmon",cast:"Joel McHale, Donald Glover, Alison Brie",country:"ABD",description:"Mesleki yüksekokuldaki uyumsuz bir çalışma grubunun absürt maceraları ve parodileri.",whyWatch:"Paintball savaş bölümleri, D&D bölümü ve 'remedial chaos theory' ile TV tarihinin en yaratıcı ve meta komedisi.",similar:["Arrested Development","Brooklyn Nine-Nine"],ageRating:"13+",platforms:["Netflix"],trivia:"'Six seasons and a movie!' hayran sloganı gerçek oldu; Community filmi yapım aşamasında."},
+    {id:"d34",title:"The Bear",imdb:8.6,year:2022,duration:"3 Sezon (28 Bölüm)",pool:"gem",genres:["Komedi","Dram"],moods:["Adrenalin","Düşünceli"],director:"Christopher Storer",cast:"Jeremy Allen White, Ayo Edebiri",country:"ABD",description:"Michelin yıldızlı şef Carmy, ağabeyinin ölümünden sonra Chicago'daki aile sandviç dükkanını devralmak zorunda kalır.",whyWatch:"Mutfak stresini savaş alanına çeviren temposu, 2. sezon 7. bölüm tek plan sahnesiyle TV tarihinin en yoğun komedisi.",similar:["Ratatouille","Fleabag"],ageRating:"16+",platforms:["Disney+"],trivia:"Oyunculara gercek profesyonel mutfak eğitimi aldı; Jeremy Allen White artık evde de yemek yapıyor."},
+
+    // ===== POLİSİYE & SUÇ =====
+    {id:"d35",title:"Sherlock",imdb:9.1,year:2010,duration:"4 Sezon (13 Bölüm)",pool:"popular",genres:["Polisiye & Suç","Gerilim & Gizem","Dram"],moods:["Adrenalin","Düşünceli"],director:"Mark Gatiss, Steven Moffat",cast:"Benedict Cumberbatch, Martin Freeman",country:"İngiltere",description:"Modern Londra'da Sherlock Holmes ve Dr. Watson, teknolojik imkanlarla cinayetleri çözer.",whyWatch:"Cumberbatch ve Freeman'ın ikonik uyumu ve sinema kalitesinde 90 dakikalık bölümleriyle kült bir yapım.",similar:["Elementary","Luther"],ageRating:"13+",platforms:["Netflix"],trivia:"Cumberbatch ve Freeman gerçek hayatta da yakın arkadaş; Freeman, Cumberbatch'in düğün şahidi."},
+    {id:"d36",title:"Narcos",imdb:8.8,year:2015,duration:"3 Sezon (30 Bölüm)",pool:"popular",genres:["Polisiye & Suç","Dram","Aksiyon & Macera"],moods:["Adrenalin"],director:"Chris Brancato",cast:"Wagner Moura, Pedro Pascal",country:"ABD",description:"Pablo Escobar'ın yükselişi ve DEA ajanlarının onu yakalama mücadelesinin gerçek hikayesi.",whyWatch:"Wagner Moura'nın inanılmaz Escobar performansı ve Latin Amerika'nın karanlık tarihini sunan epik suç destanı.",similar:["Peaky Blinders","Ozark"],ageRating:"18+",platforms:["Netflix"],trivia:"Brezilyalı Wagner Moura, Kolombiyalı İspanyolcası için 1 yıl Medellín'de yaşadı."},
+    {id:"d37",title:"Peaky Blinders",imdb:8.8,year:2013,duration:"6 Sezon (36 Bölüm)",pool:"popular",genres:["Polisiye & Suç","Dram"],moods:["Adrenalin","Nostaljik"],director:"Steven Knight",cast:"Cillian Murphy, Helen McCrory, Tom Hardy",country:"İngiltere",description:"I. Dünya Savaşı sonrası Birmingham'da Shelby suç ailesinin lideri Tommy'nin yükseliş hikayesi.",whyWatch:"Cillian Murphy'nin hipnotize eden performansı, Nick Cave müzikleri ve her karesi tabloya benzeyen sinematografisi.",similar:["Narcos","Boardwalk Empire"],ageRating:"18+",platforms:["Netflix"],trivia:"Cillian Murphy 6 sezon boyunca bölüm başına 900+ sigara içti (bitki bazlı, nikotinsiz)."},
+    {id:"d38",title:"Fargo",imdb:8.9,year:2014,duration:"5 Sezon (51 Bölüm)",pool:"gem",genres:["Polisiye & Suç","Komedi","Dram","Gerilim & Gizem"],moods:["Gerilimli","Neşeli"],director:"Noah Hawley",cast:"Martin Freeman, Billy Bob Thornton",country:"ABD",description:"Coen Kardeşler evreninde sıradan insanların suçla karşılaşmasını kara mizahla anlatan antoloji dizisi.",whyWatch:"Her sezonu bağımsız başyapıt olan, absürt şiddetiyle eşsiz bir antoloji.",similar:["True Detective","Better Call Saul"],ageRating:"18+",platforms:["Disney+"],trivia:"Her sezonun açılışında 'Bu gerçek bir hikaye' yazsa da hiçbiri gerçek değil; Coen Kardeşler geleneği."},
+
+    // ===== ANİMASYON =====
+    {id:"d39",title:"Over the Garden Wall",imdb:8.8,year:2014,duration:"Minidizi (10 Bölüm)",pool:"gem",genres:["Animasyon"],moods:["Nostaljik","Düşünceli"],director:"Patrick McHale",cast:"Elijah Wood, Collin Dean",country:"ABD",description:"Kasvetli ormanda kaybolan iki yarı kardeş, evlerini ararken gizemli yaratıklarla karşılaşır.",whyWatch:"Sonbahar melankolisi, 19. yy halk hikayeleri ve derin felsefi alt metniyle 110 dakikalık animasyon şaheseri.",similar:["Gravity Falls","Adventure Time"],ageRating:"7+",platforms:["HBO Max"],trivia:"Minidizi sadece 110 dakika ama her saniyesi hesaplanmış mükemmel bir yapı taşıyor."},
+    {id:"d40",title:"Attack on Titan",imdb:9.1,year:2013,duration:"4 Sezon (94 Bölüm)",pool:"popular",genres:["Animasyon"],moods:["Adrenalin","Düşünceli"],director:"Hajime Isayama",cast:"Yuki Kaji, Yui Ishikawa",country:"Japonya",description:"Devlerin istila ettiği dünyada duvarların ardında yaşayan Eren, annesi öldürülünce tüm devleri yok etmeye yemin eder.",whyWatch:"Basit aksiyon gibi başlayıp savaş, özgürlük ve insanlığın doğasını sorgulayan, finaliyle tartışmalı ama epik başyapıt.",similar:["Vinland Saga","Fullmetal Alchemist"],ageRating:"16+",platforms:["Crunchyroll","Netflix"],trivia:"Manga dünya çapında 110 milyon kopya sattı."},
+    {id:"d41",title:"Bojack Horseman",imdb:8.8,year:2014,duration:"6 Sezon (77 Bölüm)",pool:"gem",genres:["Animasyon"],moods:["Hüzünlü","Düşünceli"],director:"Raphael Bob-Waksberg",cast:"Will Arnett, Amy Sedaris",country:"ABD",description:"90'ların sitcom yıldızı alkolik at Bojack, Hollywood'da yeniden yıldız olmayı ve hayatının anlamını arar.",whyWatch:"Konuşan hayvan komedisi gibi başlayıp depresyon, bağımlılık ve travmayı TV tarihinde en dürüst şekilde işleyen derin başyapıt.",similar:["Fleabag","Rick and Morty"],ageRating:"16+",platforms:["Netflix"],trivia:"'Free Churro' bölümü 25 dakika boyunca tek bir cenaze konuşmasından oluşur."},
+    {id:"d42",title:"Death Note",imdb:9.0,year:2006,duration:"1 Sezon (37 Bölüm)",pool:"popular",genres:["Animasyon"],moods:["Gerilimli","Düşünceli"],director:"Tsugumi Ohba",cast:"Mamoru Miyano, Kappei Yamaguchi",country:"Japonya",description:"Lise öğrencisi Light Yagami, adını yazdığı kişiyi öldüren bir defter bulur ve suçluları temizleyerek tanrı olmaya çalışır.",whyWatch:"Light ve dedektif L arasındaki kedi-fare oyunu, ahlaki ikilemleri ve sürpriz hamleleriyle anime'nin en entellektüel gerilimi.",similar:["Code Geass","Monster"],ageRating:"16+",platforms:["Netflix","Crunchyroll"],trivia:"Manga dünya çapında 30 milyon kopya satarak Shonen Jump tarihinin en çok satan dark serisi oldu."},
+    {id:"d43",title:"Cowboy Bebop (Anime)",imdb:8.9,year:1998,duration:"1 Sezon (26 Bölüm)",pool:"gem",genres:["Animasyon"],moods:["Nostaljik","Rahat"],director:"Shinichiro Watanabe",cast:"Koichi Yamadera, Megumi Hayashibara",country:"Japonya",description:"2071'de Bebop gemisinde ödül avcılığı yapan Spike Spiegel ve mürettebatının uzay maceraları.",whyWatch:"Caz müziğini, film noir estetiğini ve kung-fu'yu uzayda harmanlayan, her bölümü farklı bir tür olan efsanevi kült anime.",similar:["Samurai Champloo","Firefly"],ageRating:"16+",platforms:["Crunchyroll","Netflix"],trivia:"Yoko Kanno'nun müzikleri diziden bağımsız olarak konser biletlerini tüketen bir fenomen oldu."},
+    {id:"d44",title:"Love, Death & Robots",imdb:8.4,year:2019,duration:"3 Sezon (35 Bölüm)",pool:"gem",genres:["Animasyon"],moods:["Adrenalin","Düşünceli"],director:"Tim Miller, David Fincher",cast:"Antoloji",country:"ABD",description:"Farklı animasyon stillerinde bilim kurgu, fantezi ve korku hikayeleri anlatan kısa film antolojisi.",whyWatch:"David Fincher ve Tim Miller imzalı, her bölümü farklı bir animasyon stüdyosu tarafından çekilen görsel bir şölen.",similar:["Black Mirror","Akira"],ageRating:"18+",platforms:["Netflix"],trivia:"Her bölüm farklı bir animasyon stüdyosu tarafından yapıldı; bazıları tam fotorealistik CG, bazıları 2D."},
+
+    // ===== KORKU =====
+    {id:"d45",title:"The Haunting of Hill House",imdb:8.6,year:2018,duration:"Minidizi (10 Bölüm)",pool:"gem",genres:["Korku","Dram","Gerilim & Gizem"],moods:["Gerilimli","Hüzünlü"],director:"Mike Flanagan",cast:"Victoria Pedretti, Oliver Jackson-Cohen",country:"ABD",description:"Çocukluklarında perili bir malikanede büyüyen Crain kardeşler, yıllar sonra geçmişleriyle yüzleşmek zorunda kalır.",whyWatch:"Korku türünü derin bir aile dramasıyla harmanlayan, 6. bölümdeki tek plan sahnesisiyle TV korku türünün en iyi temsilcisi.",similar:["Midnight Mass","The Others"],ageRating:"16+",platforms:["Netflix"],trivia:"6. bölüm neredeyse tamamen tek planda çekildi; aslında 5 uzun plan ustaca birleştirildi."},
+    {id:"d46",title:"Euphoria",imdb:8.4,year:2019,duration:"2 Sezon (16 Bölüm)",pool:"popular",genres:["Dram"],moods:["Düşünceli","Hüzünlü"],director:"Sam Levinson",cast:"Zendaya, Hunter Schafer",country:"ABD",description:"Rehabilitasyondan çıkan lise öğrencisi Rue'nun uyuşturucu bağımlılığı, aşk ve kimlik arayışıyla dolu kaotik hayatı.",whyWatch:"Zendaya'nın Emmy ödüllü performansı, neon ışıklı sinematografisi ve Z kuşağının sorunlarını ham bir dürüstlükle anlatan cesur bir dizi.",similar:["Skins","We Are Who We Are"],ageRating:"18+",platforms:["HBO Max"],trivia:"Zendaya bu rolle Emmy kazanan en genç drama oyuncusu oldu (24 yaşında)."},
+    {id:"d47",title:"Game of Thrones",imdb:9.2,year:2011,duration:"8 Sezon (73 Bölüm)",pool:"popular",genres:["Aksiyon & Macera","Bilim Kurgu & Fantastik","Dram"],moods:["Adrenalin","Düşünceli"],director:"David Benioff, D.B. Weiss",cast:"Emilia Clarke, Kit Harington, Peter Dinklage",country:"ABD / İngiltere",description:"Westeros kıtasının dokuz soylu ailesi, Yedi Krallık'ın kontrolünü ele geçirmek ve Demir Taht'a oturmak için birbirleriyle savaşırken, kadim bir düşman yüzyıllar sonra geri döner.",whyWatch:"Televizyon tarihinin en büyük yapım bütçeli, entrika, savaş, ejderhalar ve politik çatışmalarla bezeli en popüler fantastik epik dizisi.",similar:["Vikings","The Last Kingdom"],ageRating:"18+",platforms:["HBO Max"],trivia:"Dizideki dev kurtlar (direwolves) için gerçek Sibirya kurtları CGI yardımıyla büyütülerek kullanıldı."},
+    {id:"d48",title:"Vikings",imdb:8.5,year:2013,duration:"6 Sezon (89 Bölüm)",pool:"popular",genres:["Aksiyon & Macera","Dram"],moods:["Adrenalin"],director:"Michael Hirst",cast:"Travis Fimmel, Katheryn Winnick, Clive Standen",country:"Kanada / İrlanda",description:"Basit bir çiftçi olan Ragnar Lothbrok'un, İngiltere'ye yapılan ilk başarılı yağmaların ardından yükselerek efsanevi bir Viking kralına dönüşmesini konu alır.",whyWatch:"Kuzey mitolojisini, gerçekçi savaş sahnelerini ve Travis Fimmel'ın akıllara kazınan Ragnar performansını barındıran müthiş bir tarihi aksiyon.",similar:["Game of Thrones","The Last Kingdom"],ageRating:"18+",platforms:["Netflix"],trivia:"Dizideki savaş çığlıkları ve dualarda eski Nors dili (Old Norse) aslına uygun olarak seslendirildi."},
+    {id:"d49",title:"The Office (US)",imdb:9.0,year:2005,duration:"9 Sezon (201 Bölüm)",pool:"popular",genres:["Komedi"],moods:["Neşeli","Rahat"],director:"Greg Daniels",cast:"Steve Carell, John Krasinski, Jenna Fischer",country:"ABD",description:"Dunder Mifflin Kağıt Şirketi'nin Scranton şubesindeki çalışanların gündelik, komik ve absürt iş yeri yaşamını sahte belgesel tarzında anlatır.",whyWatch:"Steve Carell'ın Michael Scott rolüyle efsaneleştiği, modern komedi dünyasının en çok izlenen ve en çok paylaşılan durum komedisi (sitcom).",similar:["Parks and Recreation","Brooklyn Nine-Nine"],ageRating:"13+",platforms:["Netflix","Amazon Prime"],trivia:"Dizidir meşhur 'That's what she said' şakası toplamda 58 kez dile getirilmiştir."},
+    {id:"d50",title:"Friends",imdb:8.9,year:1994,duration:"10 Sezon (236 Bölüm)",pool:"popular",genres:["Komedi","Romantik"],moods:["Neşeli","Romantik","Rahat"],director:"David Crane, Marta Kauffman",cast:"Jennifer Aniston, Courteney Cox, Matthew Perry",country:"ABD",description:"Manhattan'da yaşayan 20'li yaşlarındaki 6 yakın arkadaşın aşk, kariyer ve gündelik hayat mücadelelerini sıcak bir dille işler.",whyWatch:"Karakter kimyası, bitmeyen esprileri ve nostaljik sıcaklığıyla izledikçe insanı rahatlatan tüm zamanların en popüler sitcom'u.",similar:["How I Met Your Mother","Modern Family"],ageRating:"13+",platforms:["Netflix"],trivia:"Dizinin meşhur jenerik şarkısı 'I'll Be There for You', Billboard listelerinde haftalarca 1 numarada kaldı."},
+    {id:"d51",title:"Şahsiyet",imdb:9.0,year:2018,duration:"1 Sezon (12 Bölüm)",pool:"gem",origin:"yerli",genres:["Polisiye & Suç","Gerilim & Gizem","Dram"],moods:["Gerilimli","Düşünceli"],director:"Onur Saylak",cast:"Haluk Bilginer, Cansu Dere, Metin Akdülger",country:"Türkiye",description:"Alzheimer teşhisi konan emekli adliye katibi Agah Beyoğlu'nun, unutacağını fırsat bilerek yıllardır ertelediği cinayetleri işlemeye başlaması.",whyWatch:"Haluk Bilginer'e Uluslararası Emmy Ödülleri'nde En İyi Erkek Oyuncu ödülünü getiren, neon estetiği ve müzikleriyle uluslararası kalitede bir başyapıt.",similar:["Ezel","Masum"],ageRating:"18+",platforms:["PuhuTV","Disney+"],trivia:"Dizideki Agah Beyoğlu'nun giydiği sarı retro kostüm ve maske tamamen özel olarak tasarlandı ve kült haline geldi."},
+    {id:"d52",title:"Ezel",imdb:8.6,year:2009,duration:"2 Sezon (71 Bölüm)",pool:"popular",origin:"yerli",genres:["Polisiye & Suç","Dram","Gerilim & Gizem","Aksiyon & Macera"],moods:["Gerilimli","Hüzünlü","Adrenalin"],director:"Uluç Bayraktar",cast:"Kenan İmirzalıoğlu, Cansu Dere, Tuncel Kurtiz",country:"Türkiye",description:"En yakın arkadaşları ve sevdiği kadın tarafından ihanete uğrayarak hapse atılan Ömer'in, yüzünü değiştirip Ezel olarak intikam almak için geri dönmesi.",whyWatch:"Monte Cristo Kontu uyarlamasını Türk televizyon tarihinin en sürükleyici entrikası, Ramiz Dayı replikleri ve efsanevi müzikleriyle bir efsaneye dönüştüren yapım.",similar:["Şahsiyet","Kuzey Güney"],ageRating:"16+",platforms:["Netflix","YouTube"],trivia:"Tuncel Kurtiz'in canlandırdığı Ramiz Dayı karakterinin okuduğu şiirler diziden sonra kitapçıların en çok satan listelerine girdi."},
+    {id:"d53",title:"Gibi",imdb:9.0,year:2021,duration:"5 Sezon (55 Bölüm)",pool:"popular",origin:"yerli",genres:["Komedi"],moods:["Neşeli","Rahat"],director:"Ömer Sinir",cast:"Feyyaz Yiğit, Kıvanç Kılınç, Ahmet Kürşat Öçalan",country:"Türkiye",description:"Yılmaz, İlkkan ve Ersoy adındaki üç arkadaşın gündelik hayatta başlarına gelen son derece absürt, sıradan ama felsefi tartışmalara yol açan komik olayları.",whyWatch:"Benzersiz absürt mizah dili, durum komedisi anlayışı ve her bölümü sosyal medyada ikonikleşen replikleriyle modern Türk komedi zirvesi.",similar:["Avrupa Yakası","Leyla ile Mecnun"],ageRating:"13+",platforms:["Exxen"],trivia:"Dizinin senaryosunu Feyyaz Yiğit ve Aziz Kedi birlikte yazmaktadır ve çekimlerde doğaçlamaya neredeyse hiç izin verilmez."},
+    {id:"d54",title:"Leyla ile Mecnun",imdb:8.7,year:2011,duration:"3 Sezon (104 Bölüm)",pool:"popular",origin:"yerli",genres:["Komedi","Bilim Kurgu & Fantastik","Dram"],moods:["Neşeli","Hüzünlü","Nostaljik"],director:"Onur Ünlü",cast:"Ali Atay, Serkan Keskin, Ahmet Mümtaz Taylan",country:"Türkiye",description:"Aynı gün doğan Leyla ve Mecnun'un absürt aşk hikayesi ve kireçburnu mahallesindeki absürt mahalle sakinlerinin gerçeküstü yaşam mücadeleleri.",whyWatch:"Aksakallı dedenin rüyalardan çıkıp gelmesi, İsmail Abi'nin gemi beklemesi ve benzersiz absürt diliyle Türk televizyonlarının en özgün absürt komedisi.",similar:["Gibi","Avrupa Yakası"],ageRating:"13+",platforms:["Netflix","TRT İzle"],trivia:"Dizi yayından kaldırıldıktan yıllar sonra hayran kitlesinin baskısıyla dijital platformda yeniden çekilmeye başlandı."},
+    {id:"d55",title:"Masum",imdb:8.3,year:2017,duration:"1 Sezon (8 Bölüm)",pool:"gem",origin:"yerli",genres:["Gerilim & Gizem","Dram","Polisiye & Suç"],moods:["Gerilimli","Düşünceli"],director:"Seren Yüce",cast:"Haluk Bilginer, Ali Atay, Okan Yalabık",country:"Türkiye",description:"Emekli komiser Cevdet ve karısının, oğullarının karıştığı gizemli bir cinayeti örtbas etmeye çalışırken eski öğrencisi Yusuf'un gerçeği araştırmaya başlaması.",whyWatch:"Berkun Oya'nın 'Bayrak' oyunundan uyarlanan, gizemli atmosferi ve muhteşem Ali Atay - Haluk Bilginer oyunculuklarıyla ilk yerli dijital başyapıt.",similar:["Şahsiyet","Bozkır"],ageRating:"16+",platforms:["Netflix","BluTV"],trivia:"Dizi sadece 8 bölümden oluşmakta ve tek bir çiftlik evi ve ormanlık alanda çekilmiştir."},
+    {id:"d56",title:"Avrupa Yakası",imdb:8.6,year:2004,duration:"6 Sezon (190 Bölüm)",pool:"popular",origin:"yerli",genres:["Komedi"],moods:["Neşeli","Rahat"],director:"Hakan Algül",cast:"Gülse Birsel, Gazanfer Özcan, Engin Günaydın, Ata Demirer",country:"Türkiye",description:"Nişantaşı'nda yaşayan Sütçüoğlu ailesi ve Avrupa Yakası dergisi çalışanlarının absürt, lüks ve komik şehir yaşamı.",whyWatch:"Engin Günaydın'ın canlandırdığı Burhan Altıntop karakteri, Şahika, Volkan ve Dilber Hala gibi efsaneleşmiş karakterleriyle Türk televizyonlarının en iyi durum komedisi (sitcom).",similar:["Gibi","Leyla ile Mecnun"],ageRating:"7+",platforms:["YouTube"],trivia:"Dizi tam 190 bölüm sürdü ve Burhan Altıntop karakteri hala sosyal medyada en çok paylaşılan karakter unvanını koruyor."},
+    {id:"d57",title:"Behzat Ç. Bir Ankara Polisiyesi",imdb:8.9,year:2010,duration:"3 Sezon (96 Bölüm)",pool:"popular",origin:"yerli",genres:["Polisiye & Suç","Dram","Komedi"],moods:["Gerilimli","Hüzünlü","Adrenalin"],director:"Serdar Akar",cast:"Erdal Beşikçioğlu, Fatih Artman, İnanç Konukçu",country:"Türkiye",description:"Cinayet Büro Amiri Behzat Ç. ve ekibinin Ankara sokaklarındaki cinayetleri çözerken yaşadıkları adalet mücadeleleri ve Behzat'ın derin aile travmaları.",whyWatch:"Erdal Beşikçioğlu'nun efsaneleştiği, sansürsüz dili, Ankara sokakları, Harun, Hayalet ve Akbaba karakterleriyle Türk dizi tarihinin en gerçekçi ve en karanlık polisiye dramı.",similar:["Şahsiyet","Masum"],ageRating:"18+",platforms:["BluTV"],trivia:"Behzat Ç.'nin meşhur kırmızı vosvosu aslında Erdal Beşikçioğlu'nun çekimler sırasında Ankara'da kendi kullandığı kişisel aracıydı."},
+    {id:"d58",title:"Kardeş Payı",imdb:8.3,year:2014,duration:"2 Sezon (35 Bölüm)",pool:"popular",origin:"yerli",genres:["Komedi"],moods:["Neşeli","Rahat"],director:"Selçuk Aydemir",cast:"Ahmet Kural, Murat Cemcir, Seda Bakan",country:"Türkiye",description:"Metin, Ali ve Feyyza adındaki üç kardeşin, dünyayı kurtaracak borla çalışan bir motor icat etmeye çalışırken mahallede yaşadıkları absürt komik olaylar.",whyWatch:"Hızlı kurgusu, absürt görsel efektleri ve Ahmet Kural - Murat Cemcir ikilisinin komedi kimyasıyla eşsiz bir modern mahalle komedisi.",similar:["İşler Güçler","Leyla ile Mecnun"],ageRating:"13+",platforms:["Netflix","YouTube"],trivia:"Dizideki bazı hızlı diyalog sahneleri aslında senaryoda yazılı değildi, oyuncuların o anki doğaçlamalarıyla zenginleştirildi."},
+    {id:"d59",title:"Kuzey Güney",imdb:8.0,year:2011,duration:"2 Sezon (80 Bölüm)",pool:"popular",origin:"yerli",genres:["Dram"],moods:["Adrenalin","Hüzünlü"],director:"Hilal Saral",cast:"Kıvanç Tatlıtuğ, Buğra Gülsoy, Öykü Karayel",country:"Türkiye",description:"Karakterleri tamamen zıt olan Kuzey ve Güney kardeşlerin, bir trafik kazası sonrasında Kuzey'in suçu üstlenmesiyle değişen ve intikama sürüklenen hayatları.",whyWatch:"Kıvanç Tatlıtuğ'un 'Kuzey Tekinoğlu' karakterini Türk dizi tarihinin en karizmatik ve en öfkeli anti-kahramanına dönüştürdüğü efsanevi dram.",similar:["Ezel","Kuzey Güney"],ageRating:"16+",platforms:["Netflix","YouTube"],trivia:"Kıvanç Tatlıtuğ, dövüş ve fiziksel kondisyon sahneleri için çekimler boyunca haftanın 6 günü özel boks eğitimi aldı."},
+    {id:"d60",title:"Aşk-ı Memnu",imdb:7.6,year:2008,duration:"2 Sezon (79 Bölüm)",pool:"popular",origin:"yerli",genres:["Dram","Romantik"],moods:["Gerilimli","Romantik"],director:"Hilal Saral",cast:"Kıvanç Tatlıtuğ, Beren Saat, Selçuk Yöntem, Hazal Kaya",country:"Türkiye",description:"Zengin Adnan Bey ile evlenen genç Bihter Yöreoğlu'nun, Adnan Bey'in çapkın yeğeni Behlül Haznedar ile yaşadığı yasak aşk ve bu aşkın trajik sonu.",whyWatch:"Halid Ziya Uşaklıgil'in romanından uyarlanan, final bölümüyle Türkiye'de hayatı durduran, entrika, lüks ve yasak aşk dramının televizyon tarihindeki zirvesi.",similar:["Kuzey Güney","Ezel"],ageRating:"13+",platforms:["Netflix","YouTube"],trivia:"Dizinin final bölümü yayınlandığı akşam Türkiye'deki elektrik tüketim oranlarında gözle görülür bir düşüş yaşanmıştır (herkes TV başındaydı)."},
+    {id:"d61",title:"Yedi Numara",imdb:8.8,year:2000,duration:"3 Sezon (92 Bölüm)",pool:"popular",origin:"yerli",genres:["Komedi"],moods:["Neşeli","Nostaljik","Rahat"],director:"Sadullah Celen",cast:"Şebnem Sönmez, Engin Alkan, Olgun Şimşek",country:"Türkiye",description:"Üniversite okumak için Anadolu'dan İstanbul'a gelen 4 kız ve 3 erkek öğrencinin, çocuksuz bakkal Vahit ve karısı Zeliha'nın yedi numaralı ahşap evinde birlikte yaşaması.",whyWatch:"Hiçbir kötülük, küfür veya kabalık barındırmayan, Anadolu insanının saflığını ve samimiyetini İstanbul'da yaşatan en nostaljik ve en tatlı yerli sitcom.",similar:["Avrupa Yakası","Leyla ile Mecnun"],ageRating:"Tümü",platforms:["TRT İzle","YouTube"],trivia:"Dizideki oyuncuların neredeyse tamamı Mimar Sinan Üniversitesi Devlet Konservatuvarı mezunu yakın arkadaş grubudur."},
+    {id:"d62",title:"Fi",imdb:7.8,year:2017,duration:"2 Sezon (22 Bölüm)",pool:"popular",origin:"yerli",genres:["Dram","Gerilim & Gizem"],moods:["Gerilimli","Romantik"],director:"Mert Baykal",cast:"Ozan Güven, Serenay Sarıkaya, Mehmet Günsür",country:"Türkiye",description:"Ünlü psikiyatrist Can Manay'ın, genç balerin Duru'ya saplantılı şekilde aşık olması ve onun hayatını ele geçirmek için çevirdiği entrikalar.",whyWatch:"Azra Kohen'in üçlemesinden uyarlanan, Ozan Güven'in Can Manay rolüyle devleştiği, yüksek prodüksiyonlu ve sürükleyici ilk büyük bütçeli yerli dijital dizi.",similar:["Şahsiyet","Masum"],ageRating:"18+",platforms:["BluTV"],trivia:"Dizi, yayınlandığı ilk sezonunda internette 100 milyon izlenme barajını aşarak Türkiye dijital yayıncılık rekorunu kırmıştır."},
+    {id:"d63",title:"Halka",imdb:8.7,year:2019,duration:"1 Sezon (19 Bölüm)",pool:"gem",origin:"yerli",genres:["Polisiye & Suç","Gerilim & Gizem","Aksiyon & Macera"],moods:["Adrenalin","Gerilimli"],director:"Volkan Kocatürk",cast:"Serkan Çayoğlu, Kaan Yıldırım, Hande Erçel",country:"Türkiye",description:"Farklı karakterlerdeki iki gencin, geçmişlerindeki karanlık sırları çözmek ve 'Halka' adındaki gizemli suç örgütünü çökertmek için iş birliği yapması.",whyWatch:"Görsel sanatsal kurgusu, sıra dışı sembolizmi ve klişe mafya dizilerinden tamamen farklı olan zeka dolu senaryosuyla saklı kalmış en iyi yerli suç gerilimi.",similar:["Bozkır","Behzat Ç."],ageRating:"16+",platforms:["TRT İzle","YouTube"],trivia:"Dizi, kullandığı renk paletleri ve simetrik kamera açılarıyla Wes Anderson ve David Fincher sinemasına pek çok görsel gönderme barındırır."},
+    {id:"d64",title:"Bozkır",imdb:8.0,year:2018,duration:"2 Sezon (18 Bölüm)",pool:"gem",origin:"yerli",genres:["Polisiye & Suç","Gerilim & Gizem"],moods:["Gerilimli","Düşünceli"],director:"Bahadır İnce",cast:"Yiğit Özşener, Ekin Koç, Altan Erkekli",country:"Türkiye",description:"Mesleğinde tecrübeli Seyfi Amir ile genç, heyecanlı ortağı Nuri'nin, bozkırın ortasında işlenen gizemli çocuk cinayetlerini araştırırken kasabanın sırlarıyla yüzleşmesi.",whyWatch:"True Detective benzeri bozkır melankolisi, Yiğit Özşener ve Ekin Koç'un müthiş oyunculukları ve karanlık atmosferiyle sarsıcı bir neo-noir polisiye.",similar:["Şahsiyet","Masum"],ageRating:"18+",platforms:["BluTV"],trivia:"Dizinin senaryosu Levent Cantek tarafından yazılmış olup, bozkırın yalnızlık ve çaresizlik felsefesini derinlemesine işler."},
+    {id:"d65",title:"İşler Güçler",imdb:8.2,year:2012,duration:"1 Sezon (41 Bölüm)",pool:"popular",origin:"yerli",genres:["Komedi"],moods:["Neşeli","Rahat"],director:"Selçuk Aydemir",cast:"Ahmet Kural, Murat Cemcir, Sadi Celil Cengiz",country:"Türkiye",description:"Oyunculukta dikiş tutturamamış üç yakın arkadaşın, kendi bağımsız filmlerini çekebilmek için belgesel sunuculuğu yaparken yaşadığı trajikomik mesleki zorluklar.",whyWatch:"Türk dizi sektörünü, yapımcıları ve şöhret dünyasını inanılmaz ince zeka ve kara mizahla eleştiren, durum komedisinin en samimi temsilcisi.",similar:["Kardeş Payı","Gibi"],ageRating:"13+",platforms:["YouTube"],trivia:"Dizideki karakterler oyuncuların kendi gerçek isimlerini ve mesleki travmalarını (gerçek hayattaki işsizlik dönemlerini) taşımaktadır."},
+];
+
+// ==================== UNIFIED ACCESS ====================
+const database = { film: filmDatabase, dizi: diziDatabase };
+
+const categories = {
+    film: ["Tümü", "Aksiyon & Macera", "Bilim Kurgu & Fantastik", "Dram", "Gerilim & Gizem", "Komedi", "Animasyon", "Korku", "Romantik", "Polisiye & Suç"],
+    dizi: ["Tümü", "Aksiyon & Macera", "Bilim Kurgu & Fantastik", "Dram", "Gerilim & Gizem", "Komedi", "Animasyon", "Korku", "Romantik", "Polisiye & Suç"]
+};
+
+const moodList = ["Neşeli","Hüzünlü","Adrenalin","Düşünceli","Romantik","Gerilimli","Nostaljik","Rahat"];
+
+// ==================== WEB AUDIO API ====================
+let audioCtx = null;
+function initAudio(){if(state.isMuted)return;if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();}
+function playCoinSound(){if(state.isMuted)return;initAudio();const n=audioCtx.currentTime;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.setValueAtTime(987.77,n);o.frequency.exponentialRampToValueAtTime(1318.51,n+.08);g.gain.setValueAtTime(.12,n);g.gain.exponentialRampToValueAtTime(.01,n+.15);o.connect(g);g.connect(audioCtx.destination);o.start(n);o.stop(n+.15);const o2=audioCtx.createOscillator(),g2=audioCtx.createGain();o2.type='triangle';o2.frequency.setValueAtTime(1318.51,n+.08);o2.frequency.exponentialRampToValueAtTime(1975.53,n+.3);g2.gain.setValueAtTime(.08,n+.08);g2.gain.exponentialRampToValueAtTime(.001,n+.4);o2.connect(g2);g2.connect(audioCtx.destination);o2.start(n+.08);o2.stop(n+.4);}
+function playLeverSound(){if(state.isMuted)return;initAudio();const n=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sawtooth';o.frequency.setValueAtTime(180,n);o.frequency.linearRampToValueAtTime(45,n+.25);g.gain.setValueAtTime(.15,n);g.gain.exponentialRampToValueAtTime(.001,n+.25);o.connect(g);g.connect(audioCtx.destination);o.start(n);o.stop(n+.25);}
+function playErrorSound(){if(state.isMuted)return;initAudio();const n=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sawtooth';o.frequency.setValueAtTime(110,n);o.frequency.setValueAtTime(100,n+.12);g.gain.setValueAtTime(.2,n);g.gain.setValueAtTime(.2,n+.12);g.gain.exponentialRampToValueAtTime(.001,n+.24);o.connect(g);g.connect(audioCtx.destination);o.start(n);o.stop(n+.25);}
+function startEngineSound(){if(state.isMuted)return{stop(){}};initAudio();const n=audioCtx.currentTime,o=audioCtx.createOscillator(),f=audioCtx.createBiquadFilter(),g=audioCtx.createGain();o.type='sawtooth';o.frequency.setValueAtTime(80,n);const l=audioCtx.createOscillator(),lg=audioCtx.createGain();l.type='sine';l.frequency.setValueAtTime(9,n);lg.gain.setValueAtTime(6,n);l.connect(lg);lg.connect(o.frequency);f.type='lowpass';f.frequency.setValueAtTime(220,n);g.gain.setValueAtTime(0,n);g.gain.linearRampToValueAtTime(.18,n+.15);o.connect(f);f.connect(g);g.connect(audioCtx.destination);l.start(n);o.start(n);return{stop(){const t=audioCtx.currentTime;g.gain.setValueAtTime(g.gain.value,t);g.gain.exponentialRampToValueAtTime(.001,t+.2);setTimeout(()=>{try{o.stop();l.stop();}catch(e){}},250);}};}
+function playDropSound(){if(state.isMuted)return;initAudio();const n=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='triangle';o.frequency.setValueAtTime(140,n);o.frequency.exponentialRampToValueAtTime(35,n+.22);g.gain.setValueAtTime(.35,n);g.gain.exponentialRampToValueAtTime(.001,n+.22);o.connect(g);g.connect(audioCtx.destination);o.start(n);o.stop(n+.22);setTimeout(()=>{const c=audioCtx.currentTime;[523.25,659.25,783.99,1046.50].forEach((fr,i)=>{const co=audioCtx.createOscillator(),cg=audioCtx.createGain();co.type='sine';co.frequency.setValueAtTime(fr,c+i*.05);cg.gain.setValueAtTime(.1,c+i*.05);cg.gain.exponentialRampToValueAtTime(.001,c+i*.05+.18);co.connect(cg);cg.connect(audioCtx.destination);co.start(c+i*.05);co.stop(c+i*.05+.18);});},180);}
+
+// ==================== CONFETTI SYSTEM ====================
+let confettiCanvas, confettiCtx;
+function initConfetti(){confettiCanvas=document.getElementById('confettiCanvas');if(!confettiCanvas)return;confettiCtx=confettiCanvas.getContext('2d');confettiCanvas.width=window.innerWidth;confettiCanvas.height=window.innerHeight;window.addEventListener('resize',()=>{confettiCanvas.width=window.innerWidth;confettiCanvas.height=window.innerHeight;});}
+function fireConfetti(){if(!confettiCtx)return;const colors=['#3b82f6','#22c55e','#14b8a6','#84cc16','#10b981','#60a5fa','#4ade80'];const particles=[];for(let i=0;i<80;i++){particles.push({x:window.innerWidth/2+Math.random()*200-100,y:window.innerHeight/2,vx:(Math.random()-0.5)*12,vy:Math.random()*-14-4,w:Math.random()*8+4,h:Math.random()*6+2,color:colors[Math.floor(Math.random()*colors.length)],rot:Math.random()*360,rotSpeed:(Math.random()-0.5)*10,life:1});}let frame=0;function draw(){confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);let alive=false;particles.forEach(p=>{if(p.life<=0)return;alive=true;p.x+=p.vx;p.y+=p.vy;p.vy+=0.3;p.rot+=p.rotSpeed;p.life-=0.008;p.vx*=0.99;confettiCtx.save();confettiCtx.translate(p.x,p.y);confettiCtx.rotate(p.rot*Math.PI/180);confettiCtx.globalAlpha=p.life;confettiCtx.fillStyle=p.color;confettiCtx.fillRect(-p.w/2,-p.h/2,p.w,p.h);confettiCtx.restore();});frame++;if(alive&&frame<300)requestAnimationFrame(draw);else confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height);}draw();}
+
+// ==================== FAVORITES (localStorage) ====================
+function getFavorites(){try{return JSON.parse(localStorage.getItem('cinematic_favs'))||[];}catch(e){return[];}}
+function saveFavorites(arr){localStorage.setItem('cinematic_favs',JSON.stringify(arr));}
+function toggleFavorite(id){let favs=getFavorites();if(favs.includes(id))favs=favs.filter(f=>f!==id);else favs.push(id);saveFavorites(favs);return favs;}
+function isFavorite(id){return getFavorites().includes(id);}
+function findItemById(id){return filmDatabase.find(f=>f.id===id)||diziDatabase.find(d=>d.id===id);}
+
+// ==================== STATE & LEVELS ====================
+let state={hasCoin:false,selectedType:"film",selectedPool:"all",selectedCategory:"Tümü",selectedMood:null,isSpinning:false,dispensedItem:null,dispensedCount:0,history:[],isMuted:false,currentDispensedItem:null,selectedOrigin:"all"};
+const levelList = [
+    { limit: 0, title: "Sinema Çaylağı 🔰" },
+    { limit: 3, title: "Sinefil Adayı 🍿" },
+    { limit: 7, title: "Dizi Kolik 📺" },
+    { limit: 12, title: "Kült Film Gurmesi 🎬" },
+    { limit: 20, title: "Sinema Profesörü 🎓" }
+];
+function updateLevel(){
+    const count = state.dispensedCount;
+    let currentTitle = levelList[0].title;
+    for(let i=levelList.length-1; i>=0; i--){
+        if(count >= levelList[i].limit){
+            currentTitle = levelList[i].title;
+            break;
+        }
+    }
+    const val = document.getElementById("levelValue");
+    if(val) val.textContent = currentTitle;
+}
+function renderHistory(){
+    const container = document.getElementById("historyTags");
+    if(!container) return;
+    if(state.history.length===0){
+        container.innerHTML = '<span class="history-empty">Geçmiş henüz boş.</span>';
+        return;
+    }
+    container.innerHTML = "";
+    const lastItems = state.history.slice(-5).reverse();
+    lastItems.forEach(id=>{
+        const item = findItemById(id);
+        if(!item) return;
+        const tag = document.createElement("span");
+        tag.className = "history-tag";
+        tag.textContent = item.title;
+        tag.style.cursor = "pointer";
+        tag.addEventListener("click",()=>{
+            showResult(item);
+        });
+        container.appendChild(tag);
+    });
+}
+
+// ==================== DOM CACHE ====================
+const el={};
+function cacheDom(){['vendingMachine','displayText','btnTypeFilm','btnTypeDizi','btnPoolAll','btnPoolPopular','btnPoolGems','categoryContainer','coinSlot','btnInsertCoin','leverArm','trayDoor','dispensedCapsule','resultPanel','resultPlaceholder','resultContent','resultBadge','resultTitle','resultImdb','imdbBar','resultYear','resultDuration','resultCountry','resultDirector','resultCast','resultGenres','resultDescription','resultWhyWatch','resultTrivia','resultSimilar','resultPlatforms','resultAge','btnWatchTrailer','btnSpinAgain','btnFavorite','dispensedCounter','moodGrid','favoritesPanel','favList','btnToggleFav','btnCloseFav','favCountBadge','btnMute','btnDailyPick','btnShare','levelValue','historyTags','btnOriginAll','btnOriginYerli','btnOriginYabanci'].forEach(id=>{el[id]=document.getElementById(id);});}
+
+// ==================== CORE FUNCTIONS ====================
+function renderCategories(){const list=categories[state.selectedType];el.categoryContainer.innerHTML="";list.forEach(c=>{const p=document.createElement("div");p.className=`pill-item ${state.selectedCategory===c?'active':''}`;p.textContent=c;p.addEventListener("click",()=>{if(state.isSpinning)return;initAudio();document.querySelectorAll(".pill-item").forEach(x=>x.classList.remove("active"));p.classList.add("active");state.selectedCategory=c;updateDisplay(`KATEGORİ: ${c.toUpperCase()}`);});el.categoryContainer.appendChild(p);});}
+
+function updateDisplay(text,cls=""){el.displayText.textContent=text;el.displayText.className="display-text";if(cls)el.displayText.classList.add(cls);}
+function updateCounter(){el.dispensedCounter.textContent=state.dispensedCount;}
+
+function insertCoin(){if(state.isSpinning)return;if(state.hasCoin){updateDisplay("JETON ZATEN VAR!","warning");playErrorSound();return;}el.dispensedCapsule.classList.remove("fall","glow-pulse");el.trayDoor.classList.remove("open");state.hasCoin=true;el.coinSlot.classList.add("inserted");updateDisplay("JETON KABUL EDİLDİ ✓","success");playCoinSound();setTimeout(()=>{if(state.hasCoin&&!state.isSpinning)updateDisplay("KOLU AŞAĞI ÇEKİN →");},1200);}
+
+function selectRandomItem(){
+    const pool=database[state.selectedType];
+    let filtered=pool;
+    if(state.selectedPool!=="all")filtered=filtered.filter(i=>i.pool===state.selectedPool);
+    
+    // Yapım Kökeni (Origin) Filtresi
+    if(state.selectedOrigin!=="all"){
+        filtered=filtered.filter(i=>{
+            const origin = i.origin || "yabanci";
+            return origin === state.selectedOrigin;
+        });
+    }
+    
+    if(state.selectedCategory!=="Tümü")filtered=filtered.filter(i=>i.genres.includes(state.selectedCategory));
+    
+    // Anime & Çizgi Film Koruması: Animasyon kategorisi seçilmediyse animasyon yapımları elensin
+    if(state.selectedCategory!=="Animasyon"){
+        filtered=filtered.filter(i=>!i.genres.includes("Animasyon"));
+    }
+    
+    if(state.selectedMood)filtered=filtered.filter(i=>i.moods&&i.moods.includes(state.selectedMood));
+    const unseen=filtered.filter(i=>!state.history.includes(i.id));
+    if(unseen.length>0)filtered=unseen;
+    
+    if(filtered.length===0){
+        filtered=pool;
+        if(state.selectedOrigin!=="all"){
+            filtered=filtered.filter(i=>{
+                const origin = i.origin || "yabanci";
+                return origin === state.selectedOrigin;
+            });
+        }
+        if(state.selectedCategory!=="Animasyon"){
+            filtered=filtered.filter(i=>!i.genres.includes("Animasyon"));
+        }
+        const fb=filtered.filter(i=>!state.history.includes(i.id));
+        if(fb.length>0)filtered=fb;
+    }
+    return filtered[Math.floor(Math.random()*filtered.length)];
+}
+
+function renderFavoritesList(){const favs=getFavorites();if(el.favCountBadge)el.favCountBadge.textContent=favs.length;if(!el.favList)return;if(favs.length===0){el.favList.innerHTML='<p class="fav-empty">Henüz favori eklemediniz.</p>';return;}el.favList.innerHTML="";favs.forEach(id=>{const item=findItemById(id);if(!item)return;const div=document.createElement("div");div.className="fav-list-item";div.innerHTML=`<div class="fav-list-info"><span class="fav-list-title">${item.title}</span><span class="fav-list-meta">⭐ ${item.imdb} · ${item.year}</span></div><button class="fav-remove-btn" data-id="${id}">✕</button>`;el.favList.appendChild(div);});el.favList.querySelectorAll('.fav-remove-btn').forEach(btn=>{btn.addEventListener('click',()=>{toggleFavorite(btn.dataset.id);renderFavoritesList();});});}
+
+function showResult(item){state.currentDispensedItem=item;el.resultPanel.className="result-panel";if(item.pool==="gem")el.resultPanel.classList.add("gem-result");else if(item.pool==="popular")el.resultPanel.classList.add("popular-result");if(state.selectedType==="dizi")el.resultPanel.classList.add("dizi-result");el.resultPlaceholder.classList.add("hidden");el.resultContent.classList.remove("hidden");setTimeout(()=>el.resultContent.classList.add("show"),50);
+el.resultBadge.textContent=item.pool==="gem"?"SAKLI CEVHER 💎":"POPÜLER YAPIM 🔥";el.resultBadge.className=`badge-tag ${item.pool}`;
+el.resultTitle.textContent=item.title;el.resultImdb.textContent=item.imdb.toFixed(1);el.resultYear.textContent=item.year;el.resultDuration.textContent=item.duration;el.resultCountry.textContent=item.country;
+const pct=(item.imdb/10)*100;el.imdbBar.style.width=pct+"%";el.imdbBar.style.background=item.imdb>=8.5?"linear-gradient(90deg,var(--neon-purple),var(--neon-green))":item.imdb>=7.5?"linear-gradient(90deg,#3b82f6,#14b8a6)":"linear-gradient(90deg,#14b8a6,#84cc16)";
+updateLevel();renderHistory();
+el.resultDirector.textContent=item.director;el.resultCast.textContent=item.cast;
+// Age rating
+if(el.resultAge){el.resultAge.textContent=item.ageRating||"13+";el.resultAge.className="age-badge";const ar=item.ageRating||"13+";if(ar.includes("18"))el.resultAge.classList.add("age-18");else if(ar.includes("16"))el.resultAge.classList.add("age-16");else if(ar.includes("13"))el.resultAge.classList.add("age-13");else el.resultAge.classList.add("age-7");}
+// Genres
+el.resultGenres.innerHTML="";item.genres.forEach(g=>{const t=document.createElement("span");t.className="genre-tag";t.textContent=g;el.resultGenres.appendChild(t);});
+// Platforms
+if(el.resultPlatforms){el.resultPlatforms.innerHTML="";(item.platforms||[]).forEach(p=>{const b=document.createElement("span");b.className="platform-badge";b.textContent=p;el.resultPlatforms.appendChild(b);});}
+el.resultDescription.textContent=item.description;el.resultWhyWatch.textContent=item.whyWatch;
+// Trivia
+if(el.resultTrivia)el.resultTrivia.textContent=item.trivia||"";
+// Similar
+if(el.resultSimilar){el.resultSimilar.innerHTML="";(item.similar||[]).forEach(s=>{const t=document.createElement("span");t.className="similar-tag";t.textContent=s;el.resultSimilar.appendChild(t);});}
+// Favorite button
+if(el.btnFavorite){el.btnFavorite.textContent=isFavorite(item.id)?"💚":"🤍";el.btnFavorite.classList.toggle("active",isFavorite(item.id));el.btnFavorite.onclick=()=>{toggleFavorite(item.id);el.btnFavorite.textContent=isFavorite(item.id)?"💚":"🤍";el.btnFavorite.classList.toggle("active",isFavorite(item.id));renderFavoritesList();};}
+// YouTube
+el.btnWatchTrailer.onclick=()=>{window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(item.title+" trailer fragman")}`,"_blank");};
+// Scroll to result on mobile
+if(window.innerWidth<=900)el.resultPanel.scrollIntoView({behavior:'smooth',block:'start'});}
+
+// ==================== VENDING PROCESS ====================
+function startVendingProcess(){if(state.isSpinning)return;if(!state.hasCoin){updateDisplay("LÜTFEN JETON ATIN!","warning");playErrorSound();el.coinSlot.style.borderColor="var(--neon-blue)";setTimeout(()=>el.coinSlot.style.borderColor="",300);return;}
+state.isSpinning=true;state.hasCoin=false;el.coinSlot.classList.remove("inserted");el.leverArm.classList.add("pulling");playLeverSound();el.dispensedCapsule.classList.remove("fall","glow-pulse");el.trayDoor.classList.remove("open");el.resultContent.classList.remove("show");setTimeout(()=>{el.resultContent.classList.add("hidden");el.resultPlaceholder.classList.remove("hidden");},300);
+const engine=startEngineSound();state.dispensedItem=selectRandomItem();
+const phrases=["BAĞLANTI KURULUYOR","HAVUZ FİLTRELENİYOR","VERİTABANI TARANIYOR","KAPSÜL SEÇİLİYOR","PAKETLENİYOR..."];let idx=0;const ticker=setInterval(()=>{updateDisplay(phrases[idx%phrases.length]);idx++;},400);
+setTimeout(()=>{clearInterval(ticker);engine.stop();el.leverArm.classList.remove("pulling");updateDisplay("KAPSÜL DÜŞÜYOR!","success");playDropSound();
+el.dispensedCapsule.className="dispensed-capsule";if(state.dispensedItem.pool==="gem")el.dispensedCapsule.classList.add(Math.random()>.5?"green":"purple");else if(state.dispensedItem.pool==="popular")el.dispensedCapsule.classList.add(Math.random()>.5?"teal":"blue");else el.dispensedCapsule.classList.add(Math.random()>.5?"purple":Math.random()>.5?"blue":"lime");
+el.trayDoor.classList.add("open");el.dispensedCapsule.classList.add("fall");
+setTimeout(()=>{el.dispensedCapsule.classList.add("glow-pulse");state.history.push(state.dispensedItem.id);state.dispensedCount++;updateCounter();fireConfetti();showResult(state.dispensedItem);updateDisplay("ÖNERİ HAZIR!","success");el.trayDoor.classList.remove("open");el.dispensedCapsule.classList.remove("fall","glow-pulse");state.isSpinning=false;state.dispensedItem=null;setTimeout(()=>updateDisplay("LÜTFEN JETON ATIN"),2500);},700);},2200);}
+
+function spinAgain(){if(state.isSpinning)return;state.hasCoin=false;el.coinSlot.classList.remove("inserted");insertCoin();setTimeout(()=>startVendingProcess(),600);}
+
+// ==================== EVENT BINDINGS ====================
+function setupEvents(){el.btnTypeFilm.addEventListener("click",()=>{if(state.isSpinning)return;initAudio();el.btnTypeFilm.classList.add("active");el.btnTypeDizi.classList.remove("active");el.vendingMachine.classList.remove("type-dizi");state.selectedType="film";state.selectedCategory="Tümü";renderCategories();updateDisplay("TÜR: FİLM SEÇİLDİ");});
+el.btnTypeDizi.addEventListener("click",()=>{if(state.isSpinning)return;initAudio();el.btnTypeDizi.classList.add("active");el.btnTypeFilm.classList.remove("active");el.vendingMachine.classList.add("type-dizi");state.selectedType="dizi";state.selectedCategory="Tümü";renderCategories();updateDisplay("TÜR: DİZİ SEÇİLDİ");});
+[{b:el.btnPoolAll,v:"all",n:"TÜM HAVUZ"},{b:el.btnPoolPopular,v:"popular",n:"POPÜLER"},{b:el.btnPoolGems,v:"gem",n:"SAKLI CEVHERLER"}].forEach(p=>{p.b.addEventListener("click",()=>{if(state.isSpinning)return;initAudio();[el.btnPoolAll,el.btnPoolPopular,el.btnPoolGems].forEach(x=>x.classList.remove("active"));p.b.classList.add("active");state.selectedPool=p.v;updateDisplay(`HAVUZ: ${p.n}`);});});
+// Origin buttons
+[{b:el.btnOriginAll,v:"all",n:"TÜM YAPIMLAR"},{b:el.btnOriginYerli,v:"yerli",n:"YERLİ YAPIMLAR"},{b:el.btnOriginYabanci,v:"yabanci",n:"YABANCI YAPIMLAR"}].forEach(o=>{
+    if(o.b){
+        o.b.addEventListener("click",()=>{
+            if(state.isSpinning)return;
+            initAudio();
+            [el.btnOriginAll,el.btnOriginYerli,el.btnOriginYabanci].forEach(x=>{if(x)x.classList.remove("active")});
+            o.b.classList.add("active");
+            state.selectedOrigin=o.v;
+            updateDisplay(`KÖKEN: ${o.n}`);
+        });
+    }
+});
+el.btnInsertCoin.addEventListener("click",insertCoin);el.coinSlot.addEventListener("click",insertCoin);el.leverArm.addEventListener("click",startVendingProcess);document.querySelector(".lever-label").addEventListener("click",startVendingProcess);el.btnSpinAgain.addEventListener("click",spinAgain);
+// Mood buttons
+document.querySelectorAll('.mood-btn').forEach(btn=>{btn.addEventListener('click',()=>{if(state.isSpinning)return;initAudio();const mood=btn.dataset.mood;if(state.selectedMood===mood){state.selectedMood=null;btn.classList.remove('active');updateDisplay("RUH HALİ: SERBESTt");}else{document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');state.selectedMood=mood;updateDisplay(`RUH HALİ: ${mood.toUpperCase()}`);}});});
+// Favorites panel
+if(el.btnToggleFav)el.btnToggleFav.addEventListener('click',()=>{el.favoritesPanel.classList.toggle('open');renderFavoritesList();});
+if(el.btnCloseFav)el.btnCloseFav.addEventListener('click',()=>{el.favoritesPanel.classList.remove('open');});
+// Mute button logic
+if(el.btnMute)el.btnMute.addEventListener('click',()=>{state.isMuted=!state.isMuted;if(state.isMuted){el.btnMute.textContent="🔇 Sesi Aç";el.btnMute.classList.add('muted');}else{el.btnMute.textContent="🔊 Sesi Kapat";el.btnMute.classList.remove('muted');initAudio();}});
+// Daily Pick logic (Random top rated)
+if(el.btnDailyPick)el.btnDailyPick.addEventListener('click',()=>{if(state.isSpinning)return;initAudio();const isFilm=Math.random()>.5;if(isFilm){el.btnTypeFilm.click();}else{el.btnTypeDizi.click();}state.selectedPool="popular";state.selectedOrigin="all";document.querySelectorAll(".btn-toggle").forEach(x=>x.classList.remove("active"));if(isFilm){el.btnTypeFilm.classList.add("active");el.btnPoolPopular.classList.add("active");}else{el.btnTypeDizi.classList.add("active");el.btnPoolPopular.classList.add("active");}if(el.btnOriginAll)el.btnOriginAll.classList.add("active");state.selectedCategory="Tümü";renderCategories();state.selectedMood=null;document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('active'));updateDisplay("GÜNÜN SÜRPRİZ SEÇİMİ!");setTimeout(()=>{spinAgain();},300);});
+// Share link logic
+if(el.btnShare)el.btnShare.addEventListener('click',()=>{if(!state.currentDispensedItem)return;const item=state.currentDispensedItem;const shareText=`🎬 CINE-MATIC ÖNERİSİ:\n🍿 ${item.title} (${item.year})\n⭐ IMDb: ${item.imdb}/10\n📖 Özet: ${item.description}\n🎯 Neden İzlemelisin: ${item.whyWatch}\n🔗 Platformlar: ${(item.platforms||[]).join(", ")}`;navigator.clipboard.writeText(shareText).then(()=>{const oldText=el.btnShare.textContent;el.btnShare.textContent="✓ KOPYALANDI!";el.btnShare.style.borderColor="var(--neon-green)";el.btnShare.style.color="var(--neon-green)";setTimeout(()=>{el.btnShare.textContent="🔗 Öneriyi Arkadaşlarınla Paylaş";el.btnShare.style.borderColor="var(--neon-teal)";el.btnShare.style.color="var(--neon-teal)";},2000);}).catch(err=>{alert("Kopyalanamadı!");});});
+// Keyboard
+document.addEventListener("keydown",e=>{if(e.code==="Space"&&!state.isSpinning){e.preventDefault();insertCoin();}if(e.code==="Enter"&&state.hasCoin&&!state.isSpinning){e.preventDefault();startVendingProcess();}});}
+
+// ==================== INIT ====================
+function init(){cacheDom();initConfetti();renderCategories();setupEvents();updateDisplay("LÜTFEN JETON ATIN");updateCounter();renderFavoritesList();updateLevel();renderHistory();}
+document.addEventListener("DOMContentLoaded",init);
+
+</script>
+    <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+            const t=(typeof filmDatabase!=='undefined'?filmDatabase.length:0)+(typeof diziDatabase!=='undefined'?diziDatabase.length:0);
+            const e=document.getElementById('dbCountDisplay');
+            if(e)e.textContent=t+' yapım veritabanında';
+        });
+    </script>
+</body>
+</html>
